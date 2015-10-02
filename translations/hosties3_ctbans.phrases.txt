@@ -1,0 +1,80 @@
+﻿"Phrases"
+{
+	"CTBanned"
+	{
+		"#format"	"{1:s},{2:d}"
+		"en"		"{1} They are still banned {2} minutes from ct team!"
+		"de"		"{1} Sie sind noch {2} Minuten vom CT-Team gebannt!"
+	}
+
+	"Invalid"
+	{
+		"en"		"Target player is invalid!"
+		"de"		"Ungültiger Spieler!"
+	}
+
+	"IsAlreadyBanned"
+	{
+		"en"		"Target player has already a CT Ban!"
+		"de"		"Der ausgewählte Spieler ist bereits vom CT Team gebannt!"
+	}
+
+	"IsntBanned"
+	{
+		"en"		"Target player has no CT Ban!"
+		"de"		"Der ausgewählte Spieler ist nicht vom CT Team gebannt!"
+	}
+
+	"CTBansList"
+	{
+		"en"		"CT banned players"
+		"de"		"CT gebannte Spieler"
+	}
+
+	"CTBanSyntax"
+	{
+		"#format"	"{1:s}"
+		"en"		"{1} Usage: sm_ctban <#userid|name> <length (minutes)> <reason>"
+		"en"		"{1} Benutzung: sm_ctban <#userID|Name> <Laenge (Minuten)> <Grund>"
+	}
+
+	"CTUnBanSyntax"
+	{
+		"#format"	"{1:s}"
+		"en"		"{1} Usage: sm_ctunban <#userid|name>"
+		"de"		"{1} Benutzung: sm_ctunban <#userID|Name>"
+	}
+
+	"OnCTBan"
+	{
+		"#format"	"{1:s},{2:N},{3:s},{4:d},{5:s}"
+		"en"		"{1} {2} was banned from the ct team by {3}! (Length is {4} minutes with the reason: {5})"
+		"de"		"{1} {2} wurde von {3} vom CT Team gebannt! (Länge beträgt {4} Minuten mit dem Grund: {5})"
+	}
+
+	"OnCTUnBan"
+	{
+		"#format"	"{1:s},{2:N},{3:s},{4:d},{5:s}"
+		"en"		"{1} CT Ban of {2} was removed by {3}! (Length was {4} with the reason: {5})"
+		"de"		"{1} Der CT Ban wurde von {2} wurde von {3} entfernt! (Länge betrug {4} mit dem Grund: {5})"
+	}
+
+	"CTBansInfo"
+	{
+		"#format"	"{1:s},{2:N},{3:d},{4:d},{5:s}"
+		"en"		"{1} {2} was banned for {3} minutes from the ct team! Remaining: {4} Reason: {5}"
+		"de"		"{1} {2} wurde für {3} Minuten vom CT Team gebannt! Verbleibend: {4} Grund: {5}"
+	}
+
+	"NoReason"
+	{
+		"en"		"No reason"
+		"de"		"Kein Grund"
+	}
+
+	"NoPlayers"
+	{
+		"en"		"no player with ctban"
+		"de"		"kein Spieler mit einen CTBan"
+	}
+}
