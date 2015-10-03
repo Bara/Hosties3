@@ -4,17 +4,14 @@
 #include <sdktools>
 #include <regex>
 #include <smlib>
-
+#include <multicolors>
 #include <hosties3>
 
 #define FEATURE_NAME "Core"
 #define PLUGIN_NAME HOSTIES3_NAME ... FEATURE_NAME
 
 #include "core/globals.sp"
-#include "core/colors.sp"
-#include "core/morecolors.sp"
 #include "core/native.sp"
-#include "core/chat.sp"
 #include "core/client.sp"
 #include "core/misc.sp"
 #include "core/sql.sp"
@@ -90,10 +87,6 @@ public void OnClientPutInServer(int client)
 {
 	g_bClientReady[client] = false;
 	SQL_CheckPlayer(client);
-	
-	Call_StartForward(g_hOnClientReady);
-	Call_PushCell(client);
-	Call_Finish();
 }
 
 public void OnClientDisconnect(int client)
@@ -242,4 +235,3 @@ void LoadConfig()
 	Call_StartForward(g_hOnConfigsLoaded);
 	Call_Finish();
 }
-s

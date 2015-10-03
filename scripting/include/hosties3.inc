@@ -81,16 +81,6 @@ native int Hosties3_SwitchClient(int client, int team);
 native void Hosties3_SteamIDToCommunityID(const char[] steamid, const char[] communityid, int maxlength);
 native void Hosties3_GetClientColors(int client, int & red, int & green, int & blue, int & alpha);
 
-native void Hosties3_PrintToChat(int client, const char[] message, any ...);
-native void Hosties3_PrintToChatAll(const char[] message, any ...);
-native void Hosties3_PrintToChatEx(int client, int author, const char[] message, any ...);
-native void Hosties3_PrintToChatAllEx(int author, const char[] message, any ...);
-native void Hosties3_ReplyToCommand(int author, const char[] message, any ...);
-native void Hosties3_ReplyToCommandEx(int client, int author, const char[] message, any ...);
-native void Hosties3_ShowActivity(int author, const char[] message, any ...);
-native void Hosties3_ShowActivityEx(int author, const char[] tag, const char[] message, any ...);
-native void Hosties3_ShowActivity2(int author, const char[] tag, const char[] message, any ...);
-
 stock void Hosties3_SafeCloseHandle(Handle & rHandle)
 {
 	if (rHandle != INVALID_HANDLE)

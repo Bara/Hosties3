@@ -5,16 +5,6 @@ Native_AskPluginLoad2()
 	CreateNative("Hosties3_IsClientAdmin", Admins_IsClientAdmin);
 	CreateNative("Hosties3_GetAdminLevel", Admins_GetAdminLevel);
 
-	CreateNative("Hosties3_PrintToChat", Chat_PrintToChat);
-	CreateNative("Hosties3_PrintToChatAll", Chat_PrintToChatAll);
-	CreateNative("Hosties3_PrintToChatEx", Chat_PrintToChatEx);
-	CreateNative("Hosties3_PrintToChatAllEx", Chat_PrintToChatAllEx);
-	CreateNative("Hosties3_ReplyToCommand", Chat_ReplyToCommand);
-	CreateNative("Hosties3_ReplyToCommandEx", Chat_ReplyToCommandEx);
-	CreateNative("Hosties3_ShowActivity", Chat_ShowActivity);
-	CreateNative("Hosties3_ShowActivityEx", Chat_ShowActivityEx);
-	CreateNative("Hosties3_ShowActivity2", Chat_ShowActivity2);
-
 	CreateNative("Hosties3_StripClientAll", Client_StripClientAll);
 	CreateNative("Hosties3_StripClient", Client_StripClient);
 	CreateNative("Hosties3_IsClientValid", Client_IsValidClient);

@@ -111,6 +111,10 @@ public SQL_AdminLevel(Handle owner, Handle hndl, const char[] error, any userid)
 			}
 
 			g_bClientReady[client] = true;
+			
+			Call_StartForward(g_hOnClientReady);
+			Call_PushCell(client);
+			Call_Finish();
 		}
 	}
 	else
