@@ -1,4 +1,4 @@
-Native_AskPluginLoad2()
+void Native_AskPluginLoad2()
 {
 	MarkNativeAsOptional("GetUserMessageType");
 
@@ -14,7 +14,6 @@ Native_AskPluginLoad2()
 	CreateNative("Hosties3_GetRandomClient", Client_GetRandomClient);
 	CreateNative("Hosties3_SwitchClient", Client_SwitchClient);
 	CreateNative("Hosties3_SteamIDToCommunityID", Client_SteamIDToCommunityID);
-	CreateNative("Hosties3_GetClientColors", Client_GetClientColors);
 
 	CreateNative("Hosties3_AddCvarInt", Cvar_AddCVarInt);
 	CreateNative("Hosties3_AddCvarBool", Cvar_AddCVarBool);

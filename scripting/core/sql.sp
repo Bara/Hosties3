@@ -1,4 +1,4 @@
-ConnectToSQL()
+void ConnectToSQL()
 {
 	g_bStarted = true;
 
@@ -10,7 +10,7 @@ ConnectToSQL()
 	SQL_TConnect(ConnectDatabase, "hosties3");
 }
 
-public ConnectDatabase(Handle owner, Handle hndl, const char[] error, any data)
+public void ConnectDatabase(Handle owner, Handle hndl, const char[] error, any data)
 {
 	if (hndl == null)
 	{
@@ -30,12 +30,12 @@ public ConnectDatabase(Handle owner, Handle hndl, const char[] error, any data)
 	if (g_bSQLReady)
 	{
 		Call_StartForward(g_hOnSQLConnected);
-		Call_PushCell(_:g_hDatabase);
+		Call_PushCell(g_hDatabase);
 		Call_Finish();
 	}
 }
 
-SQL_CheckPlayer(client)
+void SQL_CheckPlayer(int client)
 {
 	char sSteamID64[128], sQuery[2048];
 	GetClientAuthId(client, AuthId_SteamID64, sSteamID64, sizeof(sSteamID64));
@@ -43,7 +43,7 @@ SQL_CheckPlayer(client)
 	SQL_TQuery(g_hDatabase, SQL_ClientConnect, sQuery, GetClientUserId(client));
 }
 
-public SQL_ClientConnect(Handle owner, Handle hndl, const char[] error, any userid)
+public void SQL_ClientConnect(Handle owner, Handle hndl, const char[] error, any userid)
 {
 	if (hndl != null)
 	{
@@ -90,14 +90,14 @@ public SQL_ClientConnect(Handle owner, Handle hndl, const char[] error, any user
 	}
 }
 
-SQL_GetAdminLevel(client)
+void SQL_GetAdminLevel(int client)
 {
 	char sQuery[2048];
 	Format(sQuery, sizeof(sQuery), "SELECT level FROM hosties3_admins WHERE id = '%s'", g_sClientID[client]);
 	SQL_TQuery(g_hDatabase, SQL_AdminLevel, sQuery, GetClientUserId(client));
 }
 
-public SQL_AdminLevel(Handle owner, Handle hndl, const char[] error, any userid)
+public void SQL_AdminLevel(Handle owner, Handle hndl, const char[] error, any userid)
 {
 	if (hndl != null)
 	{
@@ -127,7 +127,7 @@ public SQL_AdminLevel(Handle owner, Handle hndl, const char[] error, any userid)
 	}
 }
 
-UpdatePlayerName(client)
+void UpdatePlayerName(int client)
 {
 	char sQuery[2048], sName[MAX_NAME_LENGTH];
 	GetClientName(client, sName, sizeof(sName));
@@ -135,14 +135,14 @@ UpdatePlayerName(client)
 	SQLQuery(sQuery);
 }
 
-SQLQuery(char[] sQuery)
+void SQLQuery(char[] sQuery)
 {
 	Handle hPack = CreateDataPack();
 	WritePackString(hPack, sQuery);
 	SQL_TQuery(g_hDatabase, SQL_Callback, sQuery, hPack);
 }
 
-public SQL_Callback(Handle owner, Handle hndl, const char[] error, any data)
+public void SQL_Callback(Handle owner, Handle hndl, const char[] error, any data)
 {
 	if (error[0])
 	{
@@ -151,7 +151,7 @@ public SQL_Callback(Handle owner, Handle hndl, const char[] error, any data)
 	}
 }
 
-CreateTables()
+void CreateTables()
 {
 	char sQuery1[] = "\
 		CREATE TABLE IF NOT EXISTS `hosties3_players` ( \
@@ -189,7 +189,7 @@ CreateTables()
 	CacheSettings();
 }
 
-CacheSettings()
+void CacheSettings()
 {
 	char sQuery[2048];
 	Format(sQuery, sizeof(sQuery), "SELECT id, modul, name, value FROM hosties3_settings");
@@ -201,7 +201,7 @@ CacheSettings()
 	Call_Finish();
 }
 
-public SQL_CacheSettings(Handle owner, Handle hndl, const char[] error, any userid)
+public void SQL_CacheSettings(Handle owner, Handle hndl, const char[] error, any userid)
 {
 	if (hndl != null)
 	{

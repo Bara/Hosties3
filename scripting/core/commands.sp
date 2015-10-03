@@ -6,16 +6,16 @@ public Action Command_Featurelist(int client, int args)
   }
 }
 
-Show_Featurelist(int client, int item)
+void Show_Featurelist(int client, int item)
 {
   Menu menu = new Menu(Menu_Featurelist);
 
-  int todo_add_translations;
+  // TODO: Translations
   menu.SetTitle("Hosties3 - Feature List");
 
   for (int i = 0; i < GetArraySize(g_hFlCache); i++)
   {
-    new iFlCache[FlCache];
+    int iFlCache[FlCache];
     char sBuffer[12];
 
     GetArrayArray(g_hFlCache, i, iFlCache[0]);
@@ -39,7 +39,7 @@ Show_Featurelist(int client, int item)
   menu.DisplayAt(client, item, MENU_TIME_FOREVER);
 }
 
-public Menu_Featurelist(Menu menu, MenuAction action, client, param)
+public int Menu_Featurelist(Menu menu, MenuAction action, int client, int param)
 {
   if (action == MenuAction_Select)
   {
@@ -48,7 +48,7 @@ public Menu_Featurelist(Menu menu, MenuAction action, client, param)
     char sArrayId[12];
     menu.GetItem(param, sArrayId, sizeof(sArrayId));
 
-    new iFlCache[FlCache];
+    int iFlCache[FlCache];
     GetArrayArray(g_hFlCache, StringToInt(sArrayId), iFlCache[0]);
 
     char sTitle[256], sCredits[256], sDesc[256], sVIP[256], sPoints[256], sBack[256], sFlCredits[HOSTIES3_MAX_CREDITS_LENGTH], sFlDesc[HOSTIES3_MAX_DESC_LENGTH];
@@ -109,7 +109,7 @@ public Menu_Featurelist(Menu menu, MenuAction action, client, param)
   }
 }
 
-public Menu_FeatureDetails(Menu menu2, MenuAction action, client, param)
+public int Menu_FeatureDetails(Menu menu2, MenuAction action, int client, int param)
 {
   if (action == MenuAction_Select)
   {

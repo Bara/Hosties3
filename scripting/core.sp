@@ -10,6 +10,8 @@
 #define FEATURE_NAME "Core"
 #define PLUGIN_NAME HOSTIES3_NAME ... FEATURE_NAME
 
+#pragma newdecls required
+
 #include "core/globals.sp"
 #include "core/native.sp"
 #include "core/client.sp"
@@ -20,7 +22,6 @@
 #include "core/cache.sp"
 #include "core/commands.sp"
 
-#pragma newdecls required
 
 public Plugin myinfo = 
 {
@@ -50,7 +51,6 @@ public void OnPluginStart()
 	if (!g_bStarted)
 	{
 		FullCacheReset();
-		Hosties3_AddToFeatureList(" ", " ", false, 0, " ");
 		Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, false, 0, HOSTIES3_DESCRIPTION);
 		ConnectToSQL();
 	}
@@ -66,7 +66,6 @@ public void OnMapStart()
 	if (!g_bStarted)
 	{
 		FullCacheReset();
-		Hosties3_AddToFeatureList(" ", " ", false, 0, " ");
 		Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, false, 0, HOSTIES3_DESCRIPTION);
 		ConnectToSQL();
 	}

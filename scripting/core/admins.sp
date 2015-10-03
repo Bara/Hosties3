@@ -1,4 +1,4 @@
-public Admins_IsClientAdmin(Handle plugin, numParams)
+public int Admins_IsClientAdmin(Handle plugin, int numParams)
 {
 	int client = GetNativeCell(1);
 
@@ -23,7 +23,7 @@ public Admins_IsClientAdmin(Handle plugin, numParams)
 	return false;
 }
 
-public Admins_GetAdminLevel(Handle plugin, numParams)
+public int Admins_GetAdminLevel(Handle plugin, int numParams)
 {
 	int client = GetNativeCell(1);
 

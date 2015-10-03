@@ -1,4 +1,4 @@
-public Misc_LogFile(Handle plugin, numParams)
+public int Misc_LogFile(Handle plugin, int numParams)
 {
 	char sPath[PLATFORM_MAX_PATH + 1];
 	char sPath2[PLATFORM_MAX_PATH + 1];
@@ -12,7 +12,7 @@ public Misc_LogFile(Handle plugin, numParams)
 	GetNativeString(2, sFile, sizeof(sFile));
 	GetNativeString(3, sDate, sizeof(sDate));
 
-	new LogLevel:iLevel = GetNativeCell(4);
+	LogLevel iLevel = GetNativeCell(4);
 
 	if (StrEqual(sPath, "", false))
 	{
@@ -57,32 +57,32 @@ public Misc_LogFile(Handle plugin, numParams)
 	LogToFileEx(sFile2, sBuffer);
 }
 
-public Misc_GetLogLevel(Handle plugin, numParams)
+public int Misc_GetLogLevel(Handle plugin, int numParams)
 {
-	return _:g_iLogLevel;
+	return g_iLogLevel;
 }
 
-public Misc_GetGame(Handle plugin, numParams)
+public int Misc_GetGame(Handle plugin, int numParams)
 {
-	return _:g_iGame;
+	return view_as<int>(g_iGame);
 }
 
-public Misc_GetTag(Handle plugin, numParams)
+public int Misc_GetTag(Handle plugin, int numParams)
 {
 	SetNativeString(1, g_sTag, GetNativeCell(2), false);
 }
 
-public Misc_GetCleanTag(Handle plugin, numParams)
+public int Misc_GetCleanTag(Handle plugin, int numParams)
 {
 	SetNativeString(1, g_sCTag, GetNativeCell(2), false);
 }
 
-public Misc_GetAutoUpdate(Handle plugin, numParams)
+public int Misc_GetAutoUpdate(Handle plugin, int numParams)
 {
-	return _:g_bAutoUpdate;
+	return g_bAutoUpdate;
 }
 
-public Misc_CheckGame(Handle plugin, numParams)
+public int Misc_CheckGame(Handle plugin, int numParams)
 {
 	if (Hosties3_GetServerGame() == Game_Unsupported)
 	{
@@ -90,7 +90,7 @@ public Misc_CheckGame(Handle plugin, numParams)
 	}
 }
 
-public Misc_IsSQLValid(Handle plugin, numParams)
+public int Misc_IsSQLValid(Handle plugin, int numParams)
 {
 	Handle hDatabase = GetNativeCell(1);
 
@@ -101,7 +101,7 @@ public Misc_IsSQLValid(Handle plugin, numParams)
 	return false;
 }
 
-public Misc_StringToLower(Handle plugin, numParams)
+public int Misc_StringToLower(Handle plugin, int numParams)
 {
 	char sBuffer[512];
 	GetNativeString(1, sBuffer, sizeof(sBuffer));
@@ -113,7 +113,7 @@ stock void StringToLower(const char[] input, char[] output, int size)
 {
 	size--;
 
-	new x = 0;
+	int x = 0;
 	while (input[x] != '\0' || x < size)
 	{
 		if (IsCharUpper(input[x]))
@@ -130,7 +130,7 @@ stock void StringToLower(const char[] input, char[] output, int size)
 	output[x] = '\0';
 }
 
-public Misc_RemoveSpaces(Handle plugin, numParams)
+public int Misc_RemoveSpaces(Handle plugin, int numParams)
 {
 	char sBuffer[512];
 	GetNativeString(1, sBuffer, sizeof(sBuffer));
@@ -138,7 +138,7 @@ public Misc_RemoveSpaces(Handle plugin, numParams)
 	SetNativeString(2, sBuffer, GetNativeCell(3), false);
 }
 
-public Misc_LoadTranslations(Handle plugin, numParams)
+public int Misc_LoadTranslations(Handle plugin, int numParams)
 {
 	char sBuffer[512];
 	char sName[512];
@@ -152,7 +152,7 @@ public Misc_LoadTranslations(Handle plugin, numParams)
 	LoadTranslations(sFile);
 }
 
-public Misc_AddToFeatureList(Handle plugin, numParams)
+public int Misc_AddToFeatureList(Handle plugin, int numParams)
 {
 	char sName[HOSTIES3_MAX_FEATURE_NAME];
 	char sCredits[HOSTIES3_MAX_CREDITS_LENGTH];

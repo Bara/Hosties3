@@ -1,4 +1,4 @@
-public Cvar_AddCVarInt(Handle plugin, numParams)
+public int Cvar_AddCVarInt(Handle plugin, int numParams)
 {
 	char feature[64], sFeature[64];
 	GetNativeString(1, feature, sizeof(feature));
@@ -16,7 +16,7 @@ public Cvar_AddCVarInt(Handle plugin, numParams)
 
 	for (int i = 0; i < GetArraySize(g_hCvarCache); i++)
 	{
-		new iCache[CvarCache];
+		int iCache[CvarCache];
 		GetArrayArray(g_hCvarCache, i, iCache[0]);
 
 		if (StrEqual(iCache[fFeature], sFeature, false) && StrEqual(iCache[fCvar], sCvar, false))
@@ -44,7 +44,7 @@ public Cvar_AddCVarInt(Handle plugin, numParams)
 	return false;
 }
 
-public Cvar_AddCVarBool(Handle plugin, numParams)
+public int Cvar_AddCVarBool(Handle plugin, int numParams)
 {
 	char feature[64], sFeature[64];
 	GetNativeString(1, feature, sizeof(feature));
@@ -62,13 +62,13 @@ public Cvar_AddCVarBool(Handle plugin, numParams)
 
 	for (int i = 0; i < GetArraySize(g_hCvarCache); i++)
 	{
-		new iCache[CvarCache];
+		int iCache[CvarCache];
 		GetArrayArray(g_hCvarCache, i, iCache[0]);
 
 		if (StrEqual(iCache[fFeature], sFeature, false) && StrEqual(iCache[fCvar], sCvar, false))
 		{
 			bFound = true;
-			return bool:StringToInt(iCache[fValue]);
+			return view_as<bool>(StringToInt(iCache[fValue]));
 		}
 	}
 
@@ -90,7 +90,7 @@ public Cvar_AddCVarBool(Handle plugin, numParams)
 	return false;
 }
 
-public Cvar_AddCVarFloat(Handle plugin, numParams)
+public int Cvar_AddCVarFloat(Handle plugin, int numParams)
 {
 	char feature[64], sFeature[64];
 	GetNativeString(1, feature, sizeof(feature));
@@ -102,19 +102,19 @@ public Cvar_AddCVarFloat(Handle plugin, numParams)
 	Hosties3_StringToLower(cvar, sCvar, sizeof(sCvar));
 	Hosties3_RemoveSpaces(sCvar, sCvar, sizeof(sCvar));
 
-	float value = GetNativeCell(3);
+	float value = float(GetNativeCell(3));
 
 	bool bFound = false;
 
 	for (int i = 0; i < GetArraySize(g_hCvarCache); i++)
 	{
-		new iCache[CvarCache];
+		int iCache[CvarCache];
 		GetArrayArray(g_hCvarCache, i, iCache[0]);
 
 		if (StrEqual(iCache[fFeature], sFeature, false) && StrEqual(iCache[fCvar], sCvar, false))
 		{
 			bFound = true;
-			return _:StringToFloat(iCache[fValue]);
+			return view_as<float>(StringToFloat(iCache[fValue])); // TODO: tag mismatch
 		}
 	}
 
@@ -131,12 +131,12 @@ public Cvar_AddCVarFloat(Handle plugin, numParams)
 			ThrowNativeError(SP_ERROR_NATIVE, "Error: Database handle is invalid!");
 		}
 
-		return _:value;
+		return view_as<float>(value); // TODO: tag mismatch
 	}
 	return false;
 }
 
-public Cvar_AddCVarString(Handle plugin, numParams)
+public int Cvar_AddCVarString(Handle plugin, int numParams)
 {
 	char feature[64], sFeature[64];
 	GetNativeString(1, feature, sizeof(feature));
@@ -155,7 +155,7 @@ public Cvar_AddCVarString(Handle plugin, numParams)
 
 	for (int i = 0; i < GetArraySize(g_hCvarCache); i++)
 	{
-		new iCache[CvarCache];
+		int iCache[CvarCache];
 		GetArrayArray(g_hCvarCache, i, iCache[0]);
 
 		if (StrEqual(iCache[fFeature], sFeature, false) && StrEqual(iCache[fCvar], sCvar, false))

@@ -1,10 +1,10 @@
-FullCacheReset()
+void FullCacheReset()
 {
 	ResetCvarCache();
 	ResetFlCache();
 }
 
-ResetCvarCache()
+void ResetCvarCache()
 {
 	if (g_hCvarCache != null)
 	{
@@ -16,7 +16,7 @@ ResetCvarCache()
 	}
 }
 
-ResetFlCache()
+void ResetFlCache()
 {
 	if (g_hFlCache != null)
 	{

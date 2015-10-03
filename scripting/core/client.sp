@@ -1,4 +1,4 @@
-public Client_IsValidClient(Handle plugin, numParams)
+public int Client_IsValidClient(Handle plugin, int numParams)
 {
 	int client = GetNativeCell(1);
 	bool alive = GetNativeCell(2);
@@ -13,7 +13,7 @@ public Client_IsValidClient(Handle plugin, numParams)
 	return false;
 }
 
-public Client_StripClientAll(Handle plugin, numParams)
+public int Client_StripClientAll(Handle plugin, int numParams)
 {
 	int client = GetNativeCell(1);
 
@@ -29,7 +29,7 @@ public Client_StripClientAll(Handle plugin, numParams)
 	}
 }
 
-public Client_StripClient(Handle plugin, numParams)
+public int Client_StripClient(Handle plugin, int numParams)
 {
 	int client = GetNativeCell(1);
 
@@ -48,7 +48,7 @@ public Client_StripClient(Handle plugin, numParams)
 	}
 }
 
-public Client_SendOverlayToClient(Handle plugin, numParams)
+public int Client_SendOverlayToClient(Handle plugin, int numParams)
 {
 	int client = GetNativeCell(1);
 
@@ -66,7 +66,7 @@ public Client_SendOverlayToClient(Handle plugin, numParams)
 	}
 }
 
-public Client_SendOverlayToAll(Handle plugin, numParams)
+public int Client_SendOverlayToAll(Handle plugin, int numParams)
 {
 	char overlay[PLATFORM_MAX_PATH + 1];
 	GetNativeString(1, overlay, sizeof(overlay));
@@ -81,10 +81,10 @@ public Client_SendOverlayToAll(Handle plugin, numParams)
 }
 
 // https://forums.alliedmods.net/showpost.php?p=1204522&postcount=12
-public Client_GetRandomClient(Handle plugin, numParams)
+public int Client_GetRandomClient(Handle plugin, int numParams)
 {
 	int team = GetNativeCell(1);
-	new clients[MaxClients + 1];
+	int[] clients = new int[MaxClients + 1];
 	int clientCount;
 
 	Hosties3_LoopClients(i)
@@ -97,7 +97,7 @@ public Client_GetRandomClient(Handle plugin, numParams)
 	return (clientCount == 0) ? -1 : clients[GetRandomInt(0, clientCount-1)];
 }
 
-public Client_GetClientID(Handle plugin, numParams)
+public int Client_GetClientID(Handle plugin, int numParams)
 {
 	int client = GetNativeCell(1);
 
@@ -107,7 +107,7 @@ public Client_GetClientID(Handle plugin, numParams)
 	SetNativeString(2, sBuffer, GetNativeCell(3), false);
 }
 
-public Client_SwitchClient(Handle plugin, numParams)
+public int Client_SwitchClient(Handle plugin, int numParams)
 {
 	int client = GetNativeCell(1);
 	int team = GetNativeCell(2);
@@ -134,7 +134,7 @@ public Client_SwitchClient(Handle plugin, numParams)
 	EndMessage();
 }
 
-public Client_SteamIDToCommunityID(Handle plugin, numParams)
+public int Client_SteamIDToCommunityID(Handle plugin, int numParams)
 {
 	char steamid[24];
 	char communityid[64];
@@ -158,38 +158,4 @@ public Client_SteamIDToCommunityID(Handle plugin, numParams)
 	communityid[9] = iIdx;
 
 	SetNativeString(2, communityid, GetNativeCell(3), false);
-}
-
-public Client_GetClientColors(Handle plugin, numParams)
-{
-	int client = GetNativeCell(1);
-
-	bool gotconfig = false;
-	char prop[32];
-
-	if (!gotconfig)
-	{
-		Handle gc = LoadGameConfigFile("core.games");
-		bool exists = GameConfGetKeyValue(gc, "m_clrRender", prop, sizeof(prop));
-		CloseHandle(gc);
-
-		if (!exists)
-		{
-			strcopy(prop, sizeof(prop), "m_clrRender");
-		}
-
-		gotconfig = true;
-	}
-
-	int offset = GetEntSendPropOffs(client, prop);
-
-	if (offset <= 0)
-	{
-		ThrowError("GetEntityRenderColor not supported by this mod");
-	}
-
-	SetNativeCellRef(2, GetEntData(client, offset, 1));
-	SetNativeCellRef(3, GetEntData(client, offset + 1, 1));
-	SetNativeCellRef(4, GetEntData(client, offset + 2, 1));
-	SetNativeCellRef(5, GetEntData(client, offset + 3, 1));
 }

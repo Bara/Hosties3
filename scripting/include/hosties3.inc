@@ -32,7 +32,7 @@ enum LogLevel:
 
 enum CurrentGame:
 {
-	Game_CSS,
+	Game_CSS = 1,
 	Game_CSGO,
 	Game_Unsupported
 };
@@ -74,7 +74,6 @@ native bool Hosties3_SendOverlayToAll(const char[] overlay);
 native int Hosties3_GetRandomClient(int team);
 native int Hosties3_SwitchClient(int client, int team);
 native void Hosties3_SteamIDToCommunityID(const char[] steamid, const char[] communityid, int maxlength);
-native void Hosties3_GetClientColors(int client, int & red, int & green, int & blue, int & alpha);
 
 stock void Hosties3_SafeCloseHandle(Handle & rHandle)
 {
@@ -133,7 +132,6 @@ public __pl_hosties3_SetNTVOptional()
 	MarkNativeAsOptional("Hosties3_RemoveSpaces");
 	MarkNativeAsOptional("Hosties3_SwitchClient");
 	MarkNativeAsOptional("Hosties3_SteamIDToCommunityID");
-	MarkNativeAsOptional("Hosties3_GetClientColors");
 	MarkNativeAsOptional("Hosties3_AddToFeatureList");
 }
 #endif
