@@ -34,8 +34,6 @@ void Native_AskPluginLoad2()
 	CreateNative("Hosties3_AddToFeatureList", Misc_AddToFeatureList);
 
 	// Forwards
-	g_hOnPluginStart = CreateGlobalForward("Hosties3_OnPluginStart", ET_Ignore);
-	g_hOnPluginLoaded = CreateGlobalForward("Hosties3_OnPluginLoaded", ET_Ignore);
 	g_hOnConfigsLoaded = CreateGlobalForward("Hosties3_OnConfigsLoaded", ET_Ignore);
 	g_hOnSQLConnected = CreateGlobalForward("Hosties3_OnSQLConnected", ET_Ignore, Param_Cell);
 	g_hOnClientDisconnect = CreateGlobalForward("Hosties3_OnPlayerDisconnect", ET_Ignore, Param_Cell);

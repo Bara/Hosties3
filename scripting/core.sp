@@ -56,9 +56,6 @@ public void OnPluginStart()
 	}
 	
 	LoadTranslations("hosties3_core.phrases");
-	
-	Call_StartForward(g_hOnPluginStart);
-	Call_Finish();
 }
 
 public void OnMapStart()

@@ -37,15 +37,13 @@ enum CurrentGame:
 	Game_Unsupported
 };
 
-forward void Hosties3_OnPluginStart();
-forward void Hosties3_OnPluginLoaded();
 forward void Hosties3_OnConfigsLoaded();
 forward void Hosties3_OnSQLConnected(Handle database);
 forward void Hosties3_OnPlayerReady(int client);
 forward void Hosties3_OnPlayerSpawn(int client);
 forward void Hosties3_OnPlayerDisconnect(int client);
 
-native void Hosties3_LogToFile(const char[] path = "", const char[] file = "file", const char[] date = "", LogLevel:level = INFO, const char[] format, any ...);
+native void Hosties3_LogToFile(const char[] path = "", const char[] file = "file", const char[] date = "", LogLevel level = INFO, const char[] format, any ...);
 native int Hosties3_GetLogLevel();
 native CurrentGame Hosties3_GetServerGame();
 native void Hosties3_GetColorTag(const char[] tag, int maxlength);

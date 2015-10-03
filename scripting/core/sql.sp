@@ -196,9 +196,6 @@ void CacheSettings()
 	SQL_TQuery(g_hDatabase, SQL_CacheSettings, sQuery);
 
 	g_bSQLReady = true;
-
-	Call_StartForward(g_hOnPluginLoaded);
-	Call_Finish();
 }
 
 public void SQL_CacheSettings(Handle owner, Handle hndl, const char[] error, any userid)

@@ -1,6 +1,9 @@
 #pragma semicolon 1
 
 #include <sourcemod>
+
+#pragma newdecls required
+
 #include <hosties3>
 
 #define FEATURE_NAME "Example"
@@ -18,14 +21,16 @@ public Plugin myinfo =
 	url = HOSTIES3_URL
 };
 
-public Hosties3_OnPluginPreLoaded()
+public void OnPluginStart()
 {
 	Hosties3_IsLoaded();
 	Hosties3_CheckServerGame();
 }
 
-public Hosties3_OnConfigsLoaded()
+public void Hosties3_OnConfigsLoaded()
 {
+	Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "Try to load settings for %s", FEATURE_NAME);
+	
 	if (!(g_bEnable = Hosties3_AddCvarBool(FEATURE_NAME, "Enable", true)))
 	{
 		SetFailState("'%s' is deactivated!", FEATURE_NAME);

@@ -43,8 +43,6 @@ bool g_bClientReady[MAXPLAYERS + 1] = {false,...};
 
 int g_iAdmin[MAXPLAYERS + 1] = {0,...};
 
-Handle g_hOnPluginStart;
-Handle g_hOnPluginLoaded;
 Handle g_hOnConfigsLoaded;
 Handle g_hOnSQLConnected;
 Handle g_hOnClientReady;
