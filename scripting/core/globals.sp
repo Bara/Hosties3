@@ -47,13 +47,8 @@ Handle g_hOnPluginStart;
 Handle g_hOnPluginLoaded;
 Handle g_hOnConfigsLoaded;
 Handle g_hOnSQLConnected;
-Handle g_hOnMapStart;
-Handle g_hOnRoundStart;
-Handle g_hOnRoundEnd;
 Handle g_hOnClientReady;
 Handle g_hOnPlayerSpawn;
-Handle g_hOnPlayerHurt;
-Handle g_hOnPlayerDeath;
 Handle g_hOnClientDisconnect;
 
 Handle g_hDatabase;

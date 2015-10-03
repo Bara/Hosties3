@@ -70,9 +70,6 @@ public void OnMapStart()
 		Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, false, 0, HOSTIES3_DESCRIPTION);
 		ConnectToSQL();
 	}
-	
-	Call_StartForward(g_hOnMapStart);
-	Call_Finish();
 }
 
 /* public OnMapEnd()
@@ -101,21 +98,6 @@ public void OnClientDisconnect(int client)
 	}
 }
 
-public Action Event_OnRoundStart(Handle event, const char[] name, bool dontbroadcast)
-{
-	Call_StartForward(g_hOnRoundStart);
-	Call_Finish();
-	return Plugin_Continue;
-}
-
-public Action Event_OnRoundEnd(Handle event, const char[] name, bool dontbroadcast)
-{
-	Call_StartForward(g_hOnRoundEnd);
-	Call_PushCell(GetEventInt(event, "winner"));
-	Call_Finish();
-	return Plugin_Continue;
-}
-
 public Action Event_OnPlayerSpawn(Handle event, const char[] name, bool dontbroadcast)
 {
 	int client = GetClientOfUserId(GetEventInt(event, "userid"));
@@ -131,46 +113,6 @@ public void OnPlayerSpawn(any client)
 		Call_PushCell(client);
 		Call_Finish();
 	}
-}
-
-public Action Event_OnPlayerHurt(Handle event, const char[] name, bool dontbroadcast)
-{
-	int victim = GetClientOfUserId(GetEventInt(event, "userid"));
-	int attacker = GetClientOfUserId(GetEventInt(event, "attacker"));
-	int damage = GetEventInt(event, "dmg_health");
-	char weapon[32];
-	
-	if (Hosties3_IsClientValid(victim) && Hosties3_IsClientValid(attacker))
-	{
-		Call_StartForward(g_hOnPlayerHurt);
-		Call_PushCell(victim);
-		Call_PushCell(attacker);
-		Call_PushCell(damage);
-		Call_PushString(weapon);
-		Call_Finish();
-	}
-	return Plugin_Continue;
-}
-
-public Action Event_OnPlayerDeath(Handle event, const char[] name, bool dontbroadcast)
-{
-	int victim = GetClientOfUserId(GetEventInt(event, "userid"));
-	int attacker = GetClientOfUserId(GetEventInt(event, "attacker"));
-	int assister = GetClientOfUserId(GetEventInt(event, "assister"));
-	bool headshot = GetEventBool(event, "headshot");
-	char weapon[32];
-	
-	if (Hosties3_IsClientValid(victim) && Hosties3_IsClientValid(attacker))
-	{
-		Call_StartForward(g_hOnPlayerDeath);
-		Call_PushCell(victim);
-		Call_PushCell(attacker);
-		Call_PushCell(assister);
-		Call_PushString(weapon);
-		Call_PushCell(headshot);
-		Call_Finish();
-	}
-	return Plugin_Continue;
 }
 
 void GetGame()
@@ -226,12 +168,8 @@ void LoadConfig()
 		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Register Command: %s Full: %s", FEATURE_NAME, g_sFlComList[i], sBuffer);
 	}
 	
-	HookEvent("round_start", Event_OnRoundStart);
-	HookEvent("round_end", Event_OnRoundEnd);
 	HookEvent("player_spawn", Event_OnPlayerSpawn);
-	HookEvent("player_hurt", Event_OnPlayerHurt);
-	HookEvent("player_death", Event_OnPlayerDeath);
-	
+
 	Call_StartForward(g_hOnConfigsLoaded);
 	Call_Finish();
 }

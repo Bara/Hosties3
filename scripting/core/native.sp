@@ -39,12 +39,7 @@ Native_AskPluginLoad2()
 	g_hOnPluginLoaded = CreateGlobalForward("Hosties3_OnPluginLoaded", ET_Ignore);
 	g_hOnConfigsLoaded = CreateGlobalForward("Hosties3_OnConfigsLoaded", ET_Ignore);
 	g_hOnSQLConnected = CreateGlobalForward("Hosties3_OnSQLConnected", ET_Ignore, Param_Cell);
-	g_hOnMapStart = CreateGlobalForward("Hosties3_OnMapStart", ET_Ignore);
-	g_hOnRoundStart = CreateGlobalForward("Hosties3_OnRoundStart", ET_Ignore);
-	g_hOnRoundEnd = CreateGlobalForward("Hosties3_OnRoundEnd", ET_Ignore, Param_Cell);
 	g_hOnClientDisconnect = CreateGlobalForward("Hosties3_OnPlayerDisconnect", ET_Ignore, Param_Cell);
 	g_hOnClientReady = CreateGlobalForward("Hosties3_OnPlayerReady", ET_Ignore, Param_Cell);
 	g_hOnPlayerSpawn = CreateGlobalForward("Hosties3_OnPlayerSpawn", ET_Ignore, Param_Cell);
-	g_hOnPlayerHurt = CreateGlobalForward("Hosties3_OnPlayerHurt", ET_Ignore, Param_Cell, Param_Cell, Param_Cell, Param_String);
-	g_hOnPlayerDeath = CreateGlobalForward("Hosties3_OnPlayerDeath", ET_Ignore, Param_Cell, Param_Cell, Param_Cell, Param_String, Param_Cell);
 }

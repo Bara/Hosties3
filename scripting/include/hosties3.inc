@@ -41,14 +41,9 @@ forward void Hosties3_OnPluginStart();
 forward void Hosties3_OnPluginLoaded();
 forward void Hosties3_OnConfigsLoaded();
 forward void Hosties3_OnSQLConnected(Handle database);
-forward void Hosties3_OnMapStart();
-forward void Hosties3_OnRoundStart();
-forward void Hosties3_OnRoundEnd(int winner);
 forward void Hosties3_OnPlayerReady(int client);
 forward void Hosties3_OnPlayerSpawn(int client);
 forward void Hosties3_OnPlayerDisconnect(int client);
-forward void Hosties3_OnPlayerHurt(int victim, int attacker, int damage, const char[] weapon);
-forward void Hosties3_OnPlayerDeath(int victim, int attacker, int assister, const char[] weapon, bool headshot);
 
 native void Hosties3_LogToFile(const char[] path = "", const char[] file = "file", const char[] date = "", LogLevel:level = INFO, const char[] format, any ...);
 native int Hosties3_GetLogLevel();
@@ -140,14 +135,5 @@ public __pl_hosties3_SetNTVOptional()
 	MarkNativeAsOptional("Hosties3_SteamIDToCommunityID");
 	MarkNativeAsOptional("Hosties3_GetClientColors");
 	MarkNativeAsOptional("Hosties3_AddToFeatureList");
-	MarkNativeAsOptional("Hosties3_PrintToChat");
-	MarkNativeAsOptional("Hosties3_PrintToChatAll");
-	MarkNativeAsOptional("Hosties3_PrintToChatEx");
-	MarkNativeAsOptional("Hosties3_PrintToChatAllEx");
-	MarkNativeAsOptional("Hosties3_ReplyToCommand");
-	MarkNativeAsOptional("Hosties3_ReplyToCommandEx");
-	MarkNativeAsOptional("Hosties3_ShowActivity");
-	MarkNativeAsOptional("Hosties3_ShowActivityEx");
-	MarkNativeAsOptional("Hosties3_ShowActivity2");
 }
 #endif
