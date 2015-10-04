@@ -69,8 +69,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public void OnPluginStart()
 {
-	Hosties3_IsLoaded();
-	Hosties3_CheckServerGame();
+	Hosties3_CheckRequirements();
 }
 
 public void Hosties3_OnConfigsLoaded()
@@ -200,11 +199,11 @@ public void Event_BulletImpact(Event event, const char[] name, bool dontBroadcas
 				HPlayer player = new HPlayer(client);
 				HRebel rebel = new HRebel(client);
 				
-				PrintToChat(client, "Client: %d - Rebel: %d - Status: %d", client, player.ClientID, rebel.IsRebel);
+				PrintToChat(client, "Client: %d - Player: %d - Status: %d", client, player.ClientID, rebel.IsRebel);
 
 				Hosties3_SetClientRebel(client, true, true);
 				
-				PrintToChat(client, "Client: %d - Rebel: %d - Status: %d", client, player.ClientID, rebel.IsRebel);
+				PrintToChat(client, "Client: %d - Player: %d - Status: %d", client, player.ClientID, rebel.IsRebel);
 			}
 		}
 	}

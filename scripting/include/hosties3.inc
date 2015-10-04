@@ -82,11 +82,19 @@ stock void Hosties3_SafeCloseHandle(Handle & rHandle)
 	}
 }
 
-stock bool Hosties3_IsLoaded()
+stock bool Hosties3_CheckRequirements()
 {
 	if (!LibraryExists("hosties3"))
 	{
 		SetFailState("'Hosties3' not found!");
+		
+	}
+	else
+	{
+		if(Hosties3_GetServerGame() != Game_CSGO && Hosties3_GetServerGame() != Game_CSS)
+		{
+			SetFailState("False game! Only CS:S/CS:GO supported!");
+		}
 	}
 }
 
