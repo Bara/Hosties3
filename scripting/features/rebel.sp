@@ -57,7 +57,9 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 {
 	CreateNative("Hosties3_IsClientRebel", Rebel_IsClientRebel);
 	CreateNative("Hosties3_SetClientRebel", Rebel_SetClientRebel);
-	CreateNative("HRebel.IsRebel.get", Rebel_HRebel_IsRebel_Get);
+	
+	CreateNative("HRebel.Status.get", Rebel_HRebel_Status_Get);
+	// CreateNative("HRebel.Status.set", Rebel_HRebel_Status_Set);
 
 	g_hOnClientRebel = CreateGlobalForward("Hosties3_OnClientRebel", ET_Ignore, Param_Cell, Param_Cell);
 	g_hOnRebelDeath = CreateGlobalForward("Hosties3_OnRebelDeath", ET_Ignore, Param_Cell, Param_Cell);
@@ -199,11 +201,12 @@ public void Event_BulletImpact(Event event, const char[] name, bool dontBroadcas
 				HPlayer player = new HPlayer(client);
 				HRebel rebel = new HRebel(client);
 				
-				PrintToChat(client, "Client: %d - Player: %d - Status: %d", client, player.ClientID, rebel.IsRebel);
+				PrintToChat(client, "Client: %d - Player: %d - Status: %d", client, player.ClientID, rebel.Status);
 
+				// rebel.Status(true, true);
 				Hosties3_SetClientRebel(client, true, true);
 				
-				PrintToChat(client, "Client: %d - Player: %d - Status: %d", client, player.ClientID, rebel.IsRebel);
+				PrintToChat(client, "Client: %d - Player: %d - Status: %d", client, player.ClientID, rebel.Status);
 			}
 		}
 	}
@@ -343,18 +346,37 @@ public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadca
 	}
 }
 
-public int Rebel_HRebel_IsRebel_Get(Handle plugin, int numParams)
+public int Rebel_HRebel_Status_Get(Handle plugin, int numParams)
 {
-	HPlayer client = new HPlayer(GetNativeCell(1));
+	HPlayer player = new HPlayer(GetNativeCell(1));
 
-	if (Hosties3_IsClientValid(view_as<int>(client)))
+	if (Hosties3_IsClientValid(view_as<int>(player)))
 	{
-		return g_bRebel[view_as<int>(client)];
+		return g_bRebel[view_as<int>(player)];
 	}
 	
-	ThrowNativeError(SP_ERROR_NATIVE, "Client %i is invalid", view_as<int>(client));
+	ThrowNativeError(SP_ERROR_NATIVE, "Client %i is invalid", view_as<int>(player));
 	return false;
 }
+
+/* public int Rebel_HRebel_Status_Set(Handle plugin, int numParams)
+{
+	HPlayer client = new HPlayer(GetNativeCell(1));
+	
+	bool status = GetNativeCell(2);
+	bool message = GetNativeCell(3);
+	
+	if (Hosties3_IsClientValid(view_as<int>(client)))
+	{
+		if (GetClientTeam(view_as<int>(client)) == CS_TEAM_T && IsPlayerAlive(view_as<int>(client)))
+		{
+			if(g_bRebel[view_as<int>(client)] != status)
+			{
+				SetClientRebel(view_as<int>(client), status, message);
+			}
+		}
+	}
+} */
 
 public int Rebel_IsClientRebel(Handle plugin, int numParams)
 {

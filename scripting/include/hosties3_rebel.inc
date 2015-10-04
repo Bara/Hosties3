@@ -27,17 +27,10 @@ methodmap HRebel < HPlayer
 		return view_as<HRebel>(new HPlayer(client));
 	}
 	
-	property int ClientID
-	{
-		public get()
-		{
-			return view_as<int>(this);
-		}
-	}
-	
-	property bool IsRebel
+	property bool Status
 	{
 		public native get();
+		// public native set(client, bool status, bool message);
 	}
 }
 
