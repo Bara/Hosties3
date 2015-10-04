@@ -101,6 +101,14 @@ methodmap HPlayer __nullable__
 		
 		return view_as<HPlayer>(client);
 	}
+	
+	property int ClientID
+	{
+		public get()
+		{
+			return view_as<int>(this);
+		}
+	}
 }
 
 public SharedPlugin __pl_hosties3 =

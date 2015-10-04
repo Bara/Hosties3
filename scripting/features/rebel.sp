@@ -149,7 +149,7 @@ public void Hosties3_OnConfigsLoaded()
 	LoadTranslations("hosties3_rebel.phrases");
 	
 	HookEvent("player_hurt", Event_PlayerHurt);
-	// HookEvent("player_death", Event_PlayerDeath);
+	HookEvent("player_death", Event_PlayerDeath);
 	HookEvent("bullet_impact", Event_BulletImpact);
 	HookEvent("round_end", Event_RoundEnd);
 }
@@ -197,6 +197,9 @@ public void Event_BulletImpact(Event event, const char[] name, bool dontBroadcas
 				}
 
 				Hosties3_SetClientRebel(client, true, true);
+				
+				HPlayer player = new HPlayer(client);
+				PrintToChat(client, "Client: %d - Rebel: %d", client, player.ClientID);
 			}
 		}
 	}
