@@ -26,6 +26,19 @@ methodmap HRebel < HPlayer
 	{
 		return view_as<HRebel>(new HPlayer(client));
 	}
+	
+	property int ClientID
+	{
+		public get()
+		{
+			return view_as<int>(this);
+		}
+	}
+	
+	property bool IsRebel
+	{
+		public native get();
+	}
 }
 
 public SharedPlugin __pl_hosties3_rebel =

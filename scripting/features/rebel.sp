@@ -57,6 +57,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 {
 	CreateNative("Hosties3_IsClientRebel", Rebel_IsClientRebel);
 	CreateNative("Hosties3_SetClientRebel", Rebel_SetClientRebel);
+	CreateNative("HRebel.IsRebel.get", Rebel_HRebel_IsRebel_Get);
 
 	g_hOnClientRebel = CreateGlobalForward("Hosties3_OnClientRebel", ET_Ignore, Param_Cell, Param_Cell);
 	g_hOnRebelDeath = CreateGlobalForward("Hosties3_OnRebelDeath", ET_Ignore, Param_Cell, Param_Cell);
@@ -195,11 +196,15 @@ public void Event_BulletImpact(Event event, const char[] name, bool dontBroadcas
 				{
 					Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] \"%L\" has shot and is now a rebel!", FEATURE_NAME, client);
 				}
+				
+				HPlayer player = new HPlayer(client);
+				HRebel rebel = new HRebel(client);
+				
+				PrintToChat(client, "Client: %d - Rebel: %d - Status: %d", client, player.ClientID, rebel.IsRebel);
 
 				Hosties3_SetClientRebel(client, true, true);
 				
-				HPlayer player = new HPlayer(client);
-				PrintToChat(client, "Client: %d - Rebel: %d", client, player.ClientID);
+				PrintToChat(client, "Client: %d - Rebel: %d - Status: %d", client, player.ClientID, rebel.IsRebel);
 			}
 		}
 	}
@@ -337,6 +342,19 @@ public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadca
 			}
 		}
 	}
+}
+
+public int Rebel_HRebel_IsRebel_Get(Handle plugin, int numParams)
+{
+	HPlayer client = new HPlayer(GetNativeCell(1));
+
+	if (Hosties3_IsClientValid(view_as<int>(client)))
+	{
+		return g_bRebel[view_as<int>(client)];
+	}
+	
+	ThrowNativeError(SP_ERROR_NATIVE, "Client %i is invalid", view_as<int>(client));
+	return false;
 }
 
 public int Rebel_IsClientRebel(Handle plugin, int numParams)
