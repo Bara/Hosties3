@@ -12,12 +12,15 @@ native bool Hosties3_SetVIPPoints(int client, int points);
 native bool Hosties3_DelVIPPoints(int client, int points);
 native bool Hosties3_ResetVIPPoints(int client);
 
-stock Hosties3_IsVIPLoaded()
+stock bool Hosties3_IsVIPLoaded()
 {
 	if (!LibraryExists("hosties3_vip"))
 	{
-		SetFailState("'VIP'-Feature not found!");
+		SetFailState("'VIP' Feature not found!");
+		return false;
 	}
+	
+	return true;
 }
 
 public SharedPlugin __pl_hosties3_vip = 
@@ -33,7 +36,7 @@ public SharedPlugin __pl_hosties3_vip =
 
 #if !defined REQUIRE_PLUGIN
 
-public __pl_hosties3_vip_SetNTVOptional()
+public void __pl_hosties3_vip_SetNTVOptional()
 {
 	MarkNativeAsOptional("Hosties3_GetVIPPoints");
 	MarkNativeAsOptional("Hosties3_AddVIPPoints");

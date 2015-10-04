@@ -9,11 +9,22 @@ forward void Hosties3_OnRebelDeath(int victim, int attacker);
 native bool Hosties3_IsClientRebel(int client);
 native void Hosties3_SetClientRebel(int client, bool status, bool bMessage);
 
-stock Hosties3_IsRebelLoaded()
+stock bool Hosties3_IsRebelLoaded()
 {
 	if (!LibraryExists("hosties3_rebel"))
 	{
-		SetFailState("'Rebel'-Feature not found!");
+		SetFailState("'Rebel' Feature not found!");
+		return false;
+	}
+	
+	return true;
+}
+
+methodmap HRebel < HPlayer
+{
+	public HRebel(int client)
+	{
+		return view_as<HRebel>(new HPlayer(client));
 	}
 }
 

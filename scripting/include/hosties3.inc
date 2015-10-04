@@ -90,6 +90,19 @@ stock bool Hosties3_IsLoaded()
 	}
 }
 
+const HPlayer INVALID_ENTITY = view_as<HPlayer>(INVALID_ENT_REFERENCE);
+
+methodmap HPlayer __nullable__
+{
+	public HPlayer(int client)
+	{
+		if(!Hosties3_IsClientValid(client))
+			return INVALID_ENTITY;
+		
+		return view_as<HPlayer>(client);
+	}
+}
+
 public SharedPlugin __pl_hosties3 =
 {
 	name = "hosties3",
