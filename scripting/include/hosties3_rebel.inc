@@ -27,11 +27,12 @@ methodmap HRebel < HPlayer
 		return view_as<HRebel>(new HPlayer(client));
 	}
 	
-	property bool Status
+	property bool IsRebel
 	{
 		public native get();
-		// public native set(client, bool status, bool message);
 	}
+	
+	public native void SetRebel(bool status, bool message);
 }
 
 public SharedPlugin __pl_hosties3_rebel =

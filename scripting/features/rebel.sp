@@ -58,8 +58,8 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateNative("Hosties3_IsClientRebel", Rebel_IsClientRebel);
 	CreateNative("Hosties3_SetClientRebel", Rebel_SetClientRebel);
 	
-	CreateNative("HRebel.Status.get", Rebel_HRebel_Status_Get);
-	// CreateNative("HRebel.Status.set", Rebel_HRebel_Status_Set);
+	CreateNative("HRebel.IsRebel.get", Rebel_HRebel_IsRebel_Get);
+	CreateNative("HRebel.SetRebel", Rebel_HRebel_SetRebel);
 
 	g_hOnClientRebel = CreateGlobalForward("Hosties3_OnClientRebel", ET_Ignore, Param_Cell, Param_Cell);
 	g_hOnRebelDeath = CreateGlobalForward("Hosties3_OnRebelDeath", ET_Ignore, Param_Cell, Param_Cell);
@@ -201,12 +201,11 @@ public void Event_BulletImpact(Event event, const char[] name, bool dontBroadcas
 				HPlayer player = new HPlayer(client);
 				HRebel rebel = new HRebel(client);
 				
-				PrintToChat(client, "Client: %d - Player: %d - Status: %d", client, player.ClientID, rebel.Status);
+				PrintToChat(client, "Client: %d - Player: %d - Status: %d", client, player.ClientID, rebel.IsRebel);
 
-				// rebel.Status(true, true);
-				Hosties3_SetClientRebel(client, true, true);
+				rebel.SetRebel(true, true);
 				
-				PrintToChat(client, "Client: %d - Player: %d - Status: %d", client, player.ClientID, rebel.Status);
+				PrintToChat(client, "Client: %d - Player: %d - Status: %d", client, player.ClientID, rebel.IsRebel);
 			}
 		}
 	}
@@ -346,7 +345,7 @@ public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadca
 	}
 }
 
-public int Rebel_HRebel_Status_Get(Handle plugin, int numParams)
+public int Rebel_HRebel_IsRebel_Get(Handle plugin, int numParams)
 {
 	HPlayer player = new HPlayer(GetNativeCell(1));
 
@@ -359,7 +358,7 @@ public int Rebel_HRebel_Status_Get(Handle plugin, int numParams)
 	return false;
 }
 
-/* public int Rebel_HRebel_Status_Set(Handle plugin, int numParams)
+public int Rebel_HRebel_SetRebel(Handle plugin, int numParams)
 {
 	HPlayer client = new HPlayer(GetNativeCell(1));
 	
@@ -376,7 +375,7 @@ public int Rebel_HRebel_Status_Get(Handle plugin, int numParams)
 			}
 		}
 	}
-} */
+}
 
 public int Rebel_IsClientRebel(Handle plugin, int numParams)
 {
