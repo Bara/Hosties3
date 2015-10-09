@@ -110,6 +110,14 @@ methodmap HPlayer __nullable__
 		return view_as<HPlayer>(client);
 	}
 	
+	property bool IsValid 
+	{
+		public get()
+		{
+			return Hosties3_IsClientValid(view_as<int>(this));
+		}
+	}
+	
 	property int ClientID
 	{
 		public get()

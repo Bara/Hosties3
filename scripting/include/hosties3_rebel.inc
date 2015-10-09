@@ -6,9 +6,6 @@
 forward void Hosties3_OnClientRebel(int client, bool status);
 forward void Hosties3_OnRebelDeath(int victim, int attacker);
 
-native bool Hosties3_IsClientRebel(int client);
-native void Hosties3_SetClientRebel(int client, bool status, bool bMessage);
-
 stock bool Hosties3_IsRebelLoaded()
 {
 	if (!LibraryExists("hosties3_rebel"))
