@@ -26,7 +26,6 @@ char g_sLogLevel[6][32] =
 };
 
 bool g_bEnable;
-bool g_bAutoUpdate;
 int g_iLogLevel;
 
 Handle g_hCvarCache;

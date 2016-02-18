@@ -42,7 +42,6 @@ native void Hosties3_LogToFile(const char[] path = "", const char[] file = "file
 native int Hosties3_GetLogLevel();
 native void Hosties3_GetColorTag(const char[] tag, int maxlength);
 native void Hosties3_GetCleanTag(const char[] tag, int maxlength);
-native bool Hosties3_GetAutoUpdate();
 native bool Hosties3_IsSQLValid(Handle database);
 native void Hosties3_LoadTranslations(char[] file);
 native void Hosties3_AddToFeatureList(const char[] feature, const char[] credits, bool vip, int points, const char[] description, any ...);
@@ -105,7 +104,6 @@ public SharedPlugin __pl_hosties3 =
 
 public __pl_hosties3_SetNTVOptional()
 {
-	MarkNativeAsOptional("Hosties3_GetAutoUpdate");
 	MarkNativeAsOptional("Hosties3_AddCvarInt");
 	MarkNativeAsOptional("Hosties3_AddCvarBool");
 	MarkNativeAsOptional("Hosties3_AddCvarFloat");

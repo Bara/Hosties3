@@ -71,12 +71,6 @@ public int Misc_GetCleanTag(Handle plugin, int numParams)
 {
 	SetNativeString(1, g_sCTag, GetNativeCell(2), false);
 }
-
-public int Misc_GetAutoUpdate(Handle plugin, int numParams)
-{
-	return g_bAutoUpdate;
-}
-
 public int Misc_IsSQLValid(Handle plugin, int numParams)
 {
 	Handle hDatabase = GetNativeCell(1);

@@ -24,7 +24,6 @@ void Native_AskPluginLoad2()
 	CreateNative("Hosties3_GetLogLevel", Misc_GetLogLevel);
 	CreateNative("Hosties3_GetColorTag", Misc_GetTag);
 	CreateNative("Hosties3_GetCleanTag", Misc_GetCleanTag);
-	CreateNative("Hosties3_GetAutoUpdate", Misc_GetAutoUpdate);
 	CreateNative("Hosties3_IsSQLValid", Misc_IsSQLValid);
 	CreateNative("Hosties3_StringToLower", Misc_StringToLower);
 	CreateNative("Hosties3_RemoveSpaces", Misc_RemoveSpaces);

@@ -120,7 +120,6 @@ void LoadConfig()
 			return ;
 		}
 		
-		g_bAutoUpdate = Hosties3_AddCvarBool(FEATURE_NAME, "Auto Update", true);
 		g_iLogLevel = Hosties3_AddCvarInt(FEATURE_NAME, "Log Level", 2);
 		Hosties3_AddCvarString(FEATURE_NAME, "Color Tag", "{green}[Hosties3]{lightgreen}", g_sTag, sizeof(g_sTag));
 		Hosties3_AddCvarString(FEATURE_NAME, "Clean Tag", "[Hosties3]", g_sCTag, sizeof(g_sCTag));
@@ -130,7 +129,6 @@ void LoadConfig()
 	if (g_iLogLevel <= 2)
 	{
 		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Auto Update: %d", FEATURE_NAME, g_bAutoUpdate);
 		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Log Level: %d", FEATURE_NAME, g_iLogLevel);
 		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Tag: %s", FEATURE_NAME, g_sTag);
 		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Clean Tag: %s", FEATURE_NAME, g_sCTag);
