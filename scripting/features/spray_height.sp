@@ -26,8 +26,7 @@ public Plugin myinfo =
 
 public Hosties3_OnPluginPreLoaded()
 {
-	Hosties3_IsLoaded();
-	Hosties3_CheckServerGame();
+	Hosties3_CheckRequirements();
 }
 
 public Hosties3_OnConfigsLoaded()
@@ -85,7 +84,7 @@ public Action:Hook_PlayerDecal(const String:szTempEntityName[], const arrClients
 				{
 					if(Hosties3_IsClientValid(i))
 					{
-						Hosties3_PrintToChat(i, "%T", "SprayTouched", i, g_sTag, client);
+						CPrintToChat(i, "%T", "SprayTouched", i, g_sTag, client);
 					}
 				}
 			}
@@ -100,21 +99,21 @@ public Action:Hook_PlayerDecal(const String:szTempEntityName[], const arrClients
 							char sBuffer[8];
 							Format(sBuffer, sizeof(sBuffer), "%T", "Unit_units", i);
 
-							Hosties3_PrintToChat(i, "%T", "Sprayed", i, g_sTag, client, ((GetVectorDistance(fSpray, fDown) - 32.0)), sBuffer);
+							CPrintToChat(i, "%T", "Sprayed", i, g_sTag, client, ((GetVectorDistance(fSpray, fDown) - 32.0)), sBuffer);
 						}
 						else if(g_iUnit == 1)
 						{
 							char sBuffer[8];
 							Format(sBuffer, sizeof(sBuffer), "%T", "Unit_mm", i);
 
-							Hosties3_PrintToChat(i, "%T", "Sprayed", i, g_sTag, client, ((GetVectorDistance(fSpray, fDown) - 32.0) * 1000), sBuffer);
+							CPrintToChat(i, "%T", "Sprayed", i, g_sTag, client, ((GetVectorDistance(fSpray, fDown) - 32.0) * 1000), sBuffer);
 						}
 						else if(g_iUnit == 2)
 						{
 							char sBuffer[8];
 							Format(sBuffer, sizeof(sBuffer), "%T", "Unit_cm", i);
 
-							Hosties3_PrintToChat(i, "%T", "Sprayed", i, g_sTag, client, ((GetVectorDistance(fSpray, fDown) - 32.0) * 100), sBuffer);
+							CPrintToChat(i, "%T", "Sprayed", i, g_sTag, client, ((GetVectorDistance(fSpray, fDown) - 32.0) * 100), sBuffer);
 						}
 					}
 				}

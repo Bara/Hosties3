@@ -32,8 +32,6 @@ bool g_bBlockTextMsg;
 
 char g_sRadioCommands[][] = {"coverme", "takepoint", "holdpos", "regroup", "followme", "takingfire", "go", "fallback", "sticktog", "getinpos", "stormfront", "report", "roger", "enemyspot", "needbackup", "sectorclear", "inposition", "reportingin", "getout", "negative","enemydown", "compliment", "thanks", "cheer"};
 
-bool g_bSendProxy = false;
-
 Handle g_hDatabase;
 
 bool g_bRebel = false;
@@ -57,8 +55,7 @@ public Plugin myinfo =
 
 public Hosties3_OnPluginPreLoaded()
 {
-	Hosties3_IsLoaded();
-	Hosties3_CheckServerGame();
+	Hosties3_CheckRequirements();
 }
 
 public Hosties3_OnConfigsLoaded()
@@ -107,20 +104,6 @@ public Hosties3_OnConfigsLoaded()
 	}
 
 	Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, false, 0, HOSTIES3_DESCRIPTION);
-
-	if(Hosties3_GetServerGame() == Game_CSS)
-	{
-		int iStatus = GetExtensionFileStatus("sendproxy.ext");
-
-		if (iStatus != 1)
-		{
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, ERROR, "[%s] 'SendProxy Manager' not found!", FEATURE_NAME);
-		}
-		else if (iStatus == 1)
-		{
-			g_bSendProxy = true;
-		}
-	}
 
 	Hosties3_LoopClients(client)
 	{
@@ -219,67 +202,19 @@ public OnPostThink(client)
 			{
 				if (!Hosties3_IsClientRebel(client))
 				{
-					if (Hosties3_GetServerGame() == Game_CSGO)
-					{
-						SetEntPropEnt(client, Prop_Send, "m_bSpotted", 0);
-					}
-					else if (Hosties3_GetServerGame() == Game_CSS && g_bSendProxy)
-					{
-						new iPlayerManager = FindEntityByClassname(0, "cs_player_manager");
-
-						for (new i = 1; i <= MaxClients; i++)
-						{
-							if (Hosties3_IsClientValid(i))
-							{
-								SendProxy_HookArrayProp(iPlayerManager, "m_bPlayerSpotted", i, Prop_Int, Hook_PlayerManager);
-							}
-						}
-						SendProxy_Hook(iPlayerManager, "m_bBombSpotted", Prop_Int, Hook_PlayerManager);
-					}
+					SetEntPropEnt(client, Prop_Send, "m_bSpotted", 0);
 				}
 			}
 			else if (g_iTHideRadar == 2 && g_bRebel)
 			{
 				if (Hosties3_IsClientRebel(client))
 				{
-					if (Hosties3_GetServerGame() == Game_CSGO)
-					{
-						SetEntPropEnt(client, Prop_Send, "m_bSpotted", 0);
-					}
-					else if (Hosties3_GetServerGame() == Game_CSS && g_bSendProxy)
-					{
-						new iPlayerManager = FindEntityByClassname(0, "cs_player_manager");
-
-						for (new i = 1; i <= MaxClients; i++)
-						{
-							if (Hosties3_IsClientValid(i))
-							{
-								SendProxy_HookArrayProp(iPlayerManager, "m_bPlayerSpotted", i, Prop_Int, Hook_PlayerManager);
-							}
-						}
-						SendProxy_Hook(iPlayerManager, "m_bBombSpotted", Prop_Int, Hook_PlayerManager);
-					}
+					SetEntPropEnt(client, Prop_Send, "m_bSpotted", 0);
 				}
 			}
 			else if (g_iTHideRadar == 3)
 			{
-				if (Hosties3_GetServerGame() == Game_CSGO)
-				{
-					SetEntPropEnt(client, Prop_Send, "m_bSpotted", 0);
-				}
-				else if (Hosties3_GetServerGame() == Game_CSS && g_bSendProxy)
-				{
-					new iPlayerManager = FindEntityByClassname(0, "cs_player_manager");
-
-					for (new i = 1; i <= MaxClients; i++)
-					{
-						if (Hosties3_IsClientValid(i))
-						{
-							SendProxy_HookArrayProp(iPlayerManager, "m_bPlayerSpotted", i, Prop_Int, Hook_PlayerManager);
-						}
-					}
-					SendProxy_Hook(iPlayerManager, "m_bBombSpotted", Prop_Int, Hook_PlayerManager);
-				}
+				SetEntPropEnt(client, Prop_Send, "m_bSpotted", 0);
 			}
 		}
 		/* else if (GetClientTeam(client) == CS_TEAM_CT)
@@ -288,67 +223,19 @@ public OnPostThink(client)
 			{
 				if (!Hosties3_IsClientHeadGuard(client))
 				{
-					if (Hosties3_GetServerGame() == Game_CSGO)
-					{
-						SetEntPropEnt(client, Prop_Send, "m_bSpotted", 0);
-					}
-					else if (Hosties3_GetServerGame() == Game_CSS && g_bSendProxy)
-					{
-						new iPlayerManager = FindEntityByClassname(0, "cs_player_manager");
-
-						for (new i = 1; i <= MaxClients; i++)
-						{
-							if (Hosties3_IsClientValid(i))
-							{
-								SendProxy_HookArrayProp(iPlayerManager, "m_bPlayerSpotted", i, Prop_Int, Hook_PlayerManager);
-							}
-						}
-						SendProxy_Hook(iPlayerManager, "m_bBombSpotted", Prop_Int, Hook_PlayerManager);
-					}
+					SetEntPropEnt(client, Prop_Send, "m_bSpotted", 0);
 				}
 			}
 			else if (g_iCTHideRadar == 2)
 			{
 				if (Hosties3_IsClientHeadGuard(client))
 				{
-					if (Hosties3_GetServerGame() == Game_CSGO)
-					{
-						SetEntPropEnt(client, Prop_Send, "m_bSpotted", 0);
-					}
-					else if (Hosties3_GetServerGame() == Game_CSS && g_bSendProxy)
-					{
-						new iPlayerManager = FindEntityByClassname(0, "cs_player_manager");
-
-						for (new i = 1; i <= MaxClients; i++)
-						{
-							if (Hosties3_IsClientValid(i))
-							{
-								SendProxy_HookArrayProp(iPlayerManager, "m_bPlayerSpotted", i, Prop_Int, Hook_PlayerManager);
-							}
-						}
-						SendProxy_Hook(iPlayerManager, "m_bBombSpotted", Prop_Int, Hook_PlayerManager);
-					}
+					SetEntPropEnt(client, Prop_Send, "m_bSpotted", 0);
 				}
 			}
 			else if (g_iCTHideRadar == 3)
 			{
-				if (Hosties3_GetServerGame() == Game_CSGO)
-				{
-					SetEntPropEnt(client, Prop_Send, "m_bSpotted", 0);
-				}
-				else if (Hosties3_GetServerGame() == Game_CSS && g_bSendProxy)
-				{
-					new iPlayerManager = FindEntityByClassname(0, "cs_player_manager");
-
-					for (new i = 1; i <= MaxClients; i++)
-					{
-						if (Hosties3_IsClientValid(i))
-						{
-							SendProxy_HookArrayProp(iPlayerManager, "m_bPlayerSpotted", i, Prop_Int, Hook_PlayerManager);
-						}
-					}
-					SendProxy_Hook(iPlayerManager, "m_bBombSpotted", Prop_Int, Hook_PlayerManager);
-				}
+				SetEntPropEnt(client, Prop_Send, "m_bSpotted", 0);
 			}
 		} */
 	}
@@ -381,34 +268,19 @@ public Action Command_BlockRadio(int client, const char[] command, args)
 
 public Action UserMessage_SayText2(UserMsg msg_hd, Handle hMessage, const players[], playersNum, bool reliable, bool init)
 {
-	if (Hosties3_GetServerGame() == Game_CSS)
+	char sBuffer[64];
+	new iRepeat = PbGetRepeatedFieldCount(hMessage, "params");
+	for(new i = 0; i < iRepeat; i++)
 	{
-		char sMessage[96];
-		BfReadString(hMessage, sMessage, sizeof(sMessage));
-		BfReadString(hMessage, sMessage, sizeof(sMessage));
-
-		if (StrContains(sMessage, "Name_Change") != -1)
+		PbReadString(hMessage, "params", sBuffer, sizeof(sBuffer), i);
+		if (StrEqual(sBuffer, ""))
 		{
-			BfReadString(hMessage, sMessage, sizeof(sMessage));
-			return Plugin_Handled;
+			continue;
 		}
-	}
-	else if (Hosties3_GetServerGame() == Game_CSGO)
-	{
-		char sBuffer[64];
-		new iRepeat = PbGetRepeatedFieldCount(hMessage, "params");
-		for(new i = 0; i < iRepeat; i++)
-		{
-			PbReadString(hMessage, "params", sBuffer, sizeof(sBuffer), i);
-			if (StrEqual(sBuffer, ""))
-			{
-				continue;
-			}
 
-			if (StrContains(sBuffer, "Name_Change") != -1)
-			{
-				return Plugin_Handled;
-			}
+		if (StrContains(sBuffer, "Name_Change") != -1)
+		{
+			return Plugin_Handled;
 		}
 	}
 
@@ -422,28 +294,13 @@ public Action UserMessage_TextMsg(UserMsg msg_hd, Handle hText, const players[],
 		new iCache[BlockTextMsgCache];
 		GetArrayArray(g_hBtmCache, i, iCache[0]);
 
-		if (Hosties3_GetServerGame() == Game_CSS)
+		if(reliable)
 		{
-			char sText[96];
-			BfReadString(hText, sText, sizeof(sText));
-			BfReadString(hText, sText, sizeof(sText));
-
-			if (StrContains(sText, iCache[btmName]) != -1)
+			decl String:sText[32];
+			PbReadString(hText, "params", sText, sizeof(sText),0);
+			if (StrContains(sText, iCache[btmName], false) != -1)
 			{
-				BfReadString(hText, sText, sizeof(sText));
 				return Plugin_Handled;
-			}
-		}
-		else if (Hosties3_GetServerGame() == Game_CSGO)
-		{
-			if(reliable)
-			{
-				decl String:sText[32];
-				PbReadString(hText, "params", sText, sizeof(sText),0);
-				if (StrContains(sText, iCache[btmName], false) != -1)
-				{
-					return Plugin_Handled;
-				}
 			}
 		}
 	}

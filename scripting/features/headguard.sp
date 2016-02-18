@@ -75,8 +75,7 @@ public Plugin myinfo =
 
 public Hosties3_OnPluginPreLoaded()
 {
-	Hosties3_IsLoaded();
-	Hosties3_CheckServerGame();
+	Hosties3_CheckRequirements();
 }
 
 public Hosties3_OnConfigsLoaded()
@@ -146,7 +145,7 @@ public Hosties3_OnRoundStart()
 				if (GetClientTeam(i) == CS_TEAM_CT)
 				{
 					//Todo... Add translations
-					Hosties3_PrintToChat(i,"%s Use: !hg or !headguard to be HeadGuard", g_sTag);
+					CPrintToChat(i,"%s Use: !hg or !headguard to be HeadGuard", g_sTag);
 				}
 				if (GetClientTeam(i) == CS_TEAM_T)
 				{
@@ -185,7 +184,7 @@ public Action:Event_HookPlayerChat(int client, const char[] command, args)
 		
 		//Todo... Add translations
 		//Probably best to remove the g_sTag here or you'd have things like "[Hosties3] [Headguard] Meitis : Hi". I'd also suggest removing the space behind the playername myself
-		Hosties3_PrintToChatAll("%s [HeadGuard] %N : %s", g_sTag, client, message);
+		CPrintToChatAll("%s [HeadGuard] %N : %s", g_sTag, client, message);
 		return Plugin_Handled;
 	}
 	return Plugin_Continue;
@@ -199,18 +198,18 @@ public Action:Event_RemoveHeadGuard(int client, args)
 		{
 			UnSetPlayerHeadGuard(HeadGuard);
 			//Todo... Add translations
-			Hosties3_PrintToChatAll("%s Admin: %N removed HeadGuard. You can become the new HeadGuard !", g_sTag, client);
+			CPrintToChatAll("%s Admin: %N removed HeadGuard. You can become the new HeadGuard !", g_sTag, client);
 		}
 		else
 		{
 			//Todo... Add translations
-			Hosties3_PrintToChat(client, "%s There is no HeadGuard to remove", g_sTag);
+			CPrintToChat(client, "%s There is no HeadGuard to remove", g_sTag);
 		}
 	}
 	else
 	{
 		//Todo... Add translations
-		Hosties3_PrintToChat(client, "%s HeadGuard is disabled on this server !", g_sTag);
+		CPrintToChat(client, "%s HeadGuard is disabled on this server !", g_sTag);
 	}
 }
 
@@ -223,25 +222,25 @@ public Action:Event_UnSetHeadGuard(int client, args)
 			if (client == HeadGuard)
 			{
 				//Todo... Add translations
-				Hosties3_PrintToChatAll("%s %N is not a HeadGuard anymore, You can become the new HeadGuard", g_sTag, client);
+				CPrintToChatAll("%s %N is not a HeadGuard anymore, You can become the new HeadGuard", g_sTag, client);
 				UnSetPlayerHeadGuard(client);
 			}
 			else
 			{
 				//Todo... Add translations
-				Hosties3_PrintToChat(client, "%s You are not a HeadGuard", g_sTag);
+				CPrintToChat(client, "%s You are not a HeadGuard", g_sTag);
 			}
 		}
 		else
 		{
 			//Todo... Add translations
-			Hosties3_PrintToChat(client, "%s This command is allowed only for Counter-Terrorist", g_sTag);
+			CPrintToChat(client, "%s This command is allowed only for Counter-Terrorist", g_sTag);
 		}
 	}
 	else
 	{
 		//Todo... Add translations
-		Hosties3_PrintToChat(client, "%s HeadGuard is disabled on this server !", g_sTag);
+		CPrintToChat(client, "%s HeadGuard is disabled on this server !", g_sTag);
 	}
 }
 
@@ -279,7 +278,7 @@ public Action:Event_AdminSetHeadGuard(int client, args)
 	else
 	{
 		//Todo... Add translations
-		Hosties3_PrintToChat(client, "%s HeadGuard is disabled on this server !", g_sTag);
+		CPrintToChat(client, "%s HeadGuard is disabled on this server !", g_sTag);
 	}
 	return Plugin_Continue;
 }
@@ -307,14 +306,14 @@ public m_hAdminSetHG(Handle g_mAdminSetHG, MenuAction:action, int client, Positi
 		if (HeadGuard != -1)
 		{
 			//Todo... Add translations
-			Hosties3_PrintToChatAll("%s Admin: %N set %N as a HeadGuard instead of %N !", g_sTag, client, NewHeadGuard, HeadGuard);
+			CPrintToChatAll("%s Admin: %N set %N as a HeadGuard instead of %N !", g_sTag, client, NewHeadGuard, HeadGuard);
 			UnSetPlayerHeadGuard(HeadGuard);
 			SetPlayerHeadGuard(NewHeadGuard);
 		}
 		else
 		{
 			//Todo... Add translations
-			Hosties3_PrintToChatAll("%s Admin: %N set < %N > as a new HeadGuard !", g_sTag, client, NewHeadGuard);
+			CPrintToChatAll("%s Admin: %N set < %N > as a new HeadGuard !", g_sTag, client, NewHeadGuard);
 			SetPlayerHeadGuard(NewHeadGuard);
 		}
 	}
@@ -329,38 +328,38 @@ public Action:Event_SetHeadGuard(int client, args)
 			if (client == HeadGuard)
 			{
 				//Todo... Add translations
-				Hosties3_PrintToChat(client, "%s You are already HeadGuard", g_sTag);
+				CPrintToChat(client, "%s You are already HeadGuard", g_sTag);
 			}
 			else if (HeadGuard == -1)
 			{
 				if (IsPlayerAlive(client))
 				{
 					//Todo... Add translations
-					Hosties3_PrintToChatAll("%s New 'HeadGuard' is %N", g_sTag, client);
+					CPrintToChatAll("%s New 'HeadGuard' is %N", g_sTag, client);
 					SetPlayerHeadGuard(client);
 				}
 				else
 				{
 					//Todo... Add translations
-					Hosties3_PrintToChat(client, "%s HeadGuard can be only living player", g_sTag);
+					CPrintToChat(client, "%s HeadGuard can be only living player", g_sTag);
 				}
 			}
 			else
 			{
 				//Todo... Add translations
-				Hosties3_PrintToChat(client, "%s There is already one HeadGuard < %N >", g_sTag, HeadGuard);
+				CPrintToChat(client, "%s There is already one HeadGuard < %N >", g_sTag, HeadGuard);
 			}
 		}
 		else if (GetClientTeam(client) == CS_TEAM_T)
 		{
 			//Todo... Add translations
-			Hosties3_PrintToChat(client, "%s HeadGuard can be only Counter-Terrorist", g_sTag);
+			CPrintToChat(client, "%s HeadGuard can be only Counter-Terrorist", g_sTag);
 		}
 	}
 	else
 	{
 		//Todo... Add translations
-		Hosties3_PrintToChat(client, "%s HeadGuard is disabled on this server !", g_sTag);
+		CPrintToChat(client, "%s HeadGuard is disabled on this server !", g_sTag);
 	}
 }
 
@@ -372,7 +371,7 @@ public Hosties3_OnPlayerDisconnect(int client)
 		{
 			UnSetPlayerHeadGuard(client);
 			//Todo... Add translations
-			Hosties3_PrintToChatAll("%s HeadGuard is disconnected. You can become the new HeadGuard !", g_sTag);
+			CPrintToChatAll("%s HeadGuard is disconnected. You can become the new HeadGuard !", g_sTag);
 		}
 	}
 }
@@ -385,7 +384,7 @@ public Hosties3_OnPlayerDeath(int victim)
 		{
 			UnSetPlayerHeadGuard(victim);
 			//Todo... Add translations
-			Hosties3_PrintToChatAll("%s HeadGuard is dead. You can become the new HeadGuard !", g_sTag);
+			CPrintToChatAll("%s HeadGuard is dead. You can become the new HeadGuard !", g_sTag);
 		}
 	}
 }
@@ -422,7 +421,7 @@ stock Draw_Markers()
 		
 		if (GetVectorDistance(fHeadGuardOrigin, g_MarkerOrigin[i]) > g_fMarkerRangeMax)
 		{
-			Hosties3_PrintToChat(HeadGuard, "%s %s marker removed! You were far away from it.", g_sTag, g_MarkerNames[i]);
+			CPrintToChat(HeadGuard, "%s %s marker removed! You were far away from it.", g_sTag, g_MarkerNames[i]);
 			RemoveMarker(i);
 			continue;
 		}
@@ -490,7 +489,7 @@ stock MarkerMenu(client)
 {
 	if(!(0 < client < MaxClients) || client != HeadGuard)
 	{
-		Hosties3_PrintToChat(client, "%s Only the HeadGuard can use this feature!", g_sTag);
+		CPrintToChat(client, "%s Only the HeadGuard can use this feature!", g_sTag);
 		return;
 	}
 	
@@ -498,7 +497,7 @@ stock MarkerMenu(client)
 	if (marker != -1)
 	{
 		RemoveMarker(marker);
-		Hosties3_PrintToChat(client, "%s %s marker removed!", g_sTag, g_MarkerNames[marker]);
+		CPrintToChat(client, "%s %s marker removed!", g_sTag, g_MarkerNames[marker]);
 		return;
 	}
 	
@@ -506,7 +505,7 @@ stock MarkerMenu(client)
 	if (radius <= 0.0)
 	{
 		RemoveMarker(marker);
-		Hosties3_PrintToChat(client, "%s Something went wrong, can not create marker!", g_sTag);
+		CPrintToChat(client, "%s Something went wrong, can not create marker!", g_sTag);
 		return;
 	}
 	
@@ -516,7 +515,7 @@ stock MarkerMenu(client)
 	float range = GetVectorDistance(pos, g_fMarkerSetupStartOrigin);
 	if (range > g_fMarkerRangeMax)
 	{
-		Hosties3_PrintToChat(client, "%sPosition out of range!", g_sTag);
+		CPrintToChat(client, "%sPosition out of range!", g_sTag);
 		return;
 	}
 	
@@ -549,7 +548,7 @@ public Handle_MarkerMenu(Handle:menu, MenuAction:action, client, itemNum)
 	
 	if (client != HeadGuard)
 	{
-		Hosties3_PrintToChat(client, "%s Only the HeadGuard can use this feature!", g_sTag);
+		CPrintToChat(client, "%s Only the HeadGuard can use this feature!", g_sTag);
 		return;
 	}
 	
@@ -562,7 +561,7 @@ public Handle_MarkerMenu(Handle:menu, MenuAction:action, client, itemNum)
 		if (found)
 		{
 			SetupMarker(client, marker);
-			Hosties3_PrintToChat(client, "%s %s marker set!", g_sTag, g_MarkerNames[marker]);
+			CPrintToChat(client, "%s %s marker set!", g_sTag, g_MarkerNames[marker]);
 		}
 	}
 }

@@ -38,8 +38,7 @@ public Plugin myinfo =
 
 public Hosties3_OnPluginPreLoaded()
 {
-	Hosties3_IsLoaded();
-	Hosties3_CheckServerGame();
+	Hosties3_CheckRequirements();
 }
 
 public Hosties3_OnConfigsLoaded()
@@ -147,7 +146,7 @@ public Action Command_OpenJails(client, args)
 
 	if (g_iDoors == 0)
 	{
-		Hosties3_ReplyToCommand(client, "[%s] We don't know the what the cell door is for this map.", FEATURE_NAME);
+		CReplyToCommand(client, "[%s] We don't know the what the cell door is for this map.", FEATURE_NAME);
 		return Plugin_Handled;
 	}
 
@@ -190,7 +189,7 @@ public Action Command_OpenJails(client, args)
 		{
 			if (Hosties3_IsClientValid(i))
 			{
-				Hosties3_PrintToChat(i, "%T", "UseOpenJails", i, g_sTag, client);
+				CPrintToChat(i, "%T", "UseOpenJails", i, g_sTag, client);
 			}
 		}
 	}

@@ -81,7 +81,7 @@ public Action:OnWeaponCanUse(client, weapon)
 {
 	if(g_hResetTimer[client] != null)
 	{
-		Hosties3_PrintToChat(client, "%T", "NoWeaponsUse", client, g_sTag);
+		CPrintToChat(client, "%T", "NoWeaponsUse", client, g_sTag);
 		return Plugin_Handled;
 	}
 	return Plugin_Continue;
@@ -89,8 +89,7 @@ public Action:OnWeaponCanUse(client, weapon)
 
 public Hosties3_OnPluginPreLoaded()
 {
-	Hosties3_IsLoaded();
-	Hosties3_CheckServerGame();
+	Hosties3_CheckRequirements();
 }
 
 public Hosties3_OnConfigsLoaded()
@@ -240,16 +239,8 @@ public Capitulate_IsClientInCapitulating(Handle plugin, numParams)
 
 public Hosties3_OnMapStart()
 {
-	if (Hosties3_GetServerGame() == Game_CSS)
-	{
-		g_iBeamSprite = PrecacheModel(BEAM_CSS);
-		g_iHaloSprite = PrecacheModel(HALO_CSS);
-	}
-	else if (Hosties3_GetServerGame() == Game_CSGO)
-	{
-		g_iBeamSprite = PrecacheModel(BEAM_CSGO);
-		g_iHaloSprite = PrecacheModel(HALO_CSGO);
-	}
+	g_iBeamSprite = PrecacheModel(BEAM_CSGO);
+	g_iHaloSprite = PrecacheModel(HALO_CSGO);
 }
 
 public Hosties3_OnPlayerReady(int client)
@@ -314,7 +305,7 @@ public Action Command_Capitulate(client, args)
 						}
 						else
 						{
-							Hosties3_PrintToChat(client, "%T", "NoMoreCapitulate", client, g_sTag);
+							CPrintToChat(client, "%T", "NoMoreCapitulate", client, g_sTag);
 						}
 					}
 					else
@@ -335,28 +326,28 @@ public Action Command_Capitulate(client, args)
 						}
 						else
 						{
-							Hosties3_PrintToChat(client, "%T", "NoMoreCapitulate", client, g_sTag);
+							CPrintToChat(client, "%T", "NoMoreCapitulate", client, g_sTag);
 						}
 					}
 				}
 				else
 				{
-					Hosties3_PrintToChat(client, "%T", "NotEnoughAlive", client, g_sTag);
+					CPrintToChat(client, "%T", "NotEnoughAlive", client, g_sTag);
 				}
 			}
 			else
 			{
-				Hosties3_PrintToChat(client, "%T", "Already", client, g_sTag);
+				CPrintToChat(client, "%T", "Already", client, g_sTag);
 			}
 		}
 		else
 		{
-			Hosties3_PrintToChat(client, "%T", "NotAlive", client, g_sTag);
+			CPrintToChat(client, "%T", "NotAlive", client, g_sTag);
 		}
 	}
 	else
 	{
-		Hosties3_PrintToChat(client, "%T", "WrongTeam", client, g_sTag);
+		CPrintToChat(client, "%T", "WrongTeam", client, g_sTag);
 	}
 
 	return Plugin_Handled;
@@ -372,7 +363,7 @@ Capitulating(client, bool status)
 		{
 			if (Hosties3_IsClientValid(i))
 			{
-				Hosties3_PrintToChat(i, "%T", "SingleCapitulate", i, g_sTag, client);
+				CPrintToChat(i, "%T", "SingleCapitulate", i, g_sTag, client);
 			}
 		}
 	}
@@ -382,7 +373,7 @@ Capitulating(client, bool status)
 		{
 			if (Hosties3_IsClientValid(i))
 			{
-				Hosties3_PrintToChat(i, "%T", "MultiCapitulate", i, g_sTag, client, g_iCCount[client], g_iMaxCount[client]);
+				CPrintToChat(i, "%T", "MultiCapitulate", i, g_sTag, client, g_iCCount[client], g_iMaxCount[client]);
 			}
 		}
 	}
@@ -400,7 +391,7 @@ Capitulating(client, bool status)
 stock SetColor(client)
 {
 	// save old rgba
-	Hosties3_GetClientColors(client, g_iRed[client], g_iGreen[client], g_iBlue[client], g_iAlpha[client]);
+	GetEntityRenderColor(client, g_iRed[client], g_iGreen[client], g_iBlue[client], g_iAlpha[client]);
 
 	if (g_iCCount[client] == 1)
 	{
@@ -427,7 +418,7 @@ public Action Timer_ResetColor(Handle timer, any userid)
 		SetEntityRenderMode(client, RENDER_TRANSCOLOR);
 		g_hResetTimer[client] = null;
 
-		Hosties3_PrintToChat(client, "%T", "WeaponsUseAgain", client, g_sTag);
+		CPrintToChat(client, "%T", "WeaponsUseAgain", client, g_sTag);
 
 		int iKnife = GivePlayerItem(client, "weapon_knife");
 		EquipPlayerWeapon(client, iKnife);

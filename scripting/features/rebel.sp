@@ -2,10 +2,6 @@
 
 #include <sourcemod>
 #include <cstrike>
-
-#pragma newdecls required
-
-#include <multicolors>
 #include <hosties3>
 #include <hosties3_rebel>
 
@@ -55,8 +51,8 @@ public Plugin myinfo =
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-	CreateNative("HRebel.IsRebel.get", Rebel_HRebel_IsRebel_Get);
-	CreateNative("HRebel.SetRebel", Rebel_HRebel_SetRebel);
+	CreateNative("Hosties3_IsClientRebel", Rebel_IsClientRebel);
+	CreateNative("Hosties3_SetClientRebel", Rebel_SetClientRebel);
 
 	g_hOnClientRebel = CreateGlobalForward("Hosties3_OnClientRebel", ET_Ignore, Param_Cell, Param_Cell);
 	g_hOnRebelDeath = CreateGlobalForward("Hosties3_OnRebelDeath", ET_Ignore, Param_Cell, Param_Cell);
@@ -66,12 +62,12 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	return APLRes_Success;
 }
 
-public void OnPluginStart()
+public Hosties3_OnPluginPreLoaded()
 {
 	Hosties3_CheckRequirements();
 }
 
-public void Hosties3_OnConfigsLoaded()
+public Hosties3_OnConfigsLoaded()
 {
 	if (!(g_bEnable = Hosties3_AddCvarBool(FEATURE_NAME, "Enable", true)))
 	{
@@ -146,14 +142,11 @@ public void Hosties3_OnConfigsLoaded()
 	}
 
 	LoadTranslations("hosties3_rebel.phrases");
-	
-	HookEvent("player_hurt", Event_PlayerHurt);
-	HookEvent("player_death", Event_PlayerDeath);
+
 	HookEvent("bullet_impact", Event_BulletImpact);
-	HookEvent("round_end", Event_RoundEnd);
 }
 
-public void OnLibraryAdded(const char[] name)
+public OnLibraryAdded(const char[] name)
 {
 	if(StrEqual(name, "hosties3_vip"))
 	{
@@ -161,57 +154,50 @@ public void OnLibraryAdded(const char[] name)
 	}
 }
 
-public void Hosties3_OnPlayerSpawn(int client)
+public Hosties3_OnPlayerSpawn(int client)
 {
-	HRebel player = new HRebel(client);
-	
-	if(player.IsRebel)
+	if(Hosties3_IsClientRebel(client))
 	{
-		player.SetRebel(false, false);
+		Hosties3_SetClientRebel(client, false, false);
 	}
 }
 
-public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
+public Hosties3_OnRoundEnd(int winner)
 {
 	Hosties3_LoopClients(i)
 	{
-		HPlayer player = new HPlayer(i);
-		
-		if(player.IsValid)
+		if(Hosties3_IsClientValid(i))
 		{
-			HRebel rebel = new HRebel(i);
-			
-			if(rebel.IsRebel)
-				rebel.SetRebel(false, false);
+			if(Hosties3_IsClientRebel(i))
+			{
+				Hosties3_SetClientRebel(i, false, false);
+			}
 		}
 	}
 }
 
-public void Event_BulletImpact(Event event, const char[] name, bool dontBroadcast)
+public Event_BulletImpact(Handle event, const char[] name, bool dontBroadcast)
 {
 	if (g_bOnShot)
 	{
-		int client = GetClientOfUserId(GetEventInt(event, "userid"));
-		HPlayer player = new HPlayer(client);
+		new client = GetClientOfUserId(GetEventInt(event, "userid"));
 
-		if (player.IsValid && GetClientTeam(client) == CS_TEAM_T)
+		if (Hosties3_IsClientValid(client, true) && GetClientTeam(client) == CS_TEAM_T)
 		{
-			HRebel rebel = new HRebel(client);
-			
-			if (!rebel.IsRebel)
+			if (!Hosties3_IsClientRebel(client))
 			{
 				if (g_iLogLevel <= 2)
 				{
 					Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] \"%L\" has shot and is now a rebel!", FEATURE_NAME, client);
 				}
 
-				rebel.SetRebel(true, true);
+				Hosties3_SetClientRebel(client, true, true);
 			}
 		}
 	}
 }
 
-public Action Command_SetRebel(int client, int args)
+public Action Command_SetRebel(int client, args)
 {
 	if (args != 1)
 	{
@@ -236,9 +222,8 @@ public Action Command_SetRebel(int client, int args)
 	for (int i = 0; i < target_count; i++)
 	{
 		int target = target_list[i];
-		HPlayer player = new HPlayer(target);
 
-		if (!player.IsValid)
+		if (!Hosties3_IsClientValid(target))
 		{
 			//Todo... add translations
 			CReplyToCommand(client, "Invalid target (invalid #2)");
@@ -247,146 +232,130 @@ public Action Command_SetRebel(int client, int args)
 
 		if(GetClientTeam(target) == CS_TEAM_T)
 		{
-			HRebel rebel = new HRebel(target);
-			
-			if (rebel.IsRebel)
-				rebel.SetRebel(false, true);
+			if (Hosties3_IsClientRebel(target))
+			{
+				Hosties3_SetClientRebel(target, false, true);
+			}
 			else
-				rebel.SetRebel(true, true);
+			{
+				Hosties3_SetClientRebel(target, true, true);
+			}
 		}
 	}
 
 	return Plugin_Continue;
 }
 
-public Action Event_PlayerHurt(Event event, const char[] name, bool dontBroadcast)
+public Hosties3_OnPlayerHurt(int victim, int attacker, int damage, const char[] weapon)
 {
 	if (g_bOnHurt)
 	{
-		int victim = GetClientOfUserId(event.GetInt("userid"));
-		int attacker = GetClientOfUserId(event.GetInt("attacker"));
-		
-		HPlayer player_vic = new HPlayer(victim);
-		HPlayer player_att = new HPlayer(attacker);
-		
-		if(player_vic.IsValid && player_att.IsValid)
+		if (victim != attacker)
 		{
-			if (victim != attacker)
+			if (GetClientTeam(attacker) == CS_TEAM_T && GetClientTeam(victim) == CS_TEAM_CT)
 			{
-				if (GetClientTeam(attacker) == CS_TEAM_T && GetClientTeam(victim) == CS_TEAM_CT)
+				if (!Hosties3_IsClientRebel(attacker))
 				{
-					HRebel rebel = new HRebel(attacker);
-					
-					if (!rebel.IsRebel)
+					if (g_iLogLevel <= 2)
 					{
-						if (g_iLogLevel <= 2)
-						{
-							Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] \"%L\" has hurt a ct and is now a rebel!", FEATURE_NAME, attacker);
-						}
-	
-						rebel.SetRebel(true, true);
+						Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] \"%L\" has hurt a ct and is now a rebel!", FEATURE_NAME, attacker);
 					}
+
+					Hosties3_SetClientRebel(attacker, true, true);
 				}
 			}
 		}
 	}
 }
 
-public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadcast)
+public Hosties3_OnPlayerDeath(int victim, int attacker, int assister, const char[] weapon, bool headshot)
 {
-	int victim = GetClientOfUserId(event.GetInt("userid"));
-	int attacker = GetClientOfUserId(event.GetInt("attacker"));
-	
-	HPlayer player_vic = new HPlayer(victim);
-	HPlayer player_att = new HPlayer(attacker);
-	HRebel rebel_vic = new HRebel(victim);
-	HRebel rebel_att = new HRebel(attacker);
-	
-	if(player_vic.IsValid && player_att.IsValid)
+	if (g_bOnDeath)
 	{
-		if (g_bOnDeath)
+		if (victim != attacker)
 		{
-			if (victim != attacker)
+			if (GetClientTeam(attacker) == CS_TEAM_T && GetClientTeam(victim) == CS_TEAM_CT)
 			{
-				if (GetClientTeam(attacker) == CS_TEAM_T && GetClientTeam(victim) == CS_TEAM_CT)
+				if (!Hosties3_IsClientRebel(attacker))
 				{
-					if (!rebel_att.IsRebel)
+					if (g_iLogLevel <= 2)
 					{
-						if (g_iLogLevel <= 2)
-						{
-							Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] \"%L\" has killed \"%L\" and is now a rebel!", FEATURE_NAME, attacker, victim);
-						}
-	
-						rebel_att.SetRebel(true, true);
+						Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] \"%L\" has killed \"%L\" and is now a rebel!", FEATURE_NAME, attacker, victim);
 					}
+
+					Hosties3_SetClientRebel(attacker, true, true);
 				}
 			}
 		}
-	
-		if (rebel_vic.IsRebel)
+	}
+
+	if (Hosties3_IsClientRebel(victim))
+	{
+		Hosties3_SetClientRebel(victim, false, false);
+
+		Call_StartForward(g_hOnRebelDeath);
+		Call_PushCell(victim);
+		Call_PushCell(attacker);
+		Call_Finish();
+
+		if(g_bVIP)
 		{
-			rebel_vic.SetRebel(false, false);
-	
-			Call_StartForward(g_hOnRebelDeath);
-			Call_PushCell(victim);
-			Call_PushCell(attacker);
-			Call_Finish();
-	
-			if(g_bVIP)
+			if (g_iPointsOnRebelKill > 0)
 			{
-				if (g_iPointsOnRebelKill > 0)
-				{
-					Hosties3_AddVIPPoints(attacker, g_iPointsOnRebelKill);
-				}
+				Hosties3_AddVIPPoints(attacker, g_iPointsOnRebelKill);
 			}
-	
-			if (g_bMessageOnDead)
+		}
+
+		if (g_bMessageOnDead)
+		{
+			Hosties3_LoopClients(i)
 			{
-				Hosties3_LoopClients(i)
+				if (Hosties3_IsClientValid(i))
 				{
-					if (Hosties3_IsClientValid(i))
-					{
-						CPrintToChat(i, "%T", "RebelDead", i, g_sTag, victim);
-					}
+					CPrintToChat(i, "%T", "RebelDead", i, g_sTag, victim);
 				}
 			}
 		}
 	}
 }
 
-public int Rebel_HRebel_IsRebel_Get(Handle plugin, int numParams)
+public Rebel_IsClientRebel(Handle plugin, numParams)
 {
-	HPlayer player = new HPlayer(GetNativeCell(1));
+	int client = GetNativeCell(1);
 
-	if (Hosties3_IsClientValid(view_as<int>(player)))
+	if (Hosties3_IsClientValid(client))
 	{
-		return g_bRebel[view_as<int>(player)];
+		return g_bRebel[client];
 	}
-	
-	ThrowNativeError(SP_ERROR_NATIVE, "Client %i is invalid", view_as<int>(player));
+	else
+	{
+		ThrowNativeError(SP_ERROR_NATIVE, "Client %i is invalid", client);
+	}
 	return false;
 }
 
-public int Rebel_HRebel_SetRebel(Handle plugin, int numParams)
+public Rebel_SetClientRebel(Handle plugin, numParams)
 {
-	HPlayer client = new HPlayer(GetNativeCell(1));
-	
+	int client = GetNativeCell(1);
 	bool status = GetNativeCell(2);
-	bool message = GetNativeCell(3);
-	
-	if (Hosties3_IsClientValid(view_as<int>(client)))
+	bool bMessage = GetNativeCell(3);
+
+	if (Hosties3_IsClientValid(client))
 	{
-		if (GetClientTeam(view_as<int>(client)) == CS_TEAM_T && IsPlayerAlive(view_as<int>(client)))
+		if (GetClientTeam(client) == CS_TEAM_T)
 		{
-			if(g_bRebel[view_as<int>(client)] != status)
+			if (IsPlayerAlive(client))
 			{
-				SetClientRebel(view_as<int>(client), status, message);
+				if (g_bRebel[client] != status)
+				{
+					SetClientRebel(client, status, bMessage);
+				}
 			}
 		}
 	}
 }
 
-void SetClientRebel(int client, bool status, bool bMessage)
+SetClientRebel(int client, bool status, bool bMessage)
 {
 	if (!status)
 	{

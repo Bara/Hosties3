@@ -33,8 +33,7 @@ public Plugin myinfo =
 
 public Hosties3_OnPluginPreLoaded()
 {
-	Hosties3_IsLoaded();
-	Hosties3_CheckServerGame();
+	Hosties3_CheckRequirements();
 }
 
 public Hosties3_OnConfigsLoaded()
@@ -78,7 +77,7 @@ public Action Command_Feedback(int client, int args)
 {
 	if (args < 1)
 	{
-		Hosties3_PrintToChat(client, "%T", "Usage", client, g_sTag);
+		CPrintToChat(client, "%T", "Usage", client, g_sTag);
 		return Plugin_Handled;
 	}
 
@@ -92,25 +91,18 @@ public Action Command_Feedback(int client, int args)
 		GetConVarString(FindConVar("hostport"), sPort, sizeof(sPort));
 		GetCmdArgString(sMessage, sizeof(sMessage));
 
-		if(Hosties3_GetServerGame() == Game_CSGO)
-		{
-			Format(sGame, sizeof(sGame), "csgo");
-		}
-		else if(Hosties3_GetServerGame() == Game_CSS)
-		{
-			Format(sGame, sizeof(sGame), "css");
-		}
+		Format(sGame, sizeof(sGame), "csgo");
 
 		Format(sQuery, sizeof(sQuery), "INSERT INTO `hosties3_feedback` (`pid`, `date`, `smap`, `sip`, `sport`, `game`, `feedback`) VALUES ('%s', UNIX_TIMESTAMP(), '%s', '%s', '%s', '%s', '%s')", sUserId, sMap, sIp, sPort, sGame, sMessage);
 		SQLQuery(sQuery);
 
 		g_hTimer[client] = CreateTimer(g_fCooldown, Timer_Cooldown, GetClientUserId(client));
 
-		Hosties3_PrintToChat(client, "%T", "Sended", client, g_sTag, sMessage);
+		CPrintToChat(client, "%T", "Sended", client, g_sTag, sMessage);
 	}
 	else
 	{
-		Hosties3_PrintToChat(client, "%T", "NotSended", client, g_sTag, g_fCooldown);
+		CPrintToChat(client, "%T", "NotSended", client, g_sTag, g_fCooldown);
 		return Plugin_Handled;
 	}
 

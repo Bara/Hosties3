@@ -46,8 +46,7 @@ public Plugin myinfo =
 
 public Hosties3_OnPluginPreLoaded()
 {
-	Hosties3_IsLoaded();
-	Hosties3_CheckServerGame();
+	Hosties3_CheckRequirements();
 }
 
 public Hosties3_OnConfigsLoaded()
@@ -99,7 +98,7 @@ public Hosties3_OnConfigsLoaded()
 			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Register Command: %s Full: %s", FEATURE_NAME, g_sNoBlockComList[i], sBuffer);
 	}
 
-	g_iCollision = FindSendPropOffs("CBaseEntity", "m_CollisionGroup");
+	g_iCollision = FindSendPropInfo("CBaseEntity", "m_CollisionGroup");
 	if (g_iCollision == -1)
 	{
 		SetFailState("Failed to get offset for CBaseEntity::m_CollisionGroup");
@@ -140,7 +139,7 @@ public Action Command_Block(int client, args)
 		}
 		else
 		{
-			Hosties3_PrintToChat(client, "%T", "WrongTeam", client);
+			CPrintToChat(client, "%T", "WrongTeam", client);
 			return;
 		}
 	}
@@ -237,7 +236,7 @@ CheckMenu(int client)
 		}
 		else
 		{
-			Hosties3_PrintToChat(client, "%T", "WrongTeam", client);
+			CPrintToChat(client, "%T", "WrongTeam", client);
 			return;
 		}
 	}
@@ -289,7 +288,7 @@ public Menu_Block(Menu menu, MenuAction action, int client, int param)
 		if (StrEqual(sParam, "on"))
 		{
 			SetBlock(client, false);
-			Hosties3_PrintToChat(client, "%T", "NoBlock On", client);
+			CPrintToChat(client, "%T", "NoBlock On", client);
 			CheckMenu(client);
 		}
 		else if (StrEqual(sParam, "time"))
@@ -297,7 +296,7 @@ public Menu_Block(Menu menu, MenuAction action, int client, int param)
 			if (!IsClientStuck(client))
 			{
 				SetBlock(client, false);
-				Hosties3_PrintToChat(client, "%T", "NoBlock On", client);
+				CPrintToChat(client, "%T", "NoBlock On", client);
 				g_hTimer[client] = CreateTimer(g_fTime, Timer_Block, client);
 				CheckMenu(client);
 			}
@@ -311,7 +310,7 @@ public Menu_Block(Menu menu, MenuAction action, int client, int param)
 			if (!IsClientStuck(client))
 			{
 				SetBlock(client, true);
-				Hosties3_PrintToChat(client, "%T", "NoBlock Off", client);
+				CPrintToChat(client, "%T", "NoBlock Off", client);
 				CheckMenu(client);
 			}
 			else
@@ -330,7 +329,7 @@ public CheckClient(any client)
 		if (!IsClientStuck(client))
 		{
 			SetBlock(client, true);
-			Hosties3_PrintToChat(client, "%T", "NoBlock Off", client);
+			CPrintToChat(client, "%T", "NoBlock Off", client);
 			CheckMenu(client);
 		}
 		else
@@ -347,7 +346,7 @@ public CheckClientTime(any client)
 		if (!IsClientStuck(client))
 		{
 			SetBlock(client, false);
-			Hosties3_PrintToChat(client, "%T", "NoBlock On", client);
+			CPrintToChat(client, "%T", "NoBlock On", client);
 			g_hTimer[client] = CreateTimer(g_fTime, Timer_Block, client);
 			CheckMenu(client);
 		}
@@ -369,7 +368,7 @@ public OnPlayerSpawn(any client)
 public Action Timer_Block(Handle timer, any client)
 {
 	SetBlock(client, true);
-	Hosties3_PrintToChat(client, "%T", "NoBlock Off", client);
+	CPrintToChat(client, "%T", "NoBlock Off", client);
 	g_hTimer[client] = null;
 	CheckMenu(client);
 	return Plugin_Stop;

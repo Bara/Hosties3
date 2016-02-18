@@ -6,30 +6,15 @@
 forward void Hosties3_OnClientRebel(int client, bool status);
 forward void Hosties3_OnRebelDeath(int victim, int attacker);
 
-stock bool Hosties3_IsRebelLoaded()
+native bool Hosties3_IsClientRebel(int client);
+native void Hosties3_SetClientRebel(int client, bool status, bool bMessage);
+
+stock Hosties3_IsRebelLoaded()
 {
 	if (!LibraryExists("hosties3_rebel"))
 	{
-		SetFailState("'Rebel' Feature not found!");
-		return false;
+		SetFailState("'Rebel'-Feature not found!");
 	}
-	
-	return true;
-}
-
-methodmap HRebel < HPlayer
-{
-	public HRebel(int client)
-	{
-		return view_as<HRebel>(new HPlayer(client));
-	}
-	
-	property bool IsRebel
-	{
-		public native get();
-	}
-	
-	public native void SetRebel(bool status, bool message);
 }
 
 public SharedPlugin __pl_hosties3_rebel =

@@ -3,6 +3,8 @@
 #endif
 #define _hosties3_included
 
+#include <multicolors>
+
 #define HOSTIES3_NAME "Hosties3 - "
 #define HOSTIES3_AUTHOR "Bara"
 #define HOSTIES3_VERSION "3.0.0-alpha"
@@ -30,13 +32,6 @@ enum LogLevel:
 	ERROR
 };
 
-enum CurrentGame:
-{
-	Game_CSS = 1,
-	Game_CSGO,
-	Game_Unsupported
-};
-
 forward void Hosties3_OnConfigsLoaded();
 forward void Hosties3_OnSQLConnected(Handle database);
 forward void Hosties3_OnPlayerReady(int client);
@@ -45,11 +40,9 @@ forward void Hosties3_OnPlayerDisconnect(int client);
 
 native void Hosties3_LogToFile(const char[] path = "", const char[] file = "file", const char[] date = "", LogLevel level = INFO, const char[] format, any ...);
 native int Hosties3_GetLogLevel();
-native CurrentGame Hosties3_GetServerGame();
 native void Hosties3_GetColorTag(const char[] tag, int maxlength);
 native void Hosties3_GetCleanTag(const char[] tag, int maxlength);
 native bool Hosties3_GetAutoUpdate();
-native bool Hosties3_CheckServerGame();
 native bool Hosties3_IsSQLValid(Handle database);
 native void Hosties3_LoadTranslations(char[] file);
 native void Hosties3_AddToFeatureList(const char[] feature, const char[] credits, bool vip, int points, const char[] description, any ...);
@@ -87,42 +80,12 @@ stock bool Hosties3_CheckRequirements()
 	if (!LibraryExists("hosties3"))
 	{
 		SetFailState("'Hosties3' not found!");
-		
 	}
 	else
 	{
-		if(Hosties3_GetServerGame() != Game_CSGO && Hosties3_GetServerGame() != Game_CSS)
+		if(GetEngineVersion() != Engine_CSGO)
 		{
-			SetFailState("False game! Only CS:S/CS:GO supported!");
-		}
-	}
-}
-
-const HPlayer INVALID_ENTITY = view_as<HPlayer>(INVALID_ENT_REFERENCE);
-
-methodmap HPlayer __nullable__
-{
-	public HPlayer(int client)
-	{
-		if(!Hosties3_IsClientValid(client))
-			return INVALID_ENTITY;
-		
-		return view_as<HPlayer>(client);
-	}
-	
-	property bool IsValid 
-	{
-		public get()
-		{
-			return Hosties3_IsClientValid(view_as<int>(this));
-		}
-	}
-	
-	property int ClientID
-	{
-		public get()
-		{
-			return view_as<int>(this);
+			SetFailState("False game! Only CS:GO supported!");
 		}
 	}
 }
@@ -142,7 +105,6 @@ public SharedPlugin __pl_hosties3 =
 
 public __pl_hosties3_SetNTVOptional()
 {
-	MarkNativeAsOptional("Hosties3_CheckServerGame");
 	MarkNativeAsOptional("Hosties3_GetAutoUpdate");
 	MarkNativeAsOptional("Hosties3_AddCvarInt");
 	MarkNativeAsOptional("Hosties3_AddCvarBool");
@@ -150,7 +112,6 @@ public __pl_hosties3_SetNTVOptional()
 	MarkNativeAsOptional("Hosties3_AddCvarString");
 	MarkNativeAsOptional("Hosties3_IsClientAdmin");
 	MarkNativeAsOptional("Hosties3_GetAdminLevel");
-	MarkNativeAsOptional("Hosties3_GetServerGame");
 	MarkNativeAsOptional("Hosties3_GetRandomClient");
 	MarkNativeAsOptional("Hosties3_GetColorTag");
 	MarkNativeAsOptional("Hosties3_GetCleanTag");

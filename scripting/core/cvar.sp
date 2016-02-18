@@ -114,7 +114,8 @@ public int Cvar_AddCVarFloat(Handle plugin, int numParams)
 		if (StrEqual(iCache[fFeature], sFeature, false) && StrEqual(iCache[fCvar], sCvar, false))
 		{
 			bFound = true;
-			return view_as<float>(StringToFloat(iCache[fValue])); // TODO: tag mismatch
+			float buffer = StringToFloat(iCache[fValue]);
+			return buffer; // TODO: tag mismatch
 		}
 	}
 

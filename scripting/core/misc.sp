@@ -62,11 +62,6 @@ public int Misc_GetLogLevel(Handle plugin, int numParams)
 	return g_iLogLevel;
 }
 
-public int Misc_GetGame(Handle plugin, int numParams)
-{
-	return view_as<int>(g_iGame);
-}
-
 public int Misc_GetTag(Handle plugin, int numParams)
 {
 	SetNativeString(1, g_sTag, GetNativeCell(2), false);
@@ -80,14 +75,6 @@ public int Misc_GetCleanTag(Handle plugin, int numParams)
 public int Misc_GetAutoUpdate(Handle plugin, int numParams)
 {
 	return g_bAutoUpdate;
-}
-
-public int Misc_CheckGame(Handle plugin, int numParams)
-{
-	if (Hosties3_GetServerGame() == Game_Unsupported)
-	{
-		SetFailState("Only Counter-Strike: Source and Global Offensive are supported!");
-	}
 }
 
 public int Misc_IsSQLValid(Handle plugin, int numParams)

@@ -52,8 +52,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public Hosties3_OnPluginPreLoaded()
 {
-	Hosties3_IsLoaded();
-	Hosties3_CheckServerGame();
+	Hosties3_CheckRequirements();
 }
 
 public Hosties3_OnConfigsLoaded()
@@ -446,7 +445,7 @@ SetCTRules(int client, bool status, bool message)
 				{
 					if (Hosties3_IsClientValid(i))
 					{
-						Hosties3_PrintToChat(i, "%T", "CTRulesAccepted", i, g_sTag, client);
+						CPrintToChat(i, "%T", "CTRulesAccepted", i, g_sTag, client);
 					}
 				}
 			}
@@ -456,7 +455,7 @@ SetCTRules(int client, bool status, bool message)
 				{
 					if (Hosties3_IsClientValid(i, _, _, true))
 					{
-						Hosties3_PrintToChat(i, "%T", "CTRulesAccepted", i, g_sTag, client);
+						CPrintToChat(i, "%T", "CTRulesAccepted", i, g_sTag, client);
 					}
 				}
 			}
@@ -471,7 +470,7 @@ SetCTRules(int client, bool status, bool message)
 				{
 					if (Hosties3_IsClientValid(i))
 					{
-						Hosties3_PrintToChat(i, "%T", "CTRulesAcceptedNot", i, g_sTag, client);
+						CPrintToChat(i, "%T", "CTRulesAcceptedNot", i, g_sTag, client);
 					}
 				}
 			}
@@ -481,7 +480,7 @@ SetCTRules(int client, bool status, bool message)
 				{
 					if (Hosties3_IsClientValid(i, _, _, true))
 					{
-						Hosties3_PrintToChat(i, "%T", "CTRulesAcceptedNot", i, g_sTag, client);
+						CPrintToChat(i, "%T", "CTRulesAcceptedNot", i, g_sTag, client);
 					}
 				}
 			}
@@ -505,7 +504,7 @@ CTPunishment(int client, int method)
 				{
 					if (Hosties3_IsClientValid(i))
 					{
-						Hosties3_PrintToChat(i, "%T", "PlayerMoved", i, g_sTag, client);
+						CPrintToChat(i, "%T", "PlayerMoved", i, g_sTag, client);
 					}
 				}
 			}
@@ -515,7 +514,7 @@ CTPunishment(int client, int method)
 				{
 					if (Hosties3_IsClientValid(i, _, _, true))
 					{
-						Hosties3_PrintToChat(i, "%T", "PlayerMoved", i, g_sTag, client);
+						CPrintToChat(i, "%T", "PlayerMoved", i, g_sTag, client);
 					}
 				}
 			}
@@ -532,7 +531,7 @@ CTPunishment(int client, int method)
 				{
 					if (Hosties3_IsClientValid(i))
 					{
-						Hosties3_PrintToChat(i, "%T", "PlayerSlayed", i, g_sTag, client);
+						CPrintToChat(i, "%T", "PlayerSlayed", i, g_sTag, client);
 					}
 				}
 			}
@@ -542,7 +541,7 @@ CTPunishment(int client, int method)
 				{
 					if (Hosties3_IsClientValid(i, _, _, true))
 					{
-						Hosties3_PrintToChat(i, "%T", "PlayerSlayed", i, g_sTag, client);
+						CPrintToChat(i, "%T", "PlayerSlayed", i, g_sTag, client);
 					}
 				}
 			}
@@ -562,7 +561,7 @@ CTPunishment(int client, int method)
 				{
 					if (Hosties3_IsClientValid(i))
 					{
-						Hosties3_PrintToChat(i, "%T", "PlayerKicked", i, g_sTag, client);
+						CPrintToChat(i, "%T", "PlayerKicked", i, g_sTag, client);
 					}
 				}
 			}
@@ -572,7 +571,7 @@ CTPunishment(int client, int method)
 				{
 					if (Hosties3_IsClientValid(i, _, _, true))
 					{
-						Hosties3_PrintToChat(i, "%T", "PlayerKicked", i, g_sTag, client);
+						CPrintToChat(i, "%T", "PlayerKicked", i, g_sTag, client);
 					}
 				}
 			}

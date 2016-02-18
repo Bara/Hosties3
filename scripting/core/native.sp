@@ -22,8 +22,6 @@ void Native_AskPluginLoad2()
 
 	CreateNative("Hosties3_LogToFile", Misc_LogFile);
 	CreateNative("Hosties3_GetLogLevel", Misc_GetLogLevel);
-	CreateNative("Hosties3_CheckServerGame", Misc_CheckGame);
-	CreateNative("Hosties3_GetServerGame", Misc_GetGame);
 	CreateNative("Hosties3_GetColorTag", Misc_GetTag);
 	CreateNative("Hosties3_GetCleanTag", Misc_GetCleanTag);
 	CreateNative("Hosties3_GetAutoUpdate", Misc_GetAutoUpdate);

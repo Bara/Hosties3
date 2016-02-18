@@ -29,8 +29,7 @@ public Plugin myinfo =
 
 public Hosties3_OnPluginPreLoaded()
 {
-	Hosties3_IsLoaded();
-	Hosties3_CheckServerGame();
+	Hosties3_CheckRequirements();
 }
 
 public Hosties3_OnConfigsLoaded()
@@ -82,7 +81,7 @@ public Hosties3_OnPlayerSpawn(int client)
 		{
 			if (Hosties3_GetVIPPoints(client) < g_iNeededPoints)
 			{
-				Hosties3_PrintToChat(client, "%T", "NotEnoughPoints", client);
+				CPrintToChat(client, "%T", "NotEnoughPoints", client);
 				Hosties3_SwitchClient(client, CS_TEAM_T);
 				return;
 			}
@@ -108,7 +107,7 @@ public Action Command_JoinTeam(int client, const char[] command, args)
 		{
 			if (Hosties3_GetVIPPoints(client) < g_iNeededPoints)
 			{
-				Hosties3_PrintToChat(client, "%T", "NotEnoughPoints", client);
+				CPrintToChat(client, "%T", "NotEnoughPoints", client);
 				Hosties3_SwitchClient(client, CS_TEAM_T);
 				return Plugin_Handled;
 			}
@@ -134,7 +133,7 @@ public Action Timer_CheckClients(Handle timer)
 			{
 				if (Hosties3_GetVIPPoints(client) < g_iNeededPoints)
 				{
-					Hosties3_PrintToChat(client, "%T", "NotEnoughPoints", client);
+					CPrintToChat(client, "%T", "NotEnoughPoints", client);
 					Hosties3_SwitchClient(client, CS_TEAM_T);
 					return Plugin_Stop;
 				}

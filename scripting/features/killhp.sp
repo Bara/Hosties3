@@ -29,8 +29,7 @@ public Plugin myinfo =
 
 public Hosties3_OnPluginPreLoaded()
 {
-	Hosties3_IsLoaded();
-	Hosties3_CheckServerGame();
+	Hosties3_CheckRequirements();
 }
 
 public Hosties3_OnConfigsLoaded()
@@ -73,12 +72,12 @@ public Hosties3_OnPlayerDeath(int victim, int attacker, int assister, const char
 			if(headshot)
 			{
 				AddHP(attacker, g_iNormalKill);
-				Hosties3_PrintToChat(attacker, "%T", "NormalKill", attacker, g_sTag, g_iNormalKill, victim);
+				CPrintToChat(attacker, "%T", "NormalKill", attacker, g_sTag, g_iNormalKill, victim);
 			}
 			else
 			{
 				AddHP(attacker, g_iHeadShotKill);
-				Hosties3_PrintToChat(attacker, "%T", "HeadshotKill", attacker, g_sTag, g_iHeadShotKill, victim);
+				CPrintToChat(attacker, "%T", "HeadshotKill", attacker, g_sTag, g_iHeadShotKill, victim);
 			}
 		}
 	}

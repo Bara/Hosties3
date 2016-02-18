@@ -62,8 +62,7 @@ public Plugin myinfo =
 
 public Hosties3_OnPluginPreLoaded()
 {
-	Hosties3_IsLoaded();
-	Hosties3_CheckServerGame();
+	Hosties3_CheckRequirements();
 }
 
 public Hosties3_OnConfigsLoaded()
@@ -394,5 +393,5 @@ PrintMessage(int client, int target, const char[] sMessage)
 		ReplaceString(message, sizeof(message), "{COUNTRY}", country);
 	}
 
-	Hosties3_PrintToChat(target, message);
+	CPrintToChat(target, message);
 }

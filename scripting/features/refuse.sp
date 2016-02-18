@@ -79,8 +79,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public Hosties3_OnPluginPreLoaded()
 {
-	Hosties3_IsLoaded();
-	Hosties3_CheckServerGame();
+	Hosties3_CheckRequirements();
 }
 
 public Hosties3_OnConfigsLoaded()
@@ -223,16 +222,8 @@ public Refuse_IsClientInRefusing(Handle plugin, numParams)
 
 public Hosties3_OnMapStart()
 {
-	if (Hosties3_GetServerGame() == Game_CSS)
-	{
-		g_iBeamSprite = PrecacheModel(BEAM_CSS);
-		g_iHaloSprite = PrecacheModel(HALO_CSS);
-	}
-	else if (Hosties3_GetServerGame() == Game_CSGO)
-	{
-		g_iBeamSprite = PrecacheModel(BEAM_CSGO);
-		g_iHaloSprite = PrecacheModel(HALO_CSGO);
-	}
+	g_iBeamSprite = PrecacheModel(BEAM_CSGO);
+	g_iHaloSprite = PrecacheModel(HALO_CSGO);
 }
 
 public Hosties3_OnPlayerDisconnect(int client)
@@ -288,7 +279,7 @@ public Action Command_Refuse(client, args)
 					}
 					else
 					{
-						Hosties3_PrintToChat(client, "%T", "NoMoreRefuse", client, g_sTag);
+						CPrintToChat(client, "%T", "NoMoreRefuse", client, g_sTag);
 					}
 				}
 				else
@@ -309,23 +300,23 @@ public Action Command_Refuse(client, args)
 					}
 					else
 					{
-						Hosties3_PrintToChat(client, "%T", "NoMoreRefuse", client, g_sTag);
+						CPrintToChat(client, "%T", "NoMoreRefuse", client, g_sTag);
 					}
 				}
 			}
 			else
 			{
-				Hosties3_PrintToChat(client, "%T", "NotEnoughAlive", client, g_sTag);
+				CPrintToChat(client, "%T", "NotEnoughAlive", client, g_sTag);
 			}
 		}
 		else
 		{
-			Hosties3_PrintToChat(client, "%T", "NotAlive", client, g_sTag);
+			CPrintToChat(client, "%T", "NotAlive", client, g_sTag);
 		}
 	}
 	else
 	{
-		Hosties3_PrintToChat(client, "%T", "WrongTeam", client, g_sTag);
+		CPrintToChat(client, "%T", "WrongTeam", client, g_sTag);
 	}
 
 	return Plugin_Handled;
@@ -341,7 +332,7 @@ Refusing(client, bool status)
 		{
 			if (Hosties3_IsClientValid(i))
 			{
-				Hosties3_PrintToChat(i, "%T", "SingleRefuse", i, g_sTag, client);
+				CPrintToChat(i, "%T", "SingleRefuse", i, g_sTag, client);
 			}
 		}
 	}
@@ -351,7 +342,7 @@ Refusing(client, bool status)
 		{
 			if (Hosties3_IsClientValid(i))
 			{
-				Hosties3_PrintToChat(i, "%T", "MultiRefuse", i, g_sTag, client, g_iCCount[client], g_iMaxCount[client]);
+				CPrintToChat(i, "%T", "MultiRefuse", i, g_sTag, client, g_iCCount[client], g_iMaxCount[client]);
 			}
 		}
 	}
@@ -375,7 +366,7 @@ stock SetColor(client)
 	// save old rgba
 	if (g_hResetTimer[client] == null)
 	{
-		Hosties3_GetClientColors(client, g_iRed[client], g_iGreen[client], g_iBlue[client], g_iAlpha[client]);
+		GetEntityRenderColor(client, g_iRed[client], g_iGreen[client], g_iBlue[client], g_iAlpha[client]);
 	}
 
 	if (g_iCCount[client] == 1)

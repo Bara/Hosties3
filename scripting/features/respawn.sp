@@ -28,8 +28,7 @@ public Plugin myinfo =
 
 public Hosties3_OnPluginPreLoaded()
 {
-	Hosties3_IsLoaded();
-	Hosties3_CheckServerGame();
+	Hosties3_CheckRequirements();
 }
 
 public Hosties3_OnConfigsLoaded()
@@ -73,7 +72,7 @@ public Action Command_Respawn(int client, args)
 {
 	if (args != 1)
 	{
-		Hosties3_ReplyToCommand(client, "%T", "InvalidParameter", client, g_sTag);
+		CReplyToCommand(client, "%T", "InvalidParameter", client, g_sTag);
 		return Plugin_Handled;
 	}
 
@@ -97,13 +96,13 @@ public Action Command_Respawn(int client, args)
 
 		if (!Hosties3_IsClientValid(target))
 		{
-			Hosties3_ReplyToCommand(client, "%T", "TargetInvalid", client, g_sTag);
+			CReplyToCommand(client, "%T", "TargetInvalid", client, g_sTag);
 			return Plugin_Handled;
 		}
 
 		if (GetClientTeam(target) != CS_TEAM_CT && GetClientTeam(target) != CS_TEAM_T)
 		{
-			Hosties3_ReplyToCommand(client, "TargetInvalidTeam", client, g_sTag);
+			CReplyToCommand(client, "TargetInvalidTeam", client, g_sTag);
 			return Plugin_Handled;
 		}
 
@@ -116,7 +115,7 @@ public Action Command_Respawn(int client, args)
 			{
 				if (Hosties3_IsClientValid(j))
 				{
-					Hosties3_PrintToChat(j, "%T", "PlayerRespawned", j, g_sTag, target, client);
+					CPrintToChat(j, "%T", "PlayerRespawned", j, g_sTag, target, client);
 				}
 			}
 		}
@@ -126,7 +125,7 @@ public Action Command_Respawn(int client, args)
 			{
 				if (Hosties3_IsClientValid(j, _, _, true))
 				{
-					Hosties3_PrintToChat(j, "%T", "PlayerRespawned", j, g_sTag, target, client);
+					CPrintToChat(j, "%T", "PlayerRespawned", j, g_sTag, target, client);
 				}
 			}
 		}

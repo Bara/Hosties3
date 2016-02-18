@@ -23,8 +23,7 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-	Hosties3_IsLoaded();
-	Hosties3_CheckServerGame();
+	Hosties3_CheckRequirements();
 }
 
 public void Hosties3_OnConfigsLoaded()

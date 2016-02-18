@@ -43,8 +43,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public void OnPluginStart()
 {
-	GetGame();
-	Hosties3_CheckServerGame();
+	Hosties3_CheckRequirements();
 	
 	g_bSQLReady = false;
 	
@@ -108,22 +107,6 @@ public void OnPlayerSpawn(any client)
 		Call_StartForward(g_hOnPlayerSpawn);
 		Call_PushCell(client);
 		Call_Finish();
-	}
-}
-
-void GetGame()
-{
-	if (GetEngineVersion() == Engine_CSS)
-	{
-		g_iGame = Game_CSS;
-	}
-	else if (GetEngineVersion() == Engine_CSGO)
-	{
-		g_iGame = Game_CSGO;
-	}
-	else
-	{
-		g_iGame = Game_Unsupported;
 	}
 }
 

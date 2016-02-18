@@ -29,8 +29,7 @@ public Plugin myinfo =
 
 public Hosties3_OnPluginPreLoaded()
 {
-	Hosties3_IsLoaded();
-	Hosties3_CheckServerGame();
+	Hosties3_CheckRequirements();
 }
 
 public Hosties3_OnConfigsLoaded()
@@ -124,7 +123,7 @@ public Action Event_KillCommand(int client, args)
 	{
 		if (Hosties3_IsClientValid(i))
 		{
-			Hosties3_PrintToChat(i, "%T", "Suicide", i, g_sTag, client);
+			CPrintToChat(i, "%T", "Suicide", i, g_sTag, client);
 		}
 	}
 }

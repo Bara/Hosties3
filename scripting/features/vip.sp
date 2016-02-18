@@ -83,8 +83,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public Hosties3_OnPluginPreLoaded()
 {
-	Hosties3_IsLoaded();
-	Hosties3_CheckServerGame();
+	Hosties3_CheckRequirements();
 }
 
 public Hosties3_OnConfigsLoaded()
@@ -236,7 +235,7 @@ public VIP_AddVIPPoints(Handle plugin, numParams)
 	if (Hosties3_IsClientValid(client))
 	{
 		ChangePoints(client, Hosties3_GetVIPPoints(client) + points);
-		Hosties3_PrintToChat(client, "%T", "PointsEarned", client, g_sTag, points);
+		CPrintToChat(client, "%T", "PointsEarned", client, g_sTag, points);
 		return true;
 	}
 	else
@@ -254,7 +253,7 @@ public VIP_SetVIPPoints(Handle plugin, numParams)
 	if (Hosties3_IsClientValid(client))
 	{
 		ChangePoints(client, points);
-		Hosties3_PrintToChat(client, "%T", "PointsSet", client, g_sTag, points);
+		CPrintToChat(client, "%T", "PointsSet", client, g_sTag, points);
 		return true;
 	}
 	else
@@ -272,7 +271,7 @@ public VIP_DelVIPPoints(Handle plugin, numParams)
 	if (Hosties3_IsClientValid(client))
 	{
 		ChangePoints(client, Hosties3_GetVIPPoints(client) - points);
-		Hosties3_PrintToChat(client, "%T", "PointsTaken", client, g_sTag, points);
+		CPrintToChat(client, "%T", "PointsTaken", client, g_sTag, points);
 		return true;
 	}
 	else
@@ -289,7 +288,7 @@ public VIP_ResetVIPPoints(Handle plugin, numParams)
 	if (Hosties3_IsClientValid(client))
 	{
 		ChangePoints(client, 0);
-		Hosties3_PrintToChat(client, "%T", "PointsReset", client, g_sTag);
+		CPrintToChat(client, "%T", "PointsReset", client, g_sTag);
 		return true;
 	}
 	else
@@ -363,29 +362,29 @@ public Action Command_GetPoints(int client, args)
 {
 	if (g_iShowPoints == 0)
 	{
-		Hosties3_PrintToChat(client, "%T", "OwnPoints", client, g_sTag, Hosties3_GetVIPPoints(client));
+		CPrintToChat(client, "%T", "OwnPoints", client, g_sTag, Hosties3_GetVIPPoints(client));
 	}
 	else if (g_iShowPoints == 1)
 	{
-		Hosties3_PrintToChat(client, "%T", "OwnPoints", client, g_sTag, Hosties3_GetVIPPoints(client));
+		CPrintToChat(client, "%T", "OwnPoints", client, g_sTag, Hosties3_GetVIPPoints(client));
 
 		Hosties3_LoopClients(i)
 		{
 			if (Hosties3_IsClientValid(i, _, _, true) && i != client)
 			{
-				Hosties3_PrintToChat(i, "%T", "OtherPoints", i, g_sTag, client, Hosties3_GetVIPPoints(client));
+				CPrintToChat(i, "%T", "OtherPoints", i, g_sTag, client, Hosties3_GetVIPPoints(client));
 			}
 		}
 	}
 	else if (g_iShowPoints == 2)
 	{
-		Hosties3_PrintToChat(client, "%T", "OwnPoints", client, g_sTag, Hosties3_GetVIPPoints(client));
+		CPrintToChat(client, "%T", "OwnPoints", client, g_sTag, Hosties3_GetVIPPoints(client));
 
 		Hosties3_LoopClients(i)
 		{
 			if (Hosties3_IsClientValid(i) && i != client)
 			{
-				Hosties3_PrintToChat(i, "%T", "OtherPoints", i, g_sTag, client, Hosties3_GetVIPPoints(client));
+				CPrintToChat(i, "%T", "OtherPoints", i, g_sTag, client, Hosties3_GetVIPPoints(client));
 			}
 		}
 	}
@@ -422,11 +421,11 @@ public Action Command_AddPoints(int client, args)
 		if (Hosties3_IsClientValid(target))
 		{
 			Hosties3_AddVIPPoints(target, StringToInt(sArg2));
-			Hosties3_PrintToChat(client, "%T", "Admin_AddPoints", client, g_sTag, target, StringToInt(sArg2));
+			CPrintToChat(client, "%T", "Admin_AddPoints", client, g_sTag, target, StringToInt(sArg2));
 		}
 		else
 		{
-			Hosties3_ReplyToCommand(client, "%T", "InvalidTarget", client, g_sTag, target);
+			CReplyToCommand(client, "%T", "InvalidTarget", client, g_sTag, target);
 			return Plugin_Handled;
 		}
 	}
@@ -465,11 +464,11 @@ public Action Command_DelPoints(int client, args)
 		if (Hosties3_IsClientValid(target))
 		{
 			Hosties3_DelVIPPoints(target, StringToInt(sArg2));
-			Hosties3_PrintToChat(client, "%T", "Admin_DelPoints", client, g_sTag, StringToInt(sArg2), target);
+			CPrintToChat(client, "%T", "Admin_DelPoints", client, g_sTag, StringToInt(sArg2), target);
 		}
 		else
 		{
-			Hosties3_ReplyToCommand(client, "%T", "InvalidTarget", client, g_sTag, target);
+			CReplyToCommand(client, "%T", "InvalidTarget", client, g_sTag, target);
 			return Plugin_Handled;
 		}
 	}
@@ -508,11 +507,11 @@ public Action Command_SetPoints(int client, args)
 		if (Hosties3_IsClientValid(target))
 		{
 			Hosties3_SetVIPPoints(target, StringToInt(sArg2));
-			Hosties3_PrintToChat(client, "%T", "Admin_SetPoints", client, g_sTag, target, StringToInt(sArg2));
+			CPrintToChat(client, "%T", "Admin_SetPoints", client, g_sTag, target, StringToInt(sArg2));
 		}
 		else
 		{
-			Hosties3_ReplyToCommand(client, "%T", "InvalidTarget", client, g_sTag, target);
+			CReplyToCommand(client, "%T", "InvalidTarget", client, g_sTag, target);
 			return Plugin_Handled;
 		}
 	}
@@ -549,11 +548,11 @@ public Action Command_ResetPoints(int client, args)
 		if (Hosties3_IsClientValid(target))
 		{
 			Hosties3_ResetVIPPoints(target);
-			Hosties3_PrintToChat(client, "%T", "Admin_ResPoints", client, g_sTag, target);
+			CPrintToChat(client, "%T", "Admin_ResPoints", client, g_sTag, target);
 		}
 		else
 		{
-			Hosties3_ReplyToCommand(client, "%T", "InvalidTarget", client, g_sTag, target);
+			CReplyToCommand(client, "%T", "InvalidTarget", client, g_sTag, target);
 			return Plugin_Handled;
 		}
 

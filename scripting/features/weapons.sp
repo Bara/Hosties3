@@ -38,8 +38,7 @@ public Plugin myinfo =
 
 public Hosties3_OnPluginPreLoaded()
 {
-	Hosties3_IsLoaded();
-	Hosties3_CheckServerGame();
+	Hosties3_CheckRequirements();
 }
 
 public Hosties3_OnConfigsLoaded()
@@ -145,7 +144,7 @@ public Hosties3_OnPlayerSpawn(int client)
 
 				if (g_bChatMessage)
 				{
-					Hosties3_PrintToChat(client, "%T", "GetWeapon", client, g_sTag, g_sTWeaponsList[i]);
+					CPrintToChat(client, "%T", "GetWeapon", client, g_sTag, g_sTWeaponsList[i]);
 				}
 
 				if (g_iLogLevel <= 2)
@@ -171,7 +170,7 @@ public Hosties3_OnPlayerSpawn(int client)
 
 				if (g_bChatMessage)
 				{
-					Hosties3_PrintToChat(client, "%T", "GetWeapon", client, g_sTag, g_sCTWeaponsList[i]);
+					CPrintToChat(client, "%T", "GetWeapon", client, g_sTag, g_sCTWeaponsList[i]);
 				}
 
 				if (g_iLogLevel <= 2)

@@ -35,8 +35,6 @@ int g_iCvarCacheTmp[CvarCache];
 Handle g_hFlCache;
 int g_iFlCacheTmp[FlCache];
 
-CurrentGame g_iGame;
-
 bool g_bSQLReady = false;
 bool g_bStarted = false;
 bool g_bClientReady[MAXPLAYERS + 1] = {false,...};

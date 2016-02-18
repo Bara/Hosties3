@@ -33,8 +33,7 @@ public Plugin myinfo =
 
 public Hosties3_OnPluginPreLoaded()
 {
-  Hosties3_IsLoaded();
-  Hosties3_CheckServerGame();
+  Hosties3_CheckRequirements();
 }
 
 public Hosties3_OnConfigsLoaded()
@@ -135,7 +134,7 @@ public Action Command_ResetScore(int client, int args)
   {
     if(Hosties3_IsClientValid(i))
     {
-      Hosties3_PrintToChat(i, "%T", "ScoreReset", i, g_sTag, client);
+      CPrintToChat(i, "%T", "ScoreReset", i, g_sTag, client);
     }
   }
 
