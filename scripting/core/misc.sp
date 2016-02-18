@@ -41,7 +41,9 @@ public int Misc_LogFile(Handle plugin, int numParams)
 		CreateDirectory(sLevelPath, 755);
 	}
 
-	Format(sFile2, sizeof(sFile2), "%s/%s.log", sLevelPath, sFile);
+	char sDate[12];
+	FormatTime(sDate, sizeof(sDate), "%Y-%m-%d");
+	Format(sFile2, sizeof(sFile2), "%s/%s_%s.log", sLevelPath, sFile, sDate);
 
 	FormatNativeString(0, 4, 5, sizeof(sBuffer), _, sBuffer);
 
