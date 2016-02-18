@@ -128,11 +128,11 @@ void LoadConfig()
 	
 	if (g_iLogLevel <= 2)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Log Level: %d", FEATURE_NAME, g_iLogLevel);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Tag: %s", FEATURE_NAME, g_sTag);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Clean Tag: %s", FEATURE_NAME, g_sCTag);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Fl Commands: %s", FEATURE_NAME, g_sFlCom);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Log Level: %d", FEATURE_NAME, g_iLogLevel);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Tag: %s", FEATURE_NAME, g_sTag);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Clean Tag: %s", FEATURE_NAME, g_sCTag);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Fl Commands: %s", FEATURE_NAME, g_sFlCom);
 	}
 	
 	g_iFlCom = ExplodeString(g_sFlCom, ";", g_sFlComList, sizeof(g_sFlComList), sizeof(g_sFlComList[]));
@@ -142,7 +142,7 @@ void LoadConfig()
 		char sBuffer[32];
 		Format(sBuffer, sizeof(sBuffer), "sm_%s", g_sFlComList[i]);
 		RegConsoleCmd(sBuffer, Command_Featurelist);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Register Command: %s Full: %s", FEATURE_NAME, g_sFlComList[i], sBuffer);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register Command: %s Full: %s", FEATURE_NAME, g_sFlComList[i], sBuffer);
 	}
 	
 	HookEvent("player_spawn", Event_OnPlayerSpawn);

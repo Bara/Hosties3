@@ -86,13 +86,13 @@ public Hosties3_OnConfigsLoaded()
 
 	if (g_iLogLevel <= 2)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, "rules", _, DEBUG, "[Rules] Enable: %d", g_iEnable);
-		Hosties3_LogToFile(HOSTIES3_PATH, "rules", _, DEBUG, "[Rules] Message Mode: %d", g_iMessageMode);
-		Hosties3_LogToFile(HOSTIES3_PATH, "rules", _, DEBUG, "[Rules] OnConnect: %d", g_iOnConnect);
-		Hosties3_LogToFile(HOSTIES3_PATH, "rules", _, DEBUG, "[Rules] CTEnable: %d", g_iCTEnable);
-		Hosties3_LogToFile(HOSTIES3_PATH, "rules", _, DEBUG, "[Rules] CTBlockMovement: %d", g_iCTBlockMovement);
-		Hosties3_LogToFile(HOSTIES3_PATH, "rules", _, DEBUG, "[Rules] CTPunishment: %d", g_iCTPunishment);
-		Hosties3_LogToFile(HOSTIES3_PATH, "rules", _, DEBUG, "[Rules] NoobFilter: %d", g_iNoobFilter);
+		Hosties3_LogToFile(HOSTIES3_PATH, "rules", DEBUG, "[Rules] Enable: %d", g_iEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, "rules", DEBUG, "[Rules] Message Mode: %d", g_iMessageMode);
+		Hosties3_LogToFile(HOSTIES3_PATH, "rules", DEBUG, "[Rules] OnConnect: %d", g_iOnConnect);
+		Hosties3_LogToFile(HOSTIES3_PATH, "rules", DEBUG, "[Rules] CTEnable: %d", g_iCTEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, "rules", DEBUG, "[Rules] CTBlockMovement: %d", g_iCTBlockMovement);
+		Hosties3_LogToFile(HOSTIES3_PATH, "rules", DEBUG, "[Rules] CTPunishment: %d", g_iCTPunishment);
+		Hosties3_LogToFile(HOSTIES3_PATH, "rules", DEBUG, "[Rules] NoobFilter: %d", g_iNoobFilter);
 	}
 
 	if (g_iEnable != 1)
@@ -341,7 +341,7 @@ ShowCTRules(client)
 	}
 
 	SetEntityMoveType(client, MOVETYPE_NONE);
-	Hosties3_LogToFile(HOSTIES3_PATH, "rules", _, DEBUG, "\"%L\" can't now walk!", client);
+	Hosties3_LogToFile(HOSTIES3_PATH, "rules", DEBUG, "\"%L\" can't now walk!", client);
 
 	FileToKeyValues(hConfig, CTRULES_CONFIG);
 	if (KvJumpToKey(hConfig, "Options"))
@@ -406,7 +406,7 @@ public Menu_CTRules(Menu menu, MenuAction:action, client, param)
 			if (g_iCTBlockMovement)
 			{
 				SetEntityMoveType(client, MOVETYPE_WALK);
-				Hosties3_LogToFile(HOSTIES3_PATH, "rules", _, DEBUG, "\"%L\" can walk again!", client);
+				Hosties3_LogToFile(HOSTIES3_PATH, "rules", DEBUG, "\"%L\" can walk again!", client);
 			}
 		}
 		else
@@ -460,7 +460,7 @@ SetCTRules(int client, bool status, bool message)
 				}
 			}
 
-			Hosties3_LogToFile(HOSTIES3_PATH, "rules", _, DEBUG, "\"%L\" has accept the rules!", client);
+			Hosties3_LogToFile(HOSTIES3_PATH, "rules", DEBUG, "\"%L\" has accept the rules!", client);
 		}
 		else if (!Hosties3_GetClientCTRules(client))
 		{
@@ -485,7 +485,7 @@ SetCTRules(int client, bool status, bool message)
 				}
 			}
 
-			Hosties3_LogToFile(HOSTIES3_PATH, "rules", _, DEBUG, "\"%L\" hasn't accepted the rules!", client);
+			Hosties3_LogToFile(HOSTIES3_PATH, "rules", DEBUG, "\"%L\" hasn't accepted the rules!", client);
 		}
 	}
 }
@@ -519,7 +519,7 @@ CTPunishment(int client, int method)
 				}
 			}
 
-			Hosties3_LogToFile(HOSTIES3_PATH, "rules", _, INFO, "\"%L\" hasn't accepted the rules and was moved to t team!", client);
+			Hosties3_LogToFile(HOSTIES3_PATH, "rules", INFO, "\"%L\" hasn't accepted the rules and was moved to t team!", client);
 		}
 		else if (method == 2)
 		{
@@ -546,7 +546,7 @@ CTPunishment(int client, int method)
 				}
 			}
 
-			Hosties3_LogToFile(HOSTIES3_PATH, "rules", _, INFO, "\"%L\" hasn't accepted the rules and was slayed!", client);
+			Hosties3_LogToFile(HOSTIES3_PATH, "rules", INFO, "\"%L\" hasn't accepted the rules and was slayed!", client);
 		}
 		else if (method == 3)
 		{
@@ -576,7 +576,7 @@ CTPunishment(int client, int method)
 				}
 			}
 
-			Hosties3_LogToFile(HOSTIES3_PATH, "rules", _, INFO, "\"%L\" hasn't accepted the rules and was kicked!", client);
+			Hosties3_LogToFile(HOSTIES3_PATH, "rules", INFO, "\"%L\" hasn't accepted the rules and was kicked!", client);
 		}
 	}
 }

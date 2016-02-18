@@ -38,7 +38,7 @@ forward void Hosties3_OnPlayerReady(int client);
 forward void Hosties3_OnPlayerSpawn(int client);
 forward void Hosties3_OnPlayerDisconnect(int client);
 
-native void Hosties3_LogToFile(const char[] path = "", const char[] file = "file", const char[] date = "", LogLevel level = INFO, const char[] format, any ...);
+native void Hosties3_LogToFile(const char[] path = "", const char[] file = "file", LogLevel level = INFO, const char[] format, any ...);
 native int Hosties3_GetLogLevel();
 native void Hosties3_GetColorTag(const char[] tag, int maxlength);
 native void Hosties3_GetCleanTag(const char[] tag, int maxlength);

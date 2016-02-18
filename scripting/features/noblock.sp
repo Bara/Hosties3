@@ -77,15 +77,15 @@ public Hosties3_OnConfigsLoaded()
 
 	if (g_iLogLevel <= 2)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] CommandMode: %d", FEATURE_NAME, g_bComMode);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] EnableWeapons: %d", FEATURE_NAME, g_bEnableWeapons);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] EnableGrenade: %d", FEATURE_NAME, g_bEnableGrenade);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] EnableHostage: %d", FEATURE_NAME, g_bEnableHostage);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] EnableGlobal: %d", FEATURE_NAME, g_bEnableGlobal);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Mode: %d", FEATURE_NAME, g_iSpawnMode);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] NoBlock Time: %.2f", FEATURE_NAME, g_fTime);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] NoBlock Commands: %s", FEATURE_NAME, g_sNoBlockCom);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] CommandMode: %d", FEATURE_NAME, g_bComMode);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] EnableWeapons: %d", FEATURE_NAME, g_bEnableWeapons);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] EnableGrenade: %d", FEATURE_NAME, g_bEnableGrenade);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] EnableHostage: %d", FEATURE_NAME, g_bEnableHostage);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] EnableGlobal: %d", FEATURE_NAME, g_bEnableGlobal);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Mode: %d", FEATURE_NAME, g_iSpawnMode);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] NoBlock Time: %.2f", FEATURE_NAME, g_fTime);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] NoBlock Commands: %s", FEATURE_NAME, g_sNoBlockCom);
 	}
 
 	g_iCommands = ExplodeString(g_sNoBlockCom, ";", g_sNoBlockComList, sizeof(g_sNoBlockComList), sizeof(g_sNoBlockComList[]));
@@ -95,7 +95,7 @@ public Hosties3_OnConfigsLoaded()
 			char sBuffer[32];
 			Format(sBuffer, sizeof(sBuffer), "sm_%s", g_sNoBlockComList[i]);
 			RegConsoleCmd(sBuffer, Command_Block);
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Register Command: %s Full: %s", FEATURE_NAME, g_sNoBlockComList[i], sBuffer);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register Command: %s Full: %s", FEATURE_NAME, g_sNoBlockComList[i], sBuffer);
 	}
 
 	g_iCollision = FindSendPropInfo("CBaseEntity", "m_CollisionGroup");

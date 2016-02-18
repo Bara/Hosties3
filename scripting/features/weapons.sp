@@ -64,10 +64,10 @@ public Hosties3_OnConfigsLoaded()
 			Format(g_sTWeapons, sizeof(g_sTWeapons), "no weapons for ts");
 		}
 
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Chat Message: %d", FEATURE_NAME, g_bChatMessage);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] CT Weapons: %s", FEATURE_NAME, g_sCTWeapons);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] T Weapons: %s", FEATURE_NAME, g_sTWeapons);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Chat Message: %d", FEATURE_NAME, g_bChatMessage);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] CT Weapons: %s", FEATURE_NAME, g_sCTWeapons);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] T Weapons: %s", FEATURE_NAME, g_sTWeapons);
 	}
 
 	LoadTranslations("hosties3_weapons.phrases");
@@ -149,7 +149,7 @@ public Hosties3_OnPlayerSpawn(int client)
 
 				if (g_iLogLevel <= 2)
 				{
-					Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Player: \"%L\" - Team: %d - Weapon: %s", FEATURE_NAME, client, team, g_sTWeaponsList[i]);
+					Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Player: \"%L\" - Team: %d - Weapon: %s", FEATURE_NAME, client, team, g_sTWeaponsList[i]);
 				}
 			}
 		}
@@ -175,7 +175,7 @@ public Hosties3_OnPlayerSpawn(int client)
 
 				if (g_iLogLevel <= 2)
 				{
-					Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Player: \"%L\" - Team: %d - Weapon: %s", FEATURE_NAME, client, team, g_sCTWeaponsList[i]);
+					Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Player: \"%L\" - Team: %d - Weapon: %s", FEATURE_NAME, client, team, g_sCTWeaponsList[i]);
 				}
 			}
 		}

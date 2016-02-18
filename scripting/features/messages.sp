@@ -104,27 +104,27 @@ public Hosties3_OnConfigsLoaded()
 
 	if (g_iLogLevel <= 2)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
 
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Connect: %d", FEATURE_NAME, g_bConnect);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] VIP Connect: %d", FEATURE_NAME, g_bVIPConnect);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Connect Points: %d", FEATURE_NAME, g_iVIPConnect);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Connect: %d", FEATURE_NAME, g_bConnect);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] VIP Connect: %d", FEATURE_NAME, g_bVIPConnect);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Connect Points: %d", FEATURE_NAME, g_iVIPConnect);
 
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Disconnect: %d", FEATURE_NAME, g_bDisconnect);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] VIP Disconnect: %d", FEATURE_NAME, g_bVIPDisconnect);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Disconnect Points: %d", FEATURE_NAME, g_iVIPDisconnect);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Disconnect: %d", FEATURE_NAME, g_bDisconnect);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] VIP Disconnect: %d", FEATURE_NAME, g_bVIPDisconnect);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Disconnect Points: %d", FEATURE_NAME, g_iVIPDisconnect);
 
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] CT Join: %d", FEATURE_NAME, g_bCTJoin);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] VIP CT Join: %d", FEATURE_NAME, g_bVIPCTJoin);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] CT Join Points: %d", FEATURE_NAME, g_iVIPCTJoin);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] CT Join: %d", FEATURE_NAME, g_bCTJoin);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] VIP CT Join: %d", FEATURE_NAME, g_bVIPCTJoin);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] CT Join Points: %d", FEATURE_NAME, g_iVIPCTJoin);
 
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] T Join: %d", FEATURE_NAME, g_bTJoin);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] VIP T Join: %d", FEATURE_NAME, g_bVIPTJoin);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] T Join Points: %d", FEATURE_NAME, g_iVIPTJoin);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] T Join: %d", FEATURE_NAME, g_bTJoin);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] VIP T Join: %d", FEATURE_NAME, g_bVIPTJoin);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] T Join Points: %d", FEATURE_NAME, g_iVIPTJoin);
 
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Spec Join: %d", FEATURE_NAME, g_bSpecJoin);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] VIP Spec Join: %d", FEATURE_NAME, g_bVIPSpecJoin);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Spec Join Points: %d", FEATURE_NAME, g_iVIPSpecJoin);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Spec Join: %d", FEATURE_NAME, g_bSpecJoin);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] VIP Spec Join: %d", FEATURE_NAME, g_bVIPSpecJoin);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Spec Join Points: %d", FEATURE_NAME, g_iVIPSpecJoin);
 
 	}
 

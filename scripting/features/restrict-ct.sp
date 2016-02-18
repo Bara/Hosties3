@@ -50,11 +50,11 @@ public Hosties3_OnConfigsLoaded()
 
 	if (g_iLogLevel <= 2)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] PointsToJoinCT: %d", FEATURE_NAME, g_iNeededPoints);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] StartPlayers: %d", FEATURE_NAME, g_iStartPlayers);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] HowManyPlayers: %d", FEATURE_NAME, g_iHowManyPlayers);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] StartPluginTime: %.1f", FEATURE_NAME, g_fStartPluginTime);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] PointsToJoinCT: %d", FEATURE_NAME, g_iNeededPoints);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] StartPlayers: %d", FEATURE_NAME, g_iStartPlayers);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] HowManyPlayers: %d", FEATURE_NAME, g_iHowManyPlayers);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] StartPluginTime: %.1f", FEATURE_NAME, g_fStartPluginTime);
 	}
 
 	AddCommandListener(Command_JoinTeam, "jointeam");

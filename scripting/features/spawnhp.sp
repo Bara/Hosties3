@@ -47,11 +47,11 @@ public Hosties3_OnConfigsLoaded()
 
 	if (g_iLogLevel <= 2)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Max HP: %d", FEATURE_NAME, g_iMaxHP);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Spawn HP: %d", FEATURE_NAME, g_iSpawnHP);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Multiplier: %d", FEATURE_NAME, g_iMultiplier);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Multiplier Max: %d", FEATURE_NAME, g_iMultiplierMax);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Max HP: %d", FEATURE_NAME, g_iMaxHP);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Spawn HP: %d", FEATURE_NAME, g_iSpawnHP);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Multiplier: %d", FEATURE_NAME, g_iMultiplier);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Multiplier Max: %d", FEATURE_NAME, g_iMultiplierMax);
 	}
 
 	Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, true, g_iMultiplier, HOSTIES3_DESCRIPTION);

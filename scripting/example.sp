@@ -28,7 +28,7 @@ public void OnPluginStart()
 
 public void Hosties3_OnConfigsLoaded()
 {
-	Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "Try to load settings for %s", FEATURE_NAME);
+	Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "Try to load settings for %s", FEATURE_NAME);
 	
 	if (!(g_bEnable = Hosties3_AddCvarBool(FEATURE_NAME, "Enable", true)))
 	{
@@ -40,7 +40,7 @@ public void Hosties3_OnConfigsLoaded()
 
 	if (g_iLogLevel <= 2)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
 	}
 
 	Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, false, 0, HOSTIES3_DESCRIPTION);

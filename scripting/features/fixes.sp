@@ -48,10 +48,10 @@ public Hosties3_OnConfigsLoaded()
 
 	if (g_iLogLevel <= 2)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Ladder Fix: %d", FEATURE_NAME, g_bLadderFix);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Offline Bug Fix: %d", FEATURE_NAME, g_bOfflineBugFix);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Block Family Sharing: %d", FEATURE_NAME, g_bBlockFamilySharing);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Ladder Fix: %d", FEATURE_NAME, g_bLadderFix);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Offline Bug Fix: %d", FEATURE_NAME, g_bOfflineBugFix);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Block Family Sharing: %d", FEATURE_NAME, g_bBlockFamilySharing);
 	}
 
 	Hosties3_AddToFeatureList("Ladder  Fix", HOSTIES3_AUTHOR, false, 0, HOSTIES3_DESCRIPTION);
@@ -76,7 +76,7 @@ public SW_OnValidateClient(OwnerID, ClientID)
 	                    KickClient(i, "Family Sharing/Offline Abuser detected! Family Sharing/Offline Abuser aren't allowed on this this!");
 	                    if (g_iLogLevel <= 3)
 	                    {
-	                    	Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, INFO, "Family Sharing/Offline Abuser detected! Name: %L OwnerID: %d ClientID: %d", i, OwnerID, ClientID);
+	                    	Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, INFO, "Family Sharing/Offline Abuser detected! Name: %L OwnerID: %d ClientID: %d", i, OwnerID, ClientID);
 	                    }
 	                    break;
 	                }
@@ -95,7 +95,7 @@ public OnClientPutInServer(client)
 	        KickClient(client, "Family Sharing/Offline Abuser detected! Family Sharing/Offline Abuser aren't allowed on this this!");
 	        if (g_iLogLevel <= 3)
 	        {
-	        	Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, INFO, "Family Sharing/Offline Abuser detected! Name: %L", client);
+	        	Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, INFO, "Family Sharing/Offline Abuser detected! Name: %L", client);
 	        }
 	    }
 	}

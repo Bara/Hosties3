@@ -72,17 +72,17 @@ public Hosties3_OnConfigsLoaded()
 
 	if (g_iLogLevel <= 2)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
 
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Admin: %d", FEATURE_NAME, g_bAdmin);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Admin: %d", FEATURE_NAME, g_bAdmin);
 
 		if(g_bVIPLoaded)
 		{
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] VIP: %d", FEATURE_NAME, g_bVIP);
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] VIP Points: %d", FEATURE_NAME, g_iVIPPoints);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] VIP: %d", FEATURE_NAME, g_bVIP);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] VIP Points: %d", FEATURE_NAME, g_iVIPPoints);
 		}
 
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] All: %d", FEATURE_NAME, g_bAll);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] All: %d", FEATURE_NAME, g_bAll);
 
 	}
 

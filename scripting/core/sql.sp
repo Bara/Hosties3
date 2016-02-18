@@ -4,7 +4,7 @@ void ConnectToSQL()
 
 	if (!SQL_CheckConfig("hosties3"))
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, "sql", _, ERROR, "Database failure: Couldn't find Database entry \"hosties3\"");
+		Hosties3_LogToFile(HOSTIES3_PATH, "sql", ERROR, "Database failure: Couldn't find Database entry \"hosties3\"");
 		return;
 	}
 	SQL_TConnect(ConnectDatabase, "hosties3");
@@ -16,7 +16,7 @@ public void ConnectDatabase(Handle owner, Handle hndl, const char[] error, any d
 	{
 		if (error[0])
 		{
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, ERROR, "Connection to database has failed!: (ConnectDatabase) %s", error);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, ERROR, "Connection to database has failed!: (ConnectDatabase) %s", error);
 			return;
 		}
 	}
@@ -84,7 +84,7 @@ public void SQL_ClientConnect(Handle owner, Handle hndl, const char[] error, any
 	{
 		if (error[0])
 		{
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, ERROR, "Connection to database has failed!: (SQL_ClientConnect) %s", error);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, ERROR, "Connection to database has failed!: (SQL_ClientConnect) %s", error);
 			return;
 		}
 	}
@@ -121,7 +121,7 @@ public void SQL_AdminLevel(Handle owner, Handle hndl, const char[] error, any us
 	{
 		if (error[0])
 		{
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, ERROR, "Connection to database has failed!: (SQL_AdminLevel) %s", error);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, ERROR, "Connection to database has failed!: (SQL_AdminLevel) %s", error);
 			return;
 		}
 	}
@@ -146,7 +146,7 @@ public void SQL_Callback(Handle owner, Handle hndl, const char[] error, any data
 {
 	if (error[0])
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, "sql", _, ERROR, "Query failed: (SQL_Callback) %s", error);
+		Hosties3_LogToFile(HOSTIES3_PATH, "sql", ERROR, "Query failed: (SQL_Callback) %s", error);
 		return;
 	}
 }
@@ -211,7 +211,7 @@ public void SQL_CacheSettings(Handle owner, Handle hndl, const char[] error, any
 			SQL_FetchString(hndl, 2, iNewCache[fCvar], HOSTIES3_MAX_CVAR_NAME);
 			SQL_FetchString(hndl, 3, iNewCache[fValue], HOSTIES3_MAX_CVAR_VALUE);
 
-			Hosties3_LogToFile(HOSTIES3_PATH, "Cache", _, DEBUG, "[Cache] ID: %d - Feature: %s - Cvar: %s - Value: %s", iNewCache[fId], iNewCache[fFeature], iNewCache[fCvar], iNewCache[fValue]);
+			Hosties3_LogToFile(HOSTIES3_PATH, "Cache", DEBUG, "[Cache] ID: %d - Feature: %s - Cvar: %s - Value: %s", iNewCache[fId], iNewCache[fFeature], iNewCache[fCvar], iNewCache[fValue]);
 
 			PushArrayArray(g_hCvarCache, iNewCache[0]);
 		}

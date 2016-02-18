@@ -62,14 +62,14 @@ public Hosties3_OnConfigsLoaded()
 
   if (g_iLogLevel <= 2)
   {
-    Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
+    Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
 
     if(g_bVIPLoaded)
     {
-      Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Need Points: %d", FEATURE_NAME, g_iNeedPoints);
+      Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Need Points: %d", FEATURE_NAME, g_iNeedPoints);
     }
 
-    Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Commands: %s", FEATURE_NAME, g_sResetScoreCom);
+    Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Commands: %s", FEATURE_NAME, g_sResetScoreCom);
   }
 
   Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, true, g_iNeedPoints, HOSTIES3_DESCRIPTION);
@@ -81,7 +81,7 @@ public Hosties3_OnConfigsLoaded()
     char sBuffer[32];
     Format(sBuffer, sizeof(sBuffer), "sm_%s", g_sResetScoreComList[i]);
     RegConsoleCmd(sBuffer, Command_ResetScore);
-    Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Register Command: %s Full: %s", FEATURE_NAME, g_sResetScoreComList[i], sBuffer);
+    Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register Command: %s Full: %s", FEATURE_NAME, g_sResetScoreComList[i], sBuffer);
   }
 
   LoadTranslations("hosties3_resetscore.phrases");

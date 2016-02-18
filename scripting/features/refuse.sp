@@ -110,11 +110,11 @@ public Hosties3_OnConfigsLoaded()
 
 	if (g_iLogLevel <= 2)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Multiplier: %d", FEATURE_NAME, g_iMultiplier);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] MaxRefuse: %d", FEATURE_NAME, g_iMaxRefuse);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] MinTs: %d", FEATURE_NAME, g_iMinTs);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Commands: %s", FEATURE_NAME, g_sRefuseCom);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Multiplier: %d", FEATURE_NAME, g_iMultiplier);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] MaxRefuse: %d", FEATURE_NAME, g_iMaxRefuse);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] MinTs: %d", FEATURE_NAME, g_iMinTs);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Commands: %s", FEATURE_NAME, g_sRefuseCom);
 	}
 
 	g_iRefuseCom = ExplodeString(g_sRefuseCom, ";", g_sRefuseComList, sizeof(g_sRefuseComList), sizeof(g_sRefuseComList[]));
@@ -124,7 +124,7 @@ public Hosties3_OnConfigsLoaded()
 		char sBuffer[32];
 		Format(sBuffer, sizeof(sBuffer), "sm_%s", g_sRefuseComList[i]);
 		RegConsoleCmd(sBuffer, Command_Refuse);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Register Command: %s Full: %s", FEATURE_NAME, g_sRefuseComList[i], sBuffer);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register Command: %s Full: %s", FEATURE_NAME, g_sRefuseComList[i], sBuffer);
 	}
 
 	LoadTranslations("hosties3_refuse.phrases");

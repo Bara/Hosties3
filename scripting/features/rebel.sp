@@ -107,28 +107,28 @@ public Hosties3_OnConfigsLoaded()
 
 	if (g_iLogLevel <= 2)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Set Color: %d", FEATURE_NAME, g_bSetColor);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] SetRebel Commands: %s", FEATURE_NAME, g_sSRCommands);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Set Color: %d", FEATURE_NAME, g_bSetColor);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] SetRebel Commands: %s", FEATURE_NAME, g_sSRCommands);
 
 		if(g_bVIP)
 		{
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Points On Rebel Kill: %s", FEATURE_NAME, g_iPointsOnRebelKill);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Points On Rebel Kill: %s", FEATURE_NAME, g_iPointsOnRebelKill);
 		}
 
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Show Message: %d", FEATURE_NAME, g_bShowMessage);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Message on Dead: %d", FEATURE_NAME, g_bMessageOnDead);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Show Message: %d", FEATURE_NAME, g_bShowMessage);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Message on Dead: %d", FEATURE_NAME, g_bMessageOnDead);
 
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Rebel Color Red: %d", FEATURE_NAME, g_iRebelColorRed);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Rebel Color Green: %d", FEATURE_NAME, g_iRebelColorGreen);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Rebel Color Blue: %d", FEATURE_NAME, g_iRebelColorBlue);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Default Color Red: %d", FEATURE_NAME, g_iDefaultColorRed);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Default Color Green: %d", FEATURE_NAME, g_iDefaultColorGreen);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Default Color Blue: %d", FEATURE_NAME, g_iDefaultColorBlue);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Rebel Color Red: %d", FEATURE_NAME, g_iRebelColorRed);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Rebel Color Green: %d", FEATURE_NAME, g_iRebelColorGreen);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Rebel Color Blue: %d", FEATURE_NAME, g_iRebelColorBlue);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Default Color Red: %d", FEATURE_NAME, g_iDefaultColorRed);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Default Color Green: %d", FEATURE_NAME, g_iDefaultColorGreen);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Default Color Blue: %d", FEATURE_NAME, g_iDefaultColorBlue);
 
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Rebel on Shot: %d", FEATURE_NAME, g_bOnShot);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Rebel on Hurt: %d", FEATURE_NAME, g_bOnHurt);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Rebel on Death: %d", FEATURE_NAME, g_bOnDeath);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Rebel on Shot: %d", FEATURE_NAME, g_bOnShot);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Rebel on Hurt: %d", FEATURE_NAME, g_bOnHurt);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Rebel on Death: %d", FEATURE_NAME, g_bOnDeath);
 	}
 
 	g_iSRCommands = ExplodeString(g_sSRCommands, ";", g_sSRCommandsList, sizeof(g_sSRCommandsList), sizeof(g_sSRCommandsList[]));
@@ -138,7 +138,7 @@ public Hosties3_OnConfigsLoaded()
 		char sBuffer[32];
 		Format(sBuffer, sizeof(sBuffer), "sm_%s", g_sSRCommandsList[i]);
 		RegAdminCmd(sBuffer, Command_SetRebel, ADMFLAG_GENERIC);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Register Command: %s Full: %s", FEATURE_NAME, g_sSRCommandsList[i], sBuffer);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register Command: %s Full: %s", FEATURE_NAME, g_sSRCommandsList[i], sBuffer);
 	}
 
 	LoadTranslations("hosties3_rebel.phrases");
@@ -188,7 +188,7 @@ public Event_BulletImpact(Handle event, const char[] name, bool dontBroadcast)
 			{
 				if (g_iLogLevel <= 2)
 				{
-					Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] \"%L\" has shot and is now a rebel!", FEATURE_NAME, client);
+					Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] \"%L\" has shot and is now a rebel!", FEATURE_NAME, client);
 				}
 
 				Hosties3_SetClientRebel(client, true, true);
@@ -258,7 +258,7 @@ public Hosties3_OnPlayerHurt(int victim, int attacker, int damage, const char[] 
 				{
 					if (g_iLogLevel <= 2)
 					{
-						Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] \"%L\" has hurt a ct and is now a rebel!", FEATURE_NAME, attacker);
+						Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] \"%L\" has hurt a ct and is now a rebel!", FEATURE_NAME, attacker);
 					}
 
 					Hosties3_SetClientRebel(attacker, true, true);
@@ -280,7 +280,7 @@ public Hosties3_OnPlayerDeath(int victim, int attacker, int assister, const char
 				{
 					if (g_iLogLevel <= 2)
 					{
-						Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] \"%L\" has killed \"%L\" and is now a rebel!", FEATURE_NAME, attacker, victim);
+						Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] \"%L\" has killed \"%L\" and is now a rebel!", FEATURE_NAME, attacker, victim);
 					}
 
 					Hosties3_SetClientRebel(attacker, true, true);
@@ -379,7 +379,7 @@ SetClientRebel(int client, bool status, bool bMessage)
 
 		if (g_iLogLevel <= 3)
 		{
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, INFO, "[%s] \"%L\" is no longer a rebel!", FEATURE_NAME, client);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, INFO, "[%s] \"%L\" is no longer a rebel!", FEATURE_NAME, client);
 		}
 	}
 	else
@@ -404,7 +404,7 @@ SetClientRebel(int client, bool status, bool bMessage)
 
 		if (g_iLogLevel <= 3)
 		{
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, INFO, "[%s] \"%L\" is now a rebel!", FEATURE_NAME, client);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, INFO, "[%s] \"%L\" is now a rebel!", FEATURE_NAME, client);
 		}
 	}
 

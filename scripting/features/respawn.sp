@@ -47,9 +47,9 @@ public Hosties3_OnConfigsLoaded()
 
 	if (g_iLogLevel <= 2)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Message Mode: %d", FEATURE_NAME, g_iMessageMode);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Commands: %s", FEATURE_NAME, g_sRespawnCom);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Message Mode: %d", FEATURE_NAME, g_iMessageMode);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Commands: %s", FEATURE_NAME, g_sRespawnCom);
 	}
 
 	g_iRespawnCom = ExplodeString(g_sRespawnCom, ";", g_sRespawnComList, sizeof(g_sRespawnComList), sizeof(g_sRespawnComList[]));
@@ -59,7 +59,7 @@ public Hosties3_OnConfigsLoaded()
 		char sBuffer[32];
 		Format(sBuffer, sizeof(sBuffer), "sm_%s", g_sRespawnComList[i]);
 		RegAdminCmd(sBuffer, Command_Respawn, ADMFLAG_GENERIC);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Register Command: %s Full: %s", FEATURE_NAME, g_sRespawnComList[i], sBuffer);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register Command: %s Full: %s", FEATURE_NAME, g_sRespawnComList[i], sBuffer);
 	}
 
 	Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, false, 0, HOSTIES3_DESCRIPTION);
@@ -107,7 +107,7 @@ public Action Command_Respawn(int client, args)
 		}
 
 		CS_RespawnPlayer(target);
-		Hosties3_LogToFile(HOSTIES3_PATH, "rules", _, INFO, "\"%L\" was respawned by \"%L\"!", target, client);
+		Hosties3_LogToFile(HOSTIES3_PATH, "rules", INFO, "\"%L\" was respawned by \"%L\"!", target, client);
 
 		if (g_iMessageMode)
 		{

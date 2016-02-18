@@ -47,9 +47,9 @@ public Hosties3_OnConfigsLoaded()
 
 	if (g_iLogLevel <= 2)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] VIPTag: %d", FEATURE_NAME, g_iVIPTagPoints);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Tag: %d", FEATURE_NAME, g_iTagPoints);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] VIPTag: %d", FEATURE_NAME, g_iVIPTagPoints);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Tag: %d", FEATURE_NAME, g_iTagPoints);
 	}
 
 	Hosties3_AddToFeatureList("VIP Tag", HOSTIES3_AUTHOR, true, g_iVIPTagPoints, HOSTIES3_DESCRIPTION);

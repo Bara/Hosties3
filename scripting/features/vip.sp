@@ -123,24 +123,24 @@ public Hosties3_OnConfigsLoaded()
 
 	if (g_iLogLevel <= 2)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] EnableMinPlayers: %d", FEATURE_NAME, g_bEnableMinPlayers);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] MinPlayers: %d", FEATURE_NAME, g_iMinPlayers);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] OnRoundStart: %d", FEATURE_NAME, g_bOnRoundStart);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] PointsOnRoundStart: %d", FEATURE_NAME, g_iPointsOnRoundStart);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] GetPointsPerKill: %d", FEATURE_NAME, g_bGetPointsPerKill);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] PointsPerKill: %d", FEATURE_NAME, g_iPointsPerKill);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] EnableTimePoints: %d", FEATURE_NAME, g_bTimeEnable);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] TimeInterval: %.2f", FEATURE_NAME, g_fTimeInterval);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] TimePoints: %d", FEATURE_NAME, g_iTimePoints);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] ExtraPointsPerHeadShotKill: %d", FEATURE_NAME, g_iExtraPointsPerHeadShotKill);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable Commands: %d", FEATURE_NAME, g_bEnableCommands);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Show Points: %d", FEATURE_NAME, g_iShowPoints);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] GetPoints Commands: %s", FEATURE_NAME, g_sGPCommands);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] AddPoints Commands: %s", FEATURE_NAME, g_sAPCommands);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] DelPoints Commands: %s", FEATURE_NAME, g_sDPCommands);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] SetPoints Commands: %s", FEATURE_NAME, g_sSPCommands);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] ResetPoints Commands: %s", FEATURE_NAME, g_sRPCommands);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] EnableMinPlayers: %d", FEATURE_NAME, g_bEnableMinPlayers);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] MinPlayers: %d", FEATURE_NAME, g_iMinPlayers);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] OnRoundStart: %d", FEATURE_NAME, g_bOnRoundStart);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] PointsOnRoundStart: %d", FEATURE_NAME, g_iPointsOnRoundStart);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] GetPointsPerKill: %d", FEATURE_NAME, g_bGetPointsPerKill);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] PointsPerKill: %d", FEATURE_NAME, g_iPointsPerKill);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] EnableTimePoints: %d", FEATURE_NAME, g_bTimeEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] TimeInterval: %.2f", FEATURE_NAME, g_fTimeInterval);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] TimePoints: %d", FEATURE_NAME, g_iTimePoints);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] ExtraPointsPerHeadShotKill: %d", FEATURE_NAME, g_iExtraPointsPerHeadShotKill);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable Commands: %d", FEATURE_NAME, g_bEnableCommands);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Show Points: %d", FEATURE_NAME, g_iShowPoints);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] GetPoints Commands: %s", FEATURE_NAME, g_sGPCommands);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] AddPoints Commands: %s", FEATURE_NAME, g_sAPCommands);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] DelPoints Commands: %s", FEATURE_NAME, g_sDPCommands);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] SetPoints Commands: %s", FEATURE_NAME, g_sSPCommands);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] ResetPoints Commands: %s", FEATURE_NAME, g_sRPCommands);
 	}
 
 	if (g_bEnableCommands)
@@ -151,7 +151,7 @@ public Hosties3_OnConfigsLoaded()
 			char sBuffer[32];
 			Format(sBuffer, sizeof(sBuffer), "sm_%s", g_sGPCommandsList[i]);
 			RegConsoleCmd(sBuffer, Command_GetPoints);
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Register Get Points Command: %s Full: %s", FEATURE_NAME, g_sGPCommandsList[i], sBuffer);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register Get Points Command: %s Full: %s", FEATURE_NAME, g_sGPCommandsList[i], sBuffer);
 		}
 
 		g_iAPCommands = ExplodeString(g_sAPCommands, ";", g_sAPCommandsList, sizeof(g_sAPCommandsList), sizeof(g_sAPCommandsList[]));
@@ -160,7 +160,7 @@ public Hosties3_OnConfigsLoaded()
 			char sBuffer[32];
 			Format(sBuffer, sizeof(sBuffer), "sm_%s", g_sAPCommandsList[i]);
 			RegAdminCmd(sBuffer, Command_AddPoints, ADMFLAG_ROOT);
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Register Add Points Command: %s Full: %s", FEATURE_NAME, g_sAPCommandsList[i], sBuffer);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register Add Points Command: %s Full: %s", FEATURE_NAME, g_sAPCommandsList[i], sBuffer);
 		}
 
 		g_iDPCommands = ExplodeString(g_sDPCommands, ";", g_sDPCommandsList, sizeof(g_sDPCommandsList), sizeof(g_sDPCommandsList[]));
@@ -169,7 +169,7 @@ public Hosties3_OnConfigsLoaded()
 			char sBuffer[32];
 			Format(sBuffer, sizeof(sBuffer), "sm_%s", g_sDPCommandsList[i]);
 			RegAdminCmd(sBuffer, Command_DelPoints, ADMFLAG_ROOT);
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Register Del Points Command: %s Full: %s", FEATURE_NAME, g_sDPCommandsList[i], sBuffer);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register Del Points Command: %s Full: %s", FEATURE_NAME, g_sDPCommandsList[i], sBuffer);
 		}
 
 		g_iSPCommands = ExplodeString(g_sSPCommands, ";", g_sSPCommandsList, sizeof(g_sSPCommandsList), sizeof(g_sSPCommandsList[]));
@@ -178,7 +178,7 @@ public Hosties3_OnConfigsLoaded()
 			char sBuffer[32];
 			Format(sBuffer, sizeof(sBuffer), "sm_%s", g_sSPCommandsList[i]);
 			RegAdminCmd(sBuffer, Command_SetPoints, ADMFLAG_ROOT);
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Register Set Points Command: %s Full: %s", FEATURE_NAME,  g_sSPCommandsList[i], sBuffer);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register Set Points Command: %s Full: %s", FEATURE_NAME,  g_sSPCommandsList[i], sBuffer);
 		}
 
 		g_iRPCommands = ExplodeString(g_sRPCommands, ";", g_sRPCommandsList, sizeof(g_sRPCommandsList), sizeof(g_sRPCommandsList[]));
@@ -187,7 +187,7 @@ public Hosties3_OnConfigsLoaded()
 			char sBuffer[32];
 			Format(sBuffer, sizeof(sBuffer), "sm_%s", g_sRPCommandsList[i]);
 			RegAdminCmd(sBuffer, Command_ResetPoints, ADMFLAG_ROOT);
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Register Reset Points Command: %s Full: %s", FEATURE_NAME, g_sRPCommandsList[i], sBuffer);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register Reset Points Command: %s Full: %s", FEATURE_NAME, g_sRPCommandsList[i], sBuffer);
 		}
 	}
 
@@ -593,7 +593,7 @@ public SQL_ClientConnect(Handle owner, Handle hndl, const char[] error, any user
 	{
 		if (error[0])
 		{
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, ERROR, "Connection to database has failed!: %s", error);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, ERROR, "Connection to database has failed!: %s", error);
 			return;
 		}
 	}
@@ -646,7 +646,7 @@ public SQL_Callback(Handle owner, Handle hndl, const char[] error, any data)
 {
 	if (error[0])
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, ERROR, "Query failed: %s", error);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, ERROR, "Query failed: %s", error);
 		return;
 	}
 }

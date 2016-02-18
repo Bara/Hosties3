@@ -63,7 +63,7 @@ public Hosties3_OnConfigsLoaded()
 
 	if (g_iLogLevel <= 2)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_iEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_iEnable);
 	}
 
 	Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, false, 0, HOSTIES3_DESCRIPTION);
@@ -151,7 +151,7 @@ public Action Timer_GunPlantPrevention(Handle hTimer, Handle hData)
 
 		if (g_iLogLevel <= 2)
 		{
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[Gunplant Prevention] \"%L\" tried to gunplant \"%L\"!", iOriginalOwner, iNewOwner);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[Gunplant Prevention] \"%L\" tried to gunplant \"%L\"!", iOriginalOwner, iNewOwner);
 		}
 	}
 

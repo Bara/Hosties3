@@ -57,8 +57,8 @@ public OnMapStart()
 
 		if (g_iLogLevel <= 2)
 		{
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] RoundEnd - CT Count - %d",FEATURE_NAME,  g_iCTRoundEndCount);
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] RoundEnd - T Count - %d", FEATURE_NAME, g_iTRoundEndCount);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] RoundEnd - CT Count - %d",FEATURE_NAME,  g_iCTRoundEndCount);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] RoundEnd - T Count - %d", FEATURE_NAME, g_iTRoundEndCount);
 		}
 
 		for(int i = 1; i <= g_iCTRoundEndCount; i++)
@@ -81,9 +81,9 @@ public OnMapStart()
 
 			if (g_iLogLevel <= 2)
 			{
-				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] RoundEnd - CT Overlay - %d - %s", FEATURE_NAME, i, sBuffer);
-				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] RoundEnd - CT Overlay Material - %d - %s", FEATURE_NAME, i, sMaterial);
-				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] RoundEnd - CT Overlay Texture - %d - %s", FEATURE_NAME, i, sTexture);
+				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] RoundEnd - CT Overlay - %d - %s", FEATURE_NAME, i, sBuffer);
+				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] RoundEnd - CT Overlay Material - %d - %s", FEATURE_NAME, i, sMaterial);
+				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] RoundEnd - CT Overlay Texture - %d - %s", FEATURE_NAME, i, sTexture);
 			}
 		}
 
@@ -107,9 +107,9 @@ public OnMapStart()
 
 			if (g_iLogLevel <= 2)
 			{
-				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] RoundEnd - T Overlay - %d - %s", FEATURE_NAME, i, sBuffer);
-				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] RoundEnd - T Overlay Material - %d - %s", FEATURE_NAME, i, sMaterial);
-				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] RoundEnd - T Overlay Texture - %d - %s", FEATURE_NAME, i, sTexture);
+				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] RoundEnd - T Overlay - %d - %s", FEATURE_NAME, i, sBuffer);
+				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] RoundEnd - T Overlay Material - %d - %s", FEATURE_NAME, i, sMaterial);
+				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] RoundEnd - T Overlay Texture - %d - %s", FEATURE_NAME, i, sTexture);
 			}
 		}
 		KvGoBack(hConfig);
@@ -127,8 +127,8 @@ public OnMapStart()
 
 		if (g_iLogLevel <= 2)
 		{
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] PlayerDeath - CT Count - %d", FEATURE_NAME, g_iCTPlayerDeathCount);
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] PlayerDeath - T Count - %d", FEATURE_NAME, g_iTPlayerDeathCount);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] PlayerDeath - CT Count - %d", FEATURE_NAME, g_iCTPlayerDeathCount);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] PlayerDeath - T Count - %d", FEATURE_NAME, g_iTPlayerDeathCount);
 		}
 		
 		for(int i = 1; i <= g_iCTPlayerDeathCount; i++)
@@ -151,9 +151,9 @@ public OnMapStart()
 
 			if (g_iLogLevel <= 2)
 			{
-				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] PlayerDeath - CT Overlay - %d - %s", FEATURE_NAME, i, sBuffer);
-				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] PlayerDeath - CT Overlay Material - %d - %s", FEATURE_NAME, i, sMaterial);
-				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] PlayerDeath - CT Overlay Texture - %d - %s", FEATURE_NAME, i, sTexture);
+				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] PlayerDeath - CT Overlay - %d - %s", FEATURE_NAME, i, sBuffer);
+				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] PlayerDeath - CT Overlay Material - %d - %s", FEATURE_NAME, i, sMaterial);
+				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] PlayerDeath - CT Overlay Texture - %d - %s", FEATURE_NAME, i, sTexture);
 			}
 		}
 
@@ -179,9 +179,9 @@ public OnMapStart()
 
 			if (g_iLogLevel <= 2)
 			{
-				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] PlayerDeath - T Overlay - %d - %s", FEATURE_NAME, i, sBuffer);
-				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] PlayerDeath - T Overlay Material - %d - %s", FEATURE_NAME, i, sMaterial);
-				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] PlayerDeath - T Overlay Texture - %d - %s", FEATURE_NAME, i, sTexture);
+				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] PlayerDeath - T Overlay - %d - %s", FEATURE_NAME, i, sBuffer);
+				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] PlayerDeath - T Overlay Material - %d - %s", FEATURE_NAME, i, sMaterial);
+				Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] PlayerDeath - T Overlay Texture - %d - %s", FEATURE_NAME, i, sTexture);
 			}
 		}
 	}
@@ -209,8 +209,8 @@ public Hosties3_OnConfigsLoaded()
 	
 	if (g_iLogLevel <= 2)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] PlayerDeath - Enable - %d", FEATURE_NAME, g_bEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] PlayerDeath - Enable - %d", FEATURE_NAME, g_bEnable);
 	}
 
 	if (!g_bEnable)

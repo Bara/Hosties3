@@ -42,7 +42,7 @@ public Hosties3_OnConfigsLoaded()
 
 	if (g_iLogLevel <= 2)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
 	}
 
 	Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, false, 0, HOSTIES3_DESCRIPTION);
@@ -85,7 +85,7 @@ public SQL_Callback(Handle owner, Handle hndl, const char[] error, any data)
 {
 	if (error[0])
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, ERROR, "Query failed: %s", error);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, ERROR, "Query failed: %s", error);
 		return;
 	}
 }

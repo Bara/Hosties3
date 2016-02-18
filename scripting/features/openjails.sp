@@ -61,13 +61,13 @@ public Hosties3_OnConfigsLoaded()
 
 	if (g_iLogLevel <= 2)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Message: %d", FEATURE_NAME, g_bMessage);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Debug: %d", FEATURE_NAME, g_bDebug);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Admin: %d", FEATURE_NAME, g_bAdmin);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] CT: %d", FEATURE_NAME, g_bCT);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] DeadCT: %d", FEATURE_NAME, g_bDeadCT);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Commands: %s", FEATURE_NAME, g_sOpenJailsCom);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Message: %d", FEATURE_NAME, g_bMessage);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Debug: %d", FEATURE_NAME, g_bDebug);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Admin: %d", FEATURE_NAME, g_bAdmin);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] CT: %d", FEATURE_NAME, g_bCT);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] DeadCT: %d", FEATURE_NAME, g_bDeadCT);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Commands: %s", FEATURE_NAME, g_sOpenJailsCom);
 	}
 
 	g_iOpenJailsCom = ExplodeString(g_sOpenJailsCom, ";", g_sOpenJailsComList, sizeof(g_sOpenJailsComList), sizeof(g_sOpenJailsComList[]));
@@ -77,7 +77,7 @@ public Hosties3_OnConfigsLoaded()
 		char sBuffer[32];
 		Format(sBuffer, sizeof(sBuffer), "sm_%s", g_sOpenJailsComList[i]);
 		RegConsoleCmd(sBuffer, Command_OpenJails);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Register Command: %s Full: %s", FEATURE_NAME, g_sOpenJailsComList[i], sBuffer);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register Command: %s Full: %s", FEATURE_NAME, g_sOpenJailsComList[i], sBuffer);
 	}
 
 	LoadDoors();
@@ -118,7 +118,7 @@ public SQL_Callback(Handle owner, Handle hndl, const char[] error, any data)
 {
 	if (error[0])
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, ERROR, "Query failed: %s", error);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, ERROR, "Query failed: %s", error);
 		return;
 	}
 }
@@ -175,7 +175,7 @@ public Action Command_OpenJails(client, args)
 
 					if (g_iLogLevel <= 2)
 					{
-						Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Door %d opened", FEATURE_NAME, iEnt);
+						Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Door %d opened", FEATURE_NAME, iEnt);
 					}
 				}
 			}
@@ -196,7 +196,7 @@ public Action Command_OpenJails(client, args)
 
 	if (g_iLogLevel <= 3)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, INFO, "[%s] %N used openjails", FEATURE_NAME, client);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, INFO, "[%s] %N used openjails", FEATURE_NAME, client);
 	}
 	return Plugin_Handled;
 }
@@ -225,7 +225,7 @@ public SQL_LoadDoors(Handle owner, Handle hndl, const char[] error, any userid)
 		char sMap[128];
 		GetCurrentMap(sMap, sizeof(sMap));
 
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, WARN, "[%s] No doors for %s found!", FEATURE_NAME, sMap);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, WARN, "[%s] No doors for %s found!", FEATURE_NAME, sMap);
 		return;
 	}
 
@@ -239,10 +239,10 @@ public SQL_LoadDoors(Handle owner, Handle hndl, const char[] error, any userid)
 
 	if (g_iDoors == 0)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Error with g_iDoors", FEATURE_NAME);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Error with g_iDoors", FEATURE_NAME);
 	}
 	else
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Doors (%s): %s", FEATURE_NAME, sMap, sDoors);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Doors (%s): %s", FEATURE_NAME, sMap, sDoors);
 	}
 }

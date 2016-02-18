@@ -88,19 +88,19 @@ public Hosties3_OnConfigsLoaded()
 
 	if (g_iLogLevel <= 2)
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] T Hide Radar: %d", FEATURE_NAME, g_iTHideRadar);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] CT Hide Radar: %d", FEATURE_NAME, g_iCTHideRadar);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Remove Buyzone: %d", FEATURE_NAME, g_bRemoveBuyzone);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Remove Location: %d", FEATURE_NAME, g_bRemoveLocation);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Grenade Spam: %d", FEATURE_NAME, g_bGrenadeSpam);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Radio Spam: %d", FEATURE_NAME, g_bRadioSpam);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Name Change Spam: %d", FEATURE_NAME, g_bNameChangeSpam);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Achievement Spam: %d", FEATURE_NAME, g_bAchievementSpam);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Team Join Message: %d", FEATURE_NAME, g_bTeamJoinMessage);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Connect Message: %d", FEATURE_NAME, g_bConnectMessage);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Disconnect Message: %d", FEATURE_NAME, g_bDisconnectMessage);
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, DEBUG, "[%s] Block Text Msg: %d", FEATURE_NAME, g_bBlockTextMsg);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] T Hide Radar: %d", FEATURE_NAME, g_iTHideRadar);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] CT Hide Radar: %d", FEATURE_NAME, g_iCTHideRadar);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Remove Buyzone: %d", FEATURE_NAME, g_bRemoveBuyzone);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Remove Location: %d", FEATURE_NAME, g_bRemoveLocation);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Grenade Spam: %d", FEATURE_NAME, g_bGrenadeSpam);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Radio Spam: %d", FEATURE_NAME, g_bRadioSpam);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Name Change Spam: %d", FEATURE_NAME, g_bNameChangeSpam);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Achievement Spam: %d", FEATURE_NAME, g_bAchievementSpam);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Team Join Message: %d", FEATURE_NAME, g_bTeamJoinMessage);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Connect Message: %d", FEATURE_NAME, g_bConnectMessage);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Disconnect Message: %d", FEATURE_NAME, g_bDisconnectMessage);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Block Text Msg: %d", FEATURE_NAME, g_bBlockTextMsg);
 	}
 
 	Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, false, 0, HOSTIES3_DESCRIPTION);
@@ -335,7 +335,7 @@ public SQL_Callback(Handle owner, Handle hndl, const char[] error, any data)
 {
 	if (error[0])
 	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, _, ERROR, "(SQL_Callback) Query failed: %s", error);
+		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, ERROR, "(SQL_Callback) Query failed: %s", error);
 		return false;
 	}
 	return true;

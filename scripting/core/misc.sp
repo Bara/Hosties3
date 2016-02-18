@@ -5,14 +5,12 @@ public int Misc_LogFile(Handle plugin, int numParams)
 	char sLevelPath[PLATFORM_MAX_PATH + 1];
 	char sFile[PLATFORM_MAX_PATH + 1];
 	char sFile2[PLATFORM_MAX_PATH + 1];
-	char sDate[PLATFORM_MAX_PATH + 1];
 	char sBuffer[1024];
 
 	GetNativeString(1, sPath, sizeof(sPath));
 	GetNativeString(2, sFile, sizeof(sFile));
-	GetNativeString(3, sDate, sizeof(sDate));
 
-	LogLevel iLevel = GetNativeCell(4);
+	LogLevel iLevel = GetNativeCell(3);
 
 	if (StrEqual(sPath, "", false))
 	{
@@ -43,16 +41,9 @@ public int Misc_LogFile(Handle plugin, int numParams)
 		CreateDirectory(sLevelPath, 755);
 	}
 
-	if (StrEqual(sDate, "", false))
-	{
-		Format(sFile2, sizeof(sFile2), "%s/%s.log", sLevelPath, sFile);
-	}
-	else
-	{
-		Format(sFile2, sizeof(sFile2), "%s/%s_%s.log", sLevelPath, sFile, sDate);
-	}
+	Format(sFile2, sizeof(sFile2), "%s/%s.log", sLevelPath, sFile);
 
-	FormatNativeString(0, 5, 6, sizeof(sBuffer), _, sBuffer);
+	FormatNativeString(0, 4, 5, sizeof(sBuffer), _, sBuffer);
 
 	LogToFileEx(sFile2, sBuffer);
 }
@@ -152,7 +143,7 @@ public int Misc_AddToFeatureList(Handle plugin, int numParams)
 	strcopy(iCache[flName], HOSTIES3_MAX_DESC_LENGTH, sName);
 	
 
-	Hosties3_LogToFile(HOSTIES3_PATH, "FeatureList", _, DEBUG, "[FeatureList] Feature: %s - Credits: %s - VIP: %d - Points: %d - Description: %s", iCache[flName], iCache[flCredits], iCache[bVIP], iCache[iPoints], iCache[flDescription]);
+	Hosties3_LogToFile(HOSTIES3_PATH, "FeatureList", DEBUG, "[FeatureList] Feature: %s - Credits: %s - VIP: %d - Points: %d - Description: %s", iCache[flName], iCache[flCredits], iCache[bVIP], iCache[iPoints], iCache[flDescription]);
 
 	PushArrayArray(g_hFlCache, iCache[0]);
 }
