@@ -6,7 +6,7 @@
 
 #include <hosties3>
 
-#define FEATURE_NAME "Example"
+#define FEATURE_NAME "Core Example"
 #define PLUGIN_NAME HOSTIES3_NAME ... FEATURE_NAME
 
 bool g_bEnable;
