@@ -86,4 +86,15 @@ public int Native_RegisterLRGame(Handle plugin, int numParams)
 	Hosties3_LogToFile(HOSTIES3_PATH, "LRGames", DEBUG, "[LRGames] ID: %d - Name: %s - Translations: %s", iCache[lrId], iCache[lrName], iCache[lrTranslations]);
 
 	g_aLRGames.PushArray(iCache[0]);
+	
+	for (int i = 0; i < g_aLRGames.Length; i++)
+	{
+		int iGang[lrCache];
+		g_aLRGames.GetArray(i, iGang[0]);
+
+		if(StrEqual(iGang[lrName], name, false))
+			return true;
+	}
+	
+	return false;
 }
