@@ -5,7 +5,7 @@ public int Misc_LogFile(Handle plugin, int numParams)
 	char sLevelPath[PLATFORM_MAX_PATH + 1];
 	char sFile[PLATFORM_MAX_PATH + 1];
 	char sFile2[PLATFORM_MAX_PATH + 1];
-	char sBuffer[1024];
+	char sLog[1024];
 
 	GetNativeString(1, sPath, sizeof(sPath));
 	GetNativeString(2, sFile, sizeof(sFile));
@@ -45,9 +45,9 @@ public int Misc_LogFile(Handle plugin, int numParams)
 	FormatTime(sDate, sizeof(sDate), "%Y-%m-%d");
 	Format(sFile2, sizeof(sFile2), "%s/%s_%s.log", sLevelPath, sFile, sDate);
 
-	FormatNativeString(0, 4, 5, sizeof(sBuffer), _, sBuffer);
+	FormatNativeString(0, 4, 5, sizeof(sLog), _, sLog);
 
-	LogToFileEx(sFile2, sBuffer);
+	LogToFileEx(sFile2, sLog);
 }
 
 public int Misc_GetLogLevel(Handle plugin, int numParams)

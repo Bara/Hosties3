@@ -10,6 +10,8 @@
 #define FEATURE_NAME "Hosties3"
 #define PLUGIN_NAME FEATURE_NAME
 
+#define H_DEBUG 1
+
 #pragma newdecls required
 
 #include "core/globals.sp"
@@ -48,8 +50,10 @@ public void OnPluginStart()
 		SetFailState("Only CS:GO supported!");
 	}
 	
-	g_bSQLReady = false;
+	LoadTranslations("hosties3.phrases");
 	
+	g_bSQLReady = false;
+
 	if (!g_bStarted)
 	{
 		FullCacheReset();
@@ -58,12 +62,17 @@ public void OnPluginStart()
 	}
 	
 	RegConsoleCmd("sm_debug", Debug);
-	
-	LoadTranslations("hosties3.phrases");
 }
 
 public Action Debug(int client, int args)
 {
+	for (int i = 0; i < GetArraySize(g_hFlCache); i++)
+	{
+		int iFlCache[FlCache];
+		GetArrayArray(g_hFlCache, i, iFlCache[0]);
+		
+		PrintToServer("[FeatureList] Name: %s", iFlCache[flName]);
+	}
 }
 
 public void OnMapStart()

@@ -16,15 +16,14 @@ public void ConnectDatabase(Handle owner, Handle hndl, const char[] error, any d
 	{
 		if (error[0])
 		{
-			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, ERROR, "Connection to database has failed!: (ConnectDatabase) %s", error);
+			Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, ERROR, "Connection to database has failed! (ConnectDatabase) %s", error);
 			return;
 		}
 	}
-
 	g_hDatabase = CloneHandle(hndl);
-
+	
 	CreateTables();
-
+	
 	SQLQuery("SET NAMES \"UTF8\"");
 
 	if (g_bSQLReady)

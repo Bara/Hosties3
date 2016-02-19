@@ -5,10 +5,9 @@
 #pragma newdecls required
 
 #include <hosties3>
-#include <lastrequest>
 
-#define FEATURE_NAME "LR Example"
-#define PLUGIN_NAME HOSTIES3_NAME ... FEATURE_NAME
+#define FEATURE_NAME "Hosties3 Test"
+#define PLUGIN_NAME FEATURE_NAME
 
 bool g_bEnable;
 int g_iLogLevel;
@@ -29,8 +28,6 @@ public void OnAllPluginsLoaded()
 
 public void Hosties3_OnConfigsLoaded()
 {
-	Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "Try to load settings for %s", FEATURE_NAME);
-	
 	if (!(g_bEnable = Hosties3_AddCvarBool(FEATURE_NAME, "Enable", true)))
 	{
 		SetFailState("'%s' is deactivated!", FEATURE_NAME);
@@ -45,5 +42,4 @@ public void Hosties3_OnConfigsLoaded()
 	}
 
 	Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, false, 0, HOSTIES3_DESCRIPTION);
-	Hosties3_RegisterLRGame(FEATURE_NAME, "example");
 }
