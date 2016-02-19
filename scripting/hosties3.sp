@@ -7,8 +7,8 @@
 #include <multicolors>
 #include <hosties3>
 
-#define FEATURE_NAME "Core"
-#define PLUGIN_NAME HOSTIES3_NAME ... FEATURE_NAME
+#define FEATURE_NAME "Hosties3"
+#define PLUGIN_NAME FEATURE_NAME
 
 #pragma newdecls required
 
@@ -43,7 +43,10 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public void OnPluginStart()
 {
-	Hosties3_CheckRequirements();
+	if(GetEngineVersion() != Engine_CSGO)
+	{
+		SetFailState("Only CS:GO supported!");
+	}
 	
 	g_bSQLReady = false;
 	
@@ -54,7 +57,13 @@ public void OnPluginStart()
 		ConnectToSQL();
 	}
 	
-	LoadTranslations("hosties3_core.phrases");
+	RegConsoleCmd("sm_debug", Debug);
+	
+	LoadTranslations("hosties3.phrases");
+}
+
+public Action Debug(int client, int args)
+{
 }
 
 public void OnMapStart()

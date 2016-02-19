@@ -21,7 +21,7 @@ public Plugin myinfo =
 	url = HOSTIES3_URL
 };
 
-public void OnPluginStart()
+public void OnAllPluginsLoaded()
 {
 	Hosties3_CheckRequirements();
 }

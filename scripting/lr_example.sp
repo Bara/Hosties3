@@ -5,7 +5,7 @@
 #pragma newdecls required
 
 #include <hosties3>
-#include <hosties3_lr>
+#include <lastrequest>
 
 #define FEATURE_NAME "LR Example"
 #define PLUGIN_NAME HOSTIES3_NAME ... FEATURE_NAME
@@ -22,7 +22,7 @@ public Plugin myinfo =
 	url = HOSTIES3_URL
 };
 
-public void OnPluginStart()
+public void OnAllPluginsLoaded()
 {
 	Hosties3_CheckRequirements();
 }

@@ -5,7 +5,7 @@
 #pragma newdecls required
 
 #include <hosties3>
-#include <hosties3_lr>
+#include <lastrequest>
 
 #define FEATURE_NAME "Last Request"
 #define PLUGIN_NAME HOSTIES3_NAME ... FEATURE_NAME
