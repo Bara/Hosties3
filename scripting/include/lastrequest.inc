@@ -4,6 +4,7 @@
 #define _hosties3_lr_included
 
 native bool Hosties3_RegisterLRGame(const char[] name, const char[] translations);
+native bool Hosties3_IsClientInLastRequest(int client);
 
 stock bool Hosties3_IsLRLoaded()
 {
