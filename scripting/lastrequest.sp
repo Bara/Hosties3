@@ -1,3 +1,11 @@
+/*
+
+	ToDo:
+		- Add "3..2..1..GO!"-sounds
+			- <GAME> started in 3/1 second/s
+
+*/
+
 #pragma semicolon 1
 
 #include <sourcemod>
