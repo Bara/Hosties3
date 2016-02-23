@@ -20,6 +20,7 @@ bool g_bEnable;
 int g_iLogLevel;
 
 bool g_bPlaySound;
+bool g_bAutoOpenMenu;
 char g_sLRSoundsFile[PLATFORM_MAX_PATH + 1];
 int g_iLRSoundsCount;
 
@@ -85,6 +86,7 @@ public void Hosties3_OnConfigsLoaded()
 	g_iLRMenuTime = Hosties3_AddCvarInt(FEATURE_NAME, "Last Request Menu Time", 30);
 	
 	g_bPlaySound = Hosties3_AddCvarBool(FEATURE_NAME, "Play sound on lr available", true);
+	g_bAutoOpenMenu = Hosties3_AddCvarBool(FEATURE_NAME, "Auto open menu on lr available", true);
 	g_iLRSoundsCount = Hosties3_AddCvarInt(FEATURE_NAME, "Count of last request sounds", 1);
 	Hosties3_AddCvarString(FEATURE_NAME, "Base path+filename (x is replaced with count)", "server/hosties3/lastrequest/lastrequestX.mp3", g_sLRSoundsFile, sizeof(g_sLRSoundsFile));
 
@@ -159,10 +161,14 @@ void CheckTeams()
 	
 	if(iCount == 1)
 	{
+		int client = lastT[1];
 		g_bLastRequest = true;
 		
 		if(g_bPlaySound)
 			PlayLastRequestSound();
+		
+		if(g_bAutoOpenMenu)
+			ShowLastRequestMenu(client);
 		
 		Call_StartForward(g_hOnLRAvailable);
 		Call_PushCell(lastT[1]);
@@ -205,10 +211,33 @@ public Action LRDebug(int client, int args)
 
 public Action Command_LastRequestList(int client, int args)
 {
-	PrintToChat(client, "List");
 	if(!Hosties3_IsClientValid(client)) // TODO: Add message
 		return Plugin_Handled;
 	
+	ShowLastRequestList(client);
+	
+	return Plugin_Continue;
+}
+
+
+public Action Command_LastRequest(int client, int args)
+{
+	if(!Hosties3_IsClientValid(client))
+		return Plugin_Handled;
+		
+	if(!Hosties3_IsLastRequestAvailable()) // TODO: Add message
+		return Plugin_Handled;
+	
+	if(Hosties3_IsClientInLastRequest(client)) // TODO: Add message
+		return Plugin_Handled;
+		
+	ShowLastRequestMenu(client);
+	
+	return Plugin_Continue;
+}
+
+void ShowLastRequestList(int client)
+{
 	Menu menu = new Menu(Menu_Empty); // TODO: As panel
 	menu.SetTitle("Last requests:"); // TODO: Add translation
 	
@@ -222,27 +251,6 @@ public Action Command_LastRequestList(int client, int args)
 	
 	menu.ExitButton = true;
 	menu.Display(client, g_iLRMenuTime);
-	
-	return Plugin_Continue;
-}
-
-
-public Action Command_LastRequest(int client, int args)
-{
-	PrintToChat(client, "LR");
-	
-	if(!Hosties3_IsClientValid(client))
-		return Plugin_Handled;
-		
-	if(!Hosties3_IsLastRequestAvailable()) // TODO: Add message
-		return Plugin_Handled;
-	
-	if(Hosties3_IsClientInLastRequest(client)) // TODO: Add message
-		return Plugin_Handled;
-		
-	ShowLastRequestMenu(client);
-	
-	return Plugin_Continue;
 }
 
 void ShowLastRequestMenu(int client)
