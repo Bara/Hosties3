@@ -1,6 +1,7 @@
 #pragma semicolon 1
 
 #include <sourcemod>
+#include <cstrike>
 
 #pragma newdecls required
 
@@ -10,6 +11,7 @@
 #define FEATURE_NAME "Last Request"
 #define PLUGIN_NAME HOSTIES3_NAME ... FEATURE_NAME
 
+bool g_bLastRequest = false;
 bool g_bInLR[MAXPLAYERS + 1] =  { false, ... };
 
 bool g_bEnable;
@@ -18,6 +20,7 @@ int g_iLogLevel;
 int g_iLRMenuTime;
 
 Handle g_hOnLRChoosen;
+Handle g_hOnLRAvailable;
 
 enum lrCache
 {
@@ -40,9 +43,11 @@ public Plugin myinfo =
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	CreateNative("Hosties3_RegisterLRGame", Native_RegisterLRGame);
+	CreateNative("Hosties3_IsLastRequestAvailable", Native_IsLastRequestAvailable);
 	CreateNative("Hosties3_IsClientInLastRequest", Native_IsClientInLastRequest);
 	
-	g_hOnLRChoosen = CreateGlobalForward("Hosties3_OnLRChoosen", ET_Hook, Param_Cell, Param_Cell, Param_String);
+	g_hOnLRChoosen = CreateGlobalForward("Hosties3_OnLastRequestChoosen", ET_Hook, Param_Cell, Param_Cell, Param_String);
+	g_hOnLRAvailable = CreateGlobalForward("Hosties_OnLastRequestAvailable", ET_Ignore, Param_Cell);
 	
 	RegPluginLibrary("hosties3-lr");
 	
@@ -57,6 +62,9 @@ public void OnAllPluginsLoaded()
 		g_aLRGames.Clear();
 	
 	g_aLRGames = new ArrayList(sizeof(g_iLRGames));
+	
+	HookEvent("round_prestart", Event_RoundPreStart, EventHookMode_PostNoCopy);
+	HookEvent("player_death", Event_PlayerDeath, EventHookMode_Post);
 }
 
 public void Hosties3_OnConfigsLoaded()
@@ -109,6 +117,51 @@ public void Hosties3_OnConfigsLoaded()
 	RegConsoleCmd("sm_lrdebug", LRDebug);
 	
 	Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, false, 0, HOSTIES3_DESCRIPTION);
+	
+	CreateTimer(3.0, Timer_CheckTeams, _, TIMER_REPEAT | TIMER_FLAG_NO_MAPCHANGE);
+}
+
+
+public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadcast)
+{
+	CheckTeams();
+}
+
+public Action Timer_CheckTeams(Handle timer)
+{
+	if(!Hosties3_IsLastRequestAvailable())
+	{
+		CheckTeams();
+	}
+}
+
+void CheckTeams()
+{
+	int iCount = 0;
+	int lastT[65];
+	
+	Hosties3_LoopClients(i)
+	{
+		if(IsClientInGame(i) && GetClientTeam(i) == CS_TEAM_T && IsPlayerAlive(i))
+		{
+			iCount++;
+			lastT[iCount] = i;
+		}
+	}
+	
+	if(iCount == 1)
+	{
+		g_bLastRequest = true;
+		
+		Call_StartForward(g_hOnLRAvailable);
+		Call_PushCell(lastT[1]);
+		Call_Finish();
+	}
+}
+
+public Action Event_RoundPreStart(Event event, const char[] name, bool dontBroadcast)
+{
+	g_bLastRequest = false;
 }
 
 public Action LRDebug(int client, int args)
@@ -150,10 +203,11 @@ public Action Command_LastRequestList(int client, int args)
 public Action Command_LastRequest(int client, int args)
 {
 	PrintToChat(client, "LR");
-	/* if(!Hosties3_IsLastRequestAvailable())
-		return Plugin_Handled; */
 	
-	if(!Hosties3_IsClientValid(client)) // TODO: Add message
+	if(!Hosties3_IsClientValid(client))
+		return Plugin_Handled;
+		
+	if(!Hosties3_IsLastRequestAvailable()) // TODO: Add message
 		return Plugin_Handled;
 	
 	if(Hosties3_IsClientInLastRequest(client)) // TODO: Add message
@@ -202,7 +256,7 @@ public int Menu_LastRequest(Menu menu, MenuAction action, int client, int param)
 	
 			if(StrEqual(iGang[lrTranslation], sParam, false))
 			{
-				Call_PushString(sParam);
+				Call_PushString(iGang[lrName]);
 			}
 		}
 		Call_Finish(res);
@@ -280,4 +334,9 @@ public int Native_IsClientInLastRequest(Handle plugin, int numParams)
 {
 	int client = GetNativeCell(1);
 	return g_bInLR[client];
+}
+
+public int Native_IsLastRequestAvailable(Handle plugin, int numParams)
+{
+	return g_bLastRequest;
 }

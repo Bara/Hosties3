@@ -47,3 +47,17 @@ public void Hosties3_OnConfigsLoaded()
 	
 	Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register status: %d", FEATURE_NAME, success);
 }
+
+public void Hosties3_OnLastRequestChoosen(int client, int target, const char[] name)
+{
+	PrintToChat(client, "%s", name);
+}
+
+public bool Hosties_OnLastRequestAvailable(int client)
+{
+	if(Hosties3_IsLastRequestAvailable())
+	{
+		PrintToChatAll("Last request is now available!");
+		PrintToChatAll("Last T is: %N", client);
+	}
+}
