@@ -3,6 +3,8 @@
 #include <sourcemod>
 #include <cstrike>
 
+#include <emitsoundany>
+
 #pragma newdecls required
 
 #include <hosties3>
@@ -15,8 +17,12 @@ bool g_bLastRequest = false;
 bool g_bInLR[MAXPLAYERS + 1] =  { false, ... };
 
 bool g_bEnable;
-
 int g_iLogLevel;
+
+bool g_bPlaySound;
+char g_sLRSoundsFile[PLATFORM_MAX_PATH + 1];
+int g_iLRSoundsCount;
+
 int g_iLRMenuTime;
 
 Handle g_hOnLRChoosen;
@@ -77,8 +83,10 @@ public void Hosties3_OnConfigsLoaded()
 	
 	g_iLogLevel = Hosties3_GetLogLevel();
 	g_iLRMenuTime = Hosties3_AddCvarInt(FEATURE_NAME, "Last Request Menu Time", 30);
-
 	
+	g_bPlaySound = Hosties3_AddCvarBool(FEATURE_NAME, "Play sound on lr available", true);
+	g_iLRSoundsCount = Hosties3_AddCvarInt(FEATURE_NAME, "Count of last request sounds", 1);
+	Hosties3_AddCvarString(FEATURE_NAME, "Base path+filename (x is replaced with count)", "server/hosties3/lastrequest/lastrequestX.mp3", g_sLRSoundsFile, sizeof(g_sLRSoundsFile));
 
 	if (g_iLogLevel <= 2)
 	{
@@ -153,10 +161,29 @@ void CheckTeams()
 	{
 		g_bLastRequest = true;
 		
+		if(g_bPlaySound)
+			PlayLastRequestSound();
+		
 		Call_StartForward(g_hOnLRAvailable);
 		Call_PushCell(lastT[1]);
 		Call_Finish();
 	}
+}
+
+void PlayLastRequestSound()
+{
+	char sFile[PLATFORM_MAX_PATH + 1], sid[2];
+	strcopy(sFile, sizeof(sFile), g_sLRSoundsFile);
+	
+	int id;
+	if(g_iLRSoundsCount > 1)
+		id = GetRandomInt(1, g_iLRSoundsCount);
+	else
+		id = 1;
+	
+	IntToString(id, sid, sizeof(sid));
+	ReplaceString(sFile, sizeof(sFile), "X", sid, true);
+	EmitSoundToAllAny(sFile);
 }
 
 public Action Event_RoundPreStart(Event event, const char[] name, bool dontBroadcast)
