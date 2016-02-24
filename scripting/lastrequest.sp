@@ -354,6 +354,15 @@ public int Native_RegisterLRGame(Handle plugin, int numParams)
 	GetNativeString(1, name, sizeof(name));
 	GetNativeString(2, translations, sizeof(translations));
 	
+	for (int i = 0; i < g_aLRGames.Length; i++)
+	{
+		int iGang[lrCache];
+		g_aLRGames.GetArray(i, iGang[0]);
+
+		if(StrEqual(iGang[lrName], name, false))
+			return false;
+	}
+	
 	int iCache[lrCache];
 	
 	iCache[lrId] = g_aLRGames.Length + 1;
