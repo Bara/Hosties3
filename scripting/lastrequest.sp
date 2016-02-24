@@ -22,6 +22,7 @@
 #define PLUGIN_NAME HOSTIES3_NAME ... FEATURE_NAME
 
 bool g_bLastRequest = false;
+bool g_bLastRequestRound = false;
 bool g_bInLR[MAXPLAYERS + 1] =  { false, ... };
 
 bool g_bEnable;
@@ -60,6 +61,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateNative("Hosties3_RegisterLRGame", Native_RegisterLRGame);
 	CreateNative("Hosties3_IsLastRequestAvailable", Native_IsLastRequestAvailable);
 	CreateNative("Hosties3_IsClientInLastRequest", Native_IsClientInLastRequest);
+	CreateNative("Hosties3_SetLastRequestStatus", Native_SetLastRequestStatus);
 	
 	g_hOnLRChoosen = CreateGlobalForward("Hosties3_OnLastRequestChoosen", ET_Hook, Param_Cell, Param_Cell, Param_String);
 	g_hOnLRAvailable = CreateGlobalForward("Hosties_OnLastRequestAvailable", ET_Ignore, Param_Cell);
@@ -203,6 +205,7 @@ void PlayLastRequestSound()
 public Action Event_RoundPreStart(Event event, const char[] name, bool dontBroadcast)
 {
 	g_bLastRequest = false;
+	g_bLastRequestRound = true;
 }
 
 public Action LRDebug(int client, int args)
@@ -377,6 +380,12 @@ public int Native_IsClientInLastRequest(Handle plugin, int numParams)
 {
 	int client = GetNativeCell(1);
 	return g_bInLR[client];
+}
+
+public int Native_SetLastRequestStatus(Handle plugin, int numParams)
+{
+	g_bLastRequestRound = GetNativeCell(1);
+	return g_bLastRequestRound;
 }
 
 public int Native_IsLastRequestAvailable(Handle plugin, int numParams)
