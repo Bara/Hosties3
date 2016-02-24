@@ -354,14 +354,7 @@ public int Native_RegisterLRGame(Handle plugin, int numParams)
 	GetNativeString(1, name, sizeof(name));
 	GetNativeString(2, translations, sizeof(translations));
 	
-	for (int i = 0; i < g_aLRGames.Length; i++)
-	{
-		int iGang[lrCache];
-		g_aLRGames.GetArray(i, iGang[0]);
-
-		if(StrEqual(iGang[lrName], name, false))
-			return false;
-	}
+	CheckExistsLRGames(name);
 	
 	int iCache[lrCache];
 	
@@ -373,14 +366,7 @@ public int Native_RegisterLRGame(Handle plugin, int numParams)
 
 	g_aLRGames.PushArray(iCache[0]);
 	
-	for (int i = 0; i < g_aLRGames.Length; i++)
-	{
-		int iGang[lrCache];
-		g_aLRGames.GetArray(i, iGang[0]);
-
-		if(StrEqual(iGang[lrName], name, false))
-			return true;
-	}
+	CheckExistsLRGames(name);
 	
 	return false;
 }
@@ -400,4 +386,18 @@ public int Native_SetLastRequestStatus(Handle plugin, int numParams)
 public int Native_IsLastRequestAvailable(Handle plugin, int numParams)
 {
 	return g_bLastRequest;
+}
+
+bool CheckExistsLRGames(const char[] name)
+{
+	for (int i = 0; i < g_aLRGames.Length; i++)
+	{
+		int iGang[lrCache];
+		g_aLRGames.GetArray(i, iGang[0]);
+
+		if(StrEqual(iGang[lrName], name, false))
+		{
+			return true;
+		}
+	}
 }
