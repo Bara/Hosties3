@@ -44,6 +44,7 @@ enum lrCache
 	String:lrName[HOSTIES3_MAX_FEATURE_NAME],
 	String:lrTranslation[HOSTIES3_MAX_FEATURE_NAME]
 };
+
 int g_iLRGames[lrCache];
 ArrayList g_aLRGames = null;
 
@@ -217,6 +218,8 @@ public Action LRDebug(int client, int args)
 
 		PrintToServer("[LastRequest]: %s", iGang[lrName]);
 	}
+	
+	CreateCountdown(3);
 }
 
 
@@ -320,7 +323,7 @@ public int Menu_LastRequest(Menu menu, MenuAction action, int client, int param)
 	{
 		if(param == MenuCancel_Timeout)
 		{
-			PrintToChatAll("MenuCancel_Timeout %N", client);
+			PrintToChatAll("MenuCancel_Timeout %N", client); // TODO: Add translation & function (Nothing or slay?)
 		}
 	}		
 	else if (action == MenuAction_End)
@@ -400,4 +403,45 @@ bool CheckExistsLRGames(const char[] name)
 			return true;
 		}
 	}
+	return false;
 }
+
+
+stock void CreateCountdown(int seconds)
+{
+	Handle pack = CreateDataPack();
+	WritePackCell(pack, seconds);
+	CreateTimer(0.0, Timer_Countdown, pack);
+}
+
+public Action Timer_Countdown(Handle timer, any pack)
+{
+	ResetPack(pack, false);
+	int seconds = ReadPackCell(pack);
+	CloseHandle(pack);
+	
+	Hosties3_LoopClients(i)
+	{
+		if(Hosties3_IsClientValid(i))
+		{
+			if(seconds == 1)
+				PrintToChat(i, "Last request started in %d second", seconds); // TODO: Add translation
+			else if(seconds == 0)
+				PrintToChat(i, "Go!", seconds);
+			else
+				PrintToChat(i, "Last request started in %d seconds", seconds); // TODO: Add translation
+		}
+	}
+	
+	seconds--;
+
+	if(seconds >= 0)
+	{
+		Handle hPack = CreateDataPack();
+		WritePackCell(hPack, seconds);
+		CreateTimer(1.0, Timer_Countdown, hPack);
+	}
+
+	return Plugin_Stop;
+}
+

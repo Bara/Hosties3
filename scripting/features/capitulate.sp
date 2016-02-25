@@ -44,12 +44,12 @@ char g_sCapitulateCom[128];
 
 char g_sTag[128];
 
-bool g_bVIPLoaded;
-
 Handle g_hOnClientCapitulate;
 Handle g_hOnClientCapitulateEnd;
 
 Handle g_hResetTimer[MAXPLAYERS + 1] = {null, ...};
+
+bool g_bVIP = false;
 
 public Plugin myinfo =
 {
@@ -87,7 +87,7 @@ public Action:OnWeaponCanUse(client, weapon)
 	return Plugin_Continue;
 }
 
-public Hosties3_OnPluginPreLoaded()
+public void OnAllPluginsLoaded()
 {
 	Hosties3_CheckRequirements();
 }
@@ -102,7 +102,7 @@ public Hosties3_OnConfigsLoaded()
 
 	if(LibraryExists("hosties3_vip"))
 	{
-		g_bVIPLoaded = true;
+		g_bVIP = true;
 	}
 
 	g_iLogLevel = Hosties3_GetLogLevel();
@@ -140,11 +140,19 @@ public Hosties3_OnConfigsLoaded()
 	LoadTranslations("hosties3_capitulate.phrases");
 }
 
-public OnLibraryAdded(const char[] name)
+public void OnLibraryAdded(const char[] name)
 {
-	if(StrEqual(name, "hosties3_vip"))
+	if (StrEqual(name, "hosties3_vip"))
 	{
-		g_bVIPLoaded = true;
+		g_bVIP = true;
+	}
+}
+
+public void OnLibraryRemoved(const char[] name)
+{
+	if (StrEqual(name, "hosties3_vip"))
+	{
+		g_bVIP = false;
 	}
 }
 
@@ -155,10 +163,6 @@ public Capitulate_GetClientCapitulate(Handle plugin, numParams)
 	if (Hosties3_IsClientValid(client))
 	{
 		return g_iCCount[client];
-	}
-	else
-	{
-		ThrowNativeError(SP_ERROR_NATIVE, "Client %i is invalid", client);
 	}
 
 	return false;
@@ -173,10 +177,6 @@ public Capitulate_SetClientCapitulate(Handle plugin, numParams)
 	{
 		g_iCCount[client] = count;
 	}
-	else
-	{
-		ThrowNativeError(SP_ERROR_NATIVE, "Client %i is invalid", client);
-	}
 
 	return false;
 }
@@ -188,10 +188,6 @@ public Capitulate_GetClientMaxCapitulate(Handle plugin, numParams)
 	if (Hosties3_IsClientValid(client))
 	{
 		return g_iMaxCount[client];
-	}
-	else
-	{
-		ThrowNativeError(SP_ERROR_NATIVE, "Client %i is invalid", client);
 	}
 
 	return false;
@@ -205,10 +201,6 @@ public Capitulate_SetClientMaxCapitulate(Handle plugin, numParams)
 	if (Hosties3_IsClientValid(client))
 	{
 		g_iMaxCount[client] = count;
-	}
-	else
-	{
-		ThrowNativeError(SP_ERROR_NATIVE, "Client %i is invalid", client);
 	}
 
 	return false;
@@ -229,15 +221,11 @@ public Capitulate_IsClientInCapitulating(Handle plugin, numParams)
 			return true;
 		}
 	}
-	else
-	{
-		ThrowNativeError(SP_ERROR_NATIVE, "Client %i is invalid", client);
-	}
 
 	return false;
 }
 
-public Hosties3_OnMapStart()
+public void OnMapStart()
 {
 	g_iBeamSprite = PrecacheModel(BEAM_CSGO);
 	g_iHaloSprite = PrecacheModel(HALO_CSGO);
@@ -267,9 +255,11 @@ Reset(client)
 {
 	g_iCCount[client] = 0;
 
-	SetEntityRenderColor(client, g_iRed[client], g_iGreen[client], g_iBlue[client], g_iAlpha[client]);
-	SetEntityRenderMode(client, RENDER_TRANSCOLOR);
-
+	if(IsPlayerAlive(client))
+	{
+		SetEntityRenderColor(client, g_iRed[client], g_iGreen[client], g_iBlue[client], g_iAlpha[client]);
+		SetEntityRenderMode(client, RENDER_TRANSCOLOR);
+	}
 	g_hResetTimer[client] = null;
 }
 
@@ -285,7 +275,7 @@ public Action Command_Capitulate(client, args)
 				{
 					int iPoints;
 
-					if(g_bVIPLoaded)
+					if(g_bVIP)
 					{
 						iPoints = Hosties3_GetVIPPoints(client);
 					}
@@ -412,16 +402,22 @@ public Action Timer_ResetColor(Handle timer, any userid)
 {
 	int client = GetClientOfUserId(userid);
 
-	if (Hosties3_IsClientValid(client) && IsPlayerAlive(client))
+	if (Hosties3_IsClientValid(client))
 	{
-		SetEntityRenderColor(client, g_iRed[client], g_iGreen[client], g_iBlue[client], g_iAlpha[client]);
-		SetEntityRenderMode(client, RENDER_TRANSCOLOR);
+		if(IsPlayerAlive(client))
+		{
+			SetEntityRenderColor(client, g_iRed[client], g_iGreen[client], g_iBlue[client], g_iAlpha[client]);
+			SetEntityRenderMode(client, RENDER_TRANSCOLOR);
+		}
 		g_hResetTimer[client] = null;
 
 		CPrintToChat(client, "%T", "WeaponsUseAgain", client, g_sTag);
-
-		int iKnife = GivePlayerItem(client, "weapon_knife");
-		EquipPlayerWeapon(client, iKnife);
+	
+		if(IsPlayerAlive(client))
+		{
+			int iKnife = GivePlayerItem(client, "weapon_knife");
+			EquipPlayerWeapon(client, iKnife);
+		}
 
 		Call_CapitulateEnd(client);
 	}

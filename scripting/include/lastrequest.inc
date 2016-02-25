@@ -21,7 +21,8 @@ stock bool Hosties3_IsLRLoaded()
 
 public SharedPlugin __pl_hosties3_lr = 
 {
-	file = "lr.smx",
+	name = "lastrequest",
+	file = "lastrequest.smx",
 #if defined REQUIRE_PLUGIN
 	required = 1,
 #else

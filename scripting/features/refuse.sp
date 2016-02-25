@@ -44,12 +44,12 @@ char g_sRefuseCom[128];
 
 char g_sTag[128];
 
-bool g_bVIPLoaded;
-
 Handle g_hOnClientRefuse;
 Handle g_hOnClientRefuseEnd;
 
 Handle g_hResetTimer[MAXPLAYERS + 1] = {null, ...};
+
+bool g_bVIP = false;
 
 public Plugin myinfo =
 {
@@ -77,7 +77,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	return APLRes_Success;
 }
 
-public Hosties3_OnPluginPreLoaded()
+public void OnAllPluginsLoaded()
 {
 	Hosties3_CheckRequirements();
 }
@@ -92,7 +92,7 @@ public Hosties3_OnConfigsLoaded()
 
 	if(LibraryExists("hosties3_vip"))
 	{
-		g_bVIPLoaded = true;
+		g_bVIP = true;
 	}
 
 	g_iLogLevel = Hosties3_GetLogLevel();
@@ -130,11 +130,19 @@ public Hosties3_OnConfigsLoaded()
 	LoadTranslations("hosties3_refuse.phrases");
 }
 
-public OnLibraryAdded(const char[] name)
+public void OnLibraryAdded(const char[] name)
 {
-	if(StrEqual(name, "hosties3_vip"))
+	if (StrEqual(name, "hosties3_vip"))
 	{
-		g_bVIPLoaded = true;
+		g_bVIP = true;
+	}
+}
+
+public void OnLibraryRemoved(const char[] name)
+{
+	if (StrEqual(name, "hosties3_vip"))
+	{
+		g_bVIP = false;
 	}
 }
 
@@ -145,10 +153,6 @@ public Refuse_GetClientRefuse(Handle plugin, numParams)
 	if (Hosties3_IsClientValid(client))
 	{
 		return g_iCCount[client];
-	}
-	else
-	{
-		ThrowNativeError(SP_ERROR_NATIVE, "Client %i is invalid", client);
 	}
 
 	return false;
@@ -163,10 +167,6 @@ public Refuse_SetClientRefuse(Handle plugin, numParams)
 	{
 		g_iCCount[client] = count;
 	}
-	else
-	{
-		ThrowNativeError(SP_ERROR_NATIVE, "Client %i is invalid", client);
-	}
 
 	return false;
 }
@@ -178,10 +178,6 @@ public Refuse_GetClientMaxRefuse(Handle plugin, numParams)
 	if (Hosties3_IsClientValid(client))
 	{
 		return g_iMaxCount[client];
-	}
-	else
-	{
-		ThrowNativeError(SP_ERROR_NATIVE, "Client %i is invalid", client);
 	}
 
 	return false;
@@ -196,10 +192,6 @@ public Refuse_SetClientMaxRefuse(Handle plugin, numParams)
 	{
 		g_iMaxCount[client] = count;
 	}
-	else
-	{
-		ThrowNativeError(SP_ERROR_NATIVE, "Client %i is invalid", client);
-	}
 
 	return false;
 }
@@ -212,15 +204,11 @@ public Refuse_IsClientInRefusing(Handle plugin, numParams)
 	{
 		return g_bRun[client];
 	}
-	else
-	{
-		ThrowNativeError(SP_ERROR_NATIVE, "Client %i is invalid", client);
-	}
 
 	return false;
 }
 
-public Hosties3_OnMapStart()
+public void OnMapStart()
 {
 	g_iBeamSprite = PrecacheModel(BEAM_CSGO);
 	g_iHaloSprite = PrecacheModel(HALO_CSGO);
@@ -247,6 +235,14 @@ public Hosties3_OnPlayerDeath(int victim, int attacker, int assister, const char
 Reset(client)
 {
 	g_iCCount[client] = 0;
+	
+	if(IsPlayerAlive(client))
+	{
+		SetEntityRenderColor(client, g_iRed[client], g_iGreen[client], g_iBlue[client], g_iAlpha[client]);
+		SetEntityRenderMode(client, RENDER_TRANSCOLOR);
+	}
+	g_bRun[client] = false;
+	g_hResetTimer[client] = null;
 }
 
 public Action Command_Refuse(client, args)
@@ -259,7 +255,7 @@ public Action Command_Refuse(client, args)
 			{
 				int iPoints;
 
-				if(g_bVIPLoaded)
+				if(g_bVIP)
 				{
 					iPoints = Hosties3_GetVIPPoints(client);
 				}
@@ -397,10 +393,13 @@ public Action Timer_ResetColor(Handle timer, any userid)
 {
 	int client = GetClientOfUserId(userid);
 
-	if (Hosties3_IsClientValid(client) && IsPlayerAlive(client))
+	if (Hosties3_IsClientValid(client))
 	{
-		SetEntityRenderColor(client, g_iRed[client], g_iGreen[client], g_iBlue[client], g_iAlpha[client]);
-		SetEntityRenderMode(client, RENDER_TRANSCOLOR);
+		if(IsPlayerAlive(client))
+		{
+			SetEntityRenderColor(client, g_iRed[client], g_iGreen[client], g_iBlue[client], g_iAlpha[client]);
+			SetEntityRenderMode(client, RENDER_TRANSCOLOR);
+		}
 		g_bRun[client] = false;
 		g_hResetTimer[client] = null;
 

@@ -32,7 +32,7 @@ public Plugin myinfo =
 	url = HOSTIES3_URL
 };
 
-public Hosties3_OnPluginPreLoaded()
+public void OnAllPluginsLoaded()
 {
 	Hosties3_CheckRequirements();
 }
@@ -110,6 +110,11 @@ public Hosties3_OnConfigsLoaded()
 	{
 		SetFailState("'%s' is deactivated!", FEATURE_NAME);
 		return;
+	}
+	
+	if(LibraryExists("hosties3_vip"))
+	{
+		g_bVIP = true;
 	}
 	
 	if(g_bVIP)
