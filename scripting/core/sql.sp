@@ -1,7 +1,5 @@
 void ConnectToSQL()
 {
-	g_bStarted = true;
-
 	if (!SQL_CheckConfig("hosties3"))
 	{
 		Hosties3_LogToFile(HOSTIES3_PATH, "sql", ERROR, "Database failure: Couldn't find Database entry \"hosties3\"");

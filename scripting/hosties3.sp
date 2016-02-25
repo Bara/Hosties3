@@ -54,14 +54,15 @@ public void OnPluginStart()
 	
 	g_bSQLReady = false;
 
-	if (!g_bStarted)
-	{
-		FullCacheReset();
-		Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, false, 0, HOSTIES3_DESCRIPTION);
-		ConnectToSQL();
-	}
+	FullCacheReset();
+	ConnectToSQL();
 	
 	RegConsoleCmd("sm_debug", Debug);
+}
+
+public void OnAllPluginsLoaded()
+{
+	Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, false, 0, HOSTIES3_DESCRIPTION);
 }
 
 public Action Debug(int client, int args)
@@ -74,25 +75,6 @@ public Action Debug(int client, int args)
 		PrintToServer("[FeatureList] Name: %s", iFlCache[flName]);
 	}
 }
-
-public void OnMapStart()
-{
-	if (!g_bStarted)
-	{
-		FullCacheReset();
-		Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, false, 0, HOSTIES3_DESCRIPTION);
-		ConnectToSQL();
-	}
-}
-
-/* public OnMapEnd()
-{
-	if(g_bStarted)
-	{
-		g_bStarted = false;
-	}
-} */
-
 public void OnClientPutInServer(int client)
 {
 	g_bClientReady[client] = false;

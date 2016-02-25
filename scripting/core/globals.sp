@@ -35,7 +35,6 @@ Handle g_hFlCache;
 int g_iFlCacheTmp[FlCache];
 
 bool g_bSQLReady = false;
-bool g_bStarted = false;
 bool g_bClientReady[MAXPLAYERS + 1] = {false,...};
 
 int g_iAdmin[MAXPLAYERS + 1] = {0,...};

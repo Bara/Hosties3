@@ -3,7 +3,9 @@
 #include <sourcemod>
 #include <sdktools>
 #include <hosties3>
-#include <hosties3_vip>
+
+#undef REQUIRE_PLUGIN
+#tryinclude <hosties3_vip>
 
 #define FEATURE_NAME "Paintball"
 #define FEATURE_FILE FEATURE_NAME ... ".cfg"
@@ -19,6 +21,8 @@ int g_iLogLevel;
 int g_iSpriteIndex[128];
 int g_iSpriteIndexCount = 0;
 
+bool g_bVIP = false;
+
 public Plugin myinfo =
 {
 	name = PLUGIN_NAME,
@@ -33,14 +37,14 @@ public Hosties3_OnPluginPreLoaded()
 	Hosties3_CheckRequirements();
 }
 
-public Hosties3_OnMapStart()
+public void OnMapStart()
 {
 	Handle KvColors = CreateKeyValues("colors");
 	char ConfigFile[PLATFORM_MAX_PATH];
 	BuildPath(Path_SM, ConfigFile, sizeof(ConfigFile), "configs/hosties3/" ... FEATURE_FILE);
 	if ( !FileToKeyValues(KvColors, ConfigFile) )
 	{
-		CloseHandle(KvColors);
+		delete KvColors;
 		LogError("[ERROR] %s can not convert file to keyvalues: %s", FEATURE_NAME, ConfigFile);
 		return;
 	}
@@ -50,7 +54,7 @@ public Hosties3_OnMapStart()
 	sectionExists = KvGotoFirstSubKey(KvColors);
 	if ( !sectionExists )
 	{
-		CloseHandle(KvColors);
+		delete KvColors;
 		LogError("[ERROR] %s can not find first keyvalues subkey in file: %s", FEATURE_NAME, ConfigFile);
 		return;
 	}
@@ -69,7 +73,25 @@ public Hosties3_OnMapStart()
 		sectionExists = KvGotoNextKey(KvColors);
 	}
 
-	CloseHandle(KvColors);
+	delete KvColors;
+	
+	g_bVIP = LibraryExists("hosties3_vip");
+}
+
+public void OnLibraryAdded(const char[] name)
+{
+	if (StrEqual(name, "hosties3_vip"))
+	{
+		g_bVIP = true;
+	}
+}
+
+public void OnLibraryRemoved(const char[] name)
+{
+	if (StrEqual(name, "hosties3_vip"))
+	{
+		g_bVIP = false;
+	}
 }
 
 precachePaintballDecal(const char[] filename)
@@ -89,8 +111,9 @@ public Hosties3_OnConfigsLoaded()
 		SetFailState("'%s' is deactivated!", FEATURE_NAME);
 		return;
 	}
-
-	g_iNeedPoints = Hosties3_AddCvarInt(FEATURE_NAME, "Need Points", 2000);
+	
+	if(g_bVIP)
+		g_iNeedPoints = Hosties3_AddCvarInt(FEATURE_NAME, "Need Points", 0);
 
 	g_iLogLevel = Hosties3_GetLogLevel();
 
@@ -99,7 +122,10 @@ public Hosties3_OnConfigsLoaded()
 		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
 	}
 
-	Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, true, g_iNeedPoints, HOSTIES3_DESCRIPTION);
+	if(g_bVIP && g_iNeedPoints > 0)
+		Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, true, g_iNeedPoints, HOSTIES3_DESCRIPTION);
+	else
+		Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, false, 0, HOSTIES3_DESCRIPTION);
 
 	HookEvent("bullet_impact", Event_BulletImpact);
 }
@@ -112,8 +138,8 @@ public Action Event_BulletImpact(Handle event, const char[] weapon, bool dontBro
 	fPos[0] = GetEventFloat(event, "x");
 	fPos[1] = GetEventFloat(event, "y");
 	fPos[2] = GetEventFloat(event, "z");
-
-	if (g_iSpriteIndexCount && Hosties3_IsClientValid(client) && Hosties3_GetVIPPoints(client) >= g_iNeedPoints)
+	
+	if (g_iSpriteIndexCount && Hosties3_IsClientValid(client) && (g_iNeedPoints == 0 || (g_bVIP && g_iNeedPoints > 0 && Hosties3_GetVIPPoints(client) >= g_iNeedPoints)))
 	{
 		TE_SetupWorldDecal(fPos, g_iSpriteIndex[GetRandomInt(0, g_iSpriteIndexCount - 1)]);
 		TE_SendToAll();
