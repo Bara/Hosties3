@@ -38,6 +38,9 @@ int g_iLRMenuTime;
 Handle g_hOnLRChoosen;
 Handle g_hOnLRAvailable;
 
+char g_sLRGame[MAXPLAYERS + 1][128];
+int g_iLRTarget[MAXPLAYERS + 1];
+
 enum lrCache
 {
 	lrId,
@@ -64,7 +67,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateNative("Hosties3_IsClientInLastRequest", Native_IsClientInLastRequest);
 	CreateNative("Hosties3_SetLastRequestStatus", Native_SetLastRequestStatus);
 	
-	g_hOnLRChoosen = CreateGlobalForward("Hosties3_OnLastRequestChoosen", ET_Hook, Param_Cell, Param_Cell, Param_String);
+	g_hOnLRChoosen = CreateGlobalForward("Hosties3_OnLastRequestChoosen", ET_Ignore, Param_Cell, Param_Cell, Param_String);
 	g_hOnLRAvailable = CreateGlobalForward("Hosties_OnLastRequestAvailable", ET_Ignore, Param_Cell);
 	
 	RegPluginLibrary("hosties3-lr");
@@ -219,7 +222,7 @@ public Action LRDebug(int client, int args)
 		PrintToServer("[LastRequest]: %s", iGang[lrName]);
 	}
 	
-	CreateCountdown(3);
+	CreateCountdown(3, client);
 }
 
 
@@ -293,31 +296,24 @@ public int Menu_LastRequest(Menu menu, MenuAction action, int client, int param)
 		GetMenuItem(menu, param, sParam, sizeof(sParam));
 		
 		PrintToChat(client, "LR: %s", sParam);
+		strcopy(g_sLRGame[client], sizeof(g_sLRGame[]), sParam);
 		
-		Action res = Plugin_Continue;
-		Call_StartForward(g_hOnLRChoosen);
-		Call_PushCell(client);
-		Call_PushCell(0); // TODO: Target
-		for (int i = 0; i < g_aLRGames.Length; i++)
+		Menu tMenu = new Menu(Menu_TMenu);
+		tMenu.SetTitle("Choose your opponent:");
+		
+		Hosties3_LoopClients(i)
 		{
-			int iGang[lrCache];
-			g_aLRGames.GetArray(i, iGang[0]);
-	
-			if(StrEqual(iGang[lrTranslation], sParam, false))
+			if(IsClientInGame(i) && GetClientTeam(i) == CS_TEAM_T && IsPlayerAlive(i) && !Hosties3_IsClientInLastRequest(i))
 			{
-				Call_PushString(iGang[lrName]);
+				char sIndex[12], sName[MAX_NAME_LENGTH];
+				IntToString(i, sIndex, sizeof(sIndex));
+				GetClientName(i, sName, sizeof(sName));
+				tMenu.AddItem(sIndex, sName);
 			}
 		}
-		Call_Finish(res);
-	
-		if(res > Plugin_Changed)
-		{
-			if(menu != null)
-			{
-				delete menu;
-			}
-			return 0;
-		}
+		
+		menu.ExitButton = true;
+		menu.Display(client, g_iLRMenuTime);
 	}
 	else if(action == MenuAction_Cancel)
 	{
@@ -336,6 +332,36 @@ public int Menu_LastRequest(Menu menu, MenuAction action, int client, int param)
 	return 0;
 }
 
+public int Menu_TMenu(Menu menu, MenuAction action, int client, int param)
+{
+	if (action == MenuAction_Select)
+	{
+		char sParam[32];
+		GetMenuItem(menu, param, sParam, sizeof(sParam));
+		
+		int target = StringToInt(sParam);
+		g_iLRTarget[client] = target;
+		
+		PrintToChat(client, "LR: %s - Opponent: %N", g_sLRGame[client], target);
+		
+		CreateCountdown(3, client);
+	}
+	else if(action == MenuAction_Cancel)
+	{
+		if(param == MenuCancel_Timeout)
+		{
+			PrintToChatAll("MenuCancel_Timeout %N", client); // TODO: Add translation & function (Nothing or slay?)
+		}
+	}		
+	else if (action == MenuAction_End)
+	{
+		if(menu != null)
+		{
+			delete menu;
+		}
+	}
+	return 0;
+}
 
 public int Menu_Empty(Menu menu, MenuAction action, int client, int param)
 {
@@ -407,10 +433,11 @@ bool CheckExistsLRGames(const char[] name)
 }
 
 
-stock void CreateCountdown(int seconds)
+stock void CreateCountdown(int seconds, int client)
 {
 	Handle pack = CreateDataPack();
 	WritePackCell(pack, seconds);
+	WritePackCell(pack, GetClientUserId(client));
 	CreateTimer(0.0, Timer_Countdown, pack);
 }
 
@@ -418,18 +445,25 @@ public Action Timer_Countdown(Handle timer, any pack)
 {
 	ResetPack(pack, false);
 	int seconds = ReadPackCell(pack);
+	int client = GetClientOfUserId(ReadPackCell(pack));
 	CloseHandle(pack);
 	
-	Hosties3_LoopClients(i)
+	if(Hosties3_IsClientValid(client) && Hosties3_IsClientValid(g_iLRTarget[client]))
 	{
-		if(Hosties3_IsClientValid(i))
+		Hosties3_LoopClients(i)
 		{
-			if(seconds == 1)
-				PrintToChat(i, "Last request started in %d second", seconds); // TODO: Add translation
-			else if(seconds == 0)
-				PrintToChat(i, "Go!", seconds);
-			else
-				PrintToChat(i, "Last request started in %d seconds", seconds); // TODO: Add translation
+			if(Hosties3_IsClientValid(i))
+			{
+				if(seconds == 1)
+					PrintToChat(i, "Last request started in %d second ( Game: %d, Opponent: %N)", seconds, g_sLRGame[client], g_iLRTarget[client]); // TODO: Add translation
+				else if(seconds == 0)
+				{
+					PrintToChat(i, "Go! ( Game: %d, Opponent: %N)", seconds, g_sLRGame[client], g_iLRTarget[client]); // TODO: Add translation
+					StartLastRequest(client);
+				}
+				else
+					PrintToChat(i, "Last request started in %d seconds ( Game: %d, Opponent: %N)", seconds, g_sLRGame[client], g_iLRTarget[client]); // TODO: Add translation
+			}
 		}
 	}
 	
@@ -445,3 +479,31 @@ public Action Timer_Countdown(Handle timer, any pack)
 	return Plugin_Stop;
 }
 
+void StartLastRequest(int client)
+{
+	if(!Hosties3_IsClientValid(client) || !Hosties3_IsClientValid(g_iLRTarget[client]))
+	{
+		Hosties3_LoopClients(i)
+		{
+			if(Hosties3_IsClientValid(i))
+			{
+				PrintToChat(i, "Last request aborted! Client invalid"); // TODO: Add translation
+			}
+		}
+	}
+	
+	Call_StartForward(g_hOnLRChoosen);
+	Call_PushCell(client);
+	Call_PushCell(g_iLRTarget[client]);
+	for (int i = 0; i < g_aLRGames.Length; i++)
+	{
+		int iGang[lrCache];
+		g_aLRGames.GetArray(i, iGang[0]);
+
+		if(StrEqual(iGang[lrTranslation], g_sLRGame[client], false))
+		{
+			Call_PushString(iGang[lrName]);
+		}
+	}
+	Call_Finish();
+}
