@@ -84,9 +84,15 @@ public OnMapStart()
 				}
 				
 				CloseHandle(hModelDir);
-				
-				ReplaceString(sBuffer, sizeof(sBuffer), "models/", "materials/models/");
+			}
+			
+			Format(sName, sizeof(sName), "CTMaterial%d", i);
+			KvGetString(hConfig, sName, sBuffer, sizeof(sBuffer));
+			
+			if (DirExists(sBuffer))
+			{
 				new Handle:hMaterialDir = OpenDirectory(sBuffer);
+				
 				if (hMaterialDir != null)
 				{
 					decl String:sFileName[PLATFORM_MAX_PATH + 1];
@@ -97,11 +103,17 @@ public OnMapStart()
 						if (ftType == FileType_File)
 						{
 							Format(sFileName, sizeof(sFileName), "%s/%s", sBuffer, sFileName);
+							
+							if (StrContains(sFileName, ".mdl", false) != -1)
+							{
+								PrecacheModel(sFileName, true);
+							}
+							
 							AddFileToDownloadsTable(sFileName);
 							
 							if (g_iLogLevel <= 2)
 							{
-								Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] CT Model %s: %s", FEATURE_NAME, sName, sFileName);
+								Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] CT Material %s: %s", FEATURE_NAME, sName, sFileName);
 							}
 						}
 					}
@@ -150,9 +162,15 @@ public OnMapStart()
 				}
 				
 				CloseHandle(hModelDir);
-				
-				ReplaceString(sBuffer, sizeof(sBuffer), "models/", "materials/models/");
+			}
+			
+			Format(sName, sizeof(sName), "TMaterial%d", i);
+			KvGetString(hConfig, sName, sBuffer, sizeof(sBuffer));
+			
+			if (DirExists(sBuffer))
+			{
 				new Handle:hMaterialDir = OpenDirectory(sBuffer);
+				
 				if (hMaterialDir != null)
 				{
 					decl String:sFileName[PLATFORM_MAX_PATH + 1];
@@ -163,11 +181,17 @@ public OnMapStart()
 						if (ftType == FileType_File)
 						{
 							Format(sFileName, sizeof(sFileName), "%s/%s", sBuffer, sFileName);
+							
+							if (StrContains(sFileName, ".mdl", false) != -1)
+							{
+								PrecacheModel(sFileName, true);
+							}
+							
 							AddFileToDownloadsTable(sFileName);
 							
 							if (g_iLogLevel <= 2)
 							{
-								Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] T Model %s: %s", FEATURE_NAME, sName, sFileName);
+								Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] T Material %s: %s", FEATURE_NAME, sName, sFileName);
 							}
 						}
 					}
