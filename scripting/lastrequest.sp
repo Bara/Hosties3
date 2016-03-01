@@ -41,6 +41,8 @@ Handle g_hOnLRAvailable;
 char g_sLRGame[MAXPLAYERS + 1][128];
 int g_iLRTarget[MAXPLAYERS + 1];
 
+char g_sSoundsPath[PLATFORM_MAX_PATH + 1];
+
 enum lrCache
 {
 	lrId,
@@ -103,6 +105,7 @@ public void Hosties3_OnConfigsLoaded()
 	g_bAutoOpenMenu = Hosties3_AddCvarBool(FEATURE_NAME, "Auto open menu on lr available", true);
 	g_iLRSoundsCount = Hosties3_AddCvarInt(FEATURE_NAME, "Count of last request sounds", 1);
 	Hosties3_AddCvarString(FEATURE_NAME, "Base path+filename (x is replaced with count)", "server/hosties3/lastrequest/lastrequestX.mp3", g_sLRSoundsFile, sizeof(g_sLRSoundsFile));
+	Hosties3_AddCvarString(FEATURE_NAME, "Sounds for 3...2...1...Go ( Go = 0 )", "server/hosties3/lastrequest/X.mp3", g_sSoundsPath, sizeof(g_sSoundsPath));
 
 	if (g_iLogLevel <= 2)
 	{
@@ -463,6 +466,8 @@ public Action Timer_Countdown(Handle timer, any pack)
 				}
 				else
 					PrintToChat(i, "Last request started in %d seconds ( Game: %d, Opponent: %N)", seconds, g_sLRGame[client], g_iLRTarget[client]); // TODO: Add translation
+				
+				PlaySound(seconds);
 			}
 		}
 	}
@@ -477,6 +482,18 @@ public Action Timer_Countdown(Handle timer, any pack)
 	}
 
 	return Plugin_Stop;
+}
+
+void PlaySound(int seconds)
+{
+	if(seconds >= 0 && seconds <= 3)
+	{
+		char sFile[PLATFORM_MAX_PATH + 1], sid[2];
+		strcopy(sFile, sizeof(sFile), g_sLRSoundsFile);
+		IntToString(seconds, sid, sizeof(sid));
+		ReplaceString(sFile, sizeof(sFile), "X", sid, true);
+		EmitSoundToAllAny(sFile);
+	}
 }
 
 void StartLastRequest(int client)
