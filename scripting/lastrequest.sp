@@ -272,8 +272,10 @@ public Action Command_LastRequest(int client, int args)
 {
 	if(!Hosties3_IsClientValid(client))
 		return Plugin_Handled;
-		
-	if(!Hosties3_IsLastRequestAvailable()) // TODO: Add message
+	
+	PrintToChat(client, "Hosties3_IsLastRequestAvailable: %d, Hosties3_IsClientInLastRequest: %d", Hosties3_IsLastRequestAvailable(), Hosties3_IsClientInLastRequest(client));
+	
+	if(Hosties3_IsLastRequestAvailable()) // TODO: Add message
 		return Plugin_Handled;
 	
 	if(Hosties3_IsClientInLastRequest(client)) // TODO: Add message
@@ -343,8 +345,8 @@ public int Menu_LastRequest(Menu menu, MenuAction action, int client, int param)
 			}
 		}
 		
-		menu.ExitButton = true;
-		menu.Display(client, g_iLRMenuTime);
+		tMenu.ExitButton = true;
+		tMenu.Display(client, g_iLRMenuTime);
 	}
 	else if(action == MenuAction_Cancel)
 	{
@@ -539,6 +541,7 @@ public Action Timer_Countdown(Handle timer, any pack)
 	{
 		Handle hPack = CreateDataPack();
 		WritePackCell(hPack, seconds);
+		WritePackCell(hPack, GetClientUserId(client));
 		CreateTimer(1.0, Timer_Countdown, hPack);
 	}
 
