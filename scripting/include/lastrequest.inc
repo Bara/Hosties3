@@ -10,6 +10,7 @@ native bool Hosties3_RegisterLRGame(const char[] name, const char[] translations
 native bool Hosties3_IsClientInLastRequest(int client);
 native bool Hosties3_IsLastRequestAvailable();
 native bool Hosties3_SetLastRequestStatus(bool status);
+native void Hosties3_StopLastRequest();
 
 stock bool Hosties3_IsLRLoaded()
 {

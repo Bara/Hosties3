@@ -68,6 +68,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateNative("Hosties3_IsLastRequestAvailable", Native_IsLastRequestAvailable);
 	CreateNative("Hosties3_IsClientInLastRequest", Native_IsClientInLastRequest);
 	CreateNative("Hosties3_SetLastRequestStatus", Native_SetLastRequestStatus);
+	CreateNative("Hosties3_StopLastRequest", Native_StopLastRequest);
 	
 	g_hOnLRChoosen = CreateGlobalForward("Hosties3_OnLastRequestChoosen", ET_Ignore, Param_Cell, Param_Cell, Param_String);
 	g_hOnLRAvailable = CreateGlobalForward("Hosties_OnLastRequestAvailable", ET_Ignore, Param_Cell);
@@ -160,6 +161,30 @@ public Action Timer_CheckTeams(Handle timer)
 	{
 		CheckTeams();
 	}
+	else
+	{
+		int T = 0;
+		int CT = 0;
+		Hosties3_LoopClients(i)
+		{
+			if(IsClientInGame(i) && IsPlayerAlive(i))
+			{
+				if(GetClientTeam(i) == CS_TEAM_T)
+				{
+					T++;
+				}
+				else if(GetClientTeam(i) == CS_TEAM_CT)
+				{
+					CT++;
+				}
+			}
+		}
+		
+		if(T == 0 || CT == 0)
+		{
+			Hosties3_StopLastRequest();
+		}
+	}
 }
 
 void CheckTeams()
@@ -188,7 +213,7 @@ void CheckTeams()
 			ShowLastRequestMenu(client);
 		
 		Call_StartForward(g_hOnLRAvailable);
-		Call_PushCell(lastT[1]);
+		Call_PushCell(client);
 		Call_Finish();
 	}
 }
@@ -418,6 +443,35 @@ public int Native_SetLastRequestStatus(Handle plugin, int numParams)
 	return g_bLastRequestRound;
 }
 
+public int Native_StopLastRequest(Handle plugin, int numParams)
+{
+	Hosties3_LoopClients(i)
+	{
+		if(Hosties3_IsClientValid(i))
+		{
+			if(g_bInLR[i])
+			{
+				g_bInLR[i] = false;
+			}
+			
+			if(GetClientTeam(i) == CS_TEAM_T && g_iLRTarget[i] > 0)
+			{
+				Hosties3_LoopClients(j)
+				{
+					if(Hosties3_IsClientValid(j))
+					{
+						PrintToChat(j, "Last request was ended ( Game: %s, Player: %N, Opponent: %N )", g_sLRGame[i], i, g_iLRTarget[i]); // TODO: Add translation
+					}
+				}
+				g_iLRTarget[i] = 0;
+				g_sLRGame[i] = "";
+			}
+		}
+	}
+	
+	g_bLastRequest = true;
+}
+
 public int Native_IsLastRequestAvailable(Handle plugin, int numParams)
 {
 	return g_bLastRequest;
@@ -462,16 +516,16 @@ public Action Timer_Countdown(Handle timer, any pack)
 			{
 				if(seconds == 1)
 				{
-					PrintToChat(i, "Last request started in %d second ( Game: %s, Opponent: %N)", seconds, g_sLRGame[client], g_iLRTarget[client]); // TODO: Add translation
+					PrintToChat(i, "Last request started in %d second ( Game: %s, Player: %N, Opponent: %N)", seconds, g_sLRGame[client], i, g_iLRTarget[client]); // TODO: Add translation
 				}
 				else if(seconds == 0)
 				{
-					PrintToChat(i, "Go! ( Game: %s, Opponent: %N)", g_sLRGame[client], g_iLRTarget[client]); // TODO: Add translation
+					PrintToChat(i, "Go! ( Game: %s, Player: %N, Opponent: %N)", g_sLRGame[client], i, g_iLRTarget[client]); // TODO: Add translation
 					StartLastRequest(client);
 				}
 				else
 				{
-					PrintToChat(i, "Last request started in %d seconds ( Game: %s, Opponent: %N)", seconds, g_sLRGame[client], g_iLRTarget[client]); // TODO: Add translation
+					PrintToChat(i, "Last request started in %d seconds ( Game: %s, Player: %N, Opponent: %N)", seconds, g_sLRGame[client], i, g_iLRTarget[client]); // TODO: Add translation
 				}
 				
 				PlaySound(seconds);
@@ -515,6 +569,9 @@ void StartLastRequest(int client)
 			}
 		}
 	}
+	
+	g_bLastRequest = false;
+	g_bInLR[g_iLRTarget[client]] = true;
 	
 	Call_StartForward(g_hOnLRChoosen);
 	Call_PushCell(client);
