@@ -83,7 +83,9 @@ public void OnAllPluginsLoaded()
 	Hosties3_CheckRequirements();
 	
 	if(g_aLRGames != null)
+	{
 		g_aLRGames.Clear();
+	}
 	
 	g_aLRGames = new ArrayList(sizeof(g_iLRGames));
 	
@@ -207,10 +209,14 @@ void CheckTeams()
 		g_bLastRequest = true;
 		
 		if(g_bPlaySound)
+		{
 			PlayLastRequestSound();
+		}
 		
 		if(g_bAutoOpenMenu)
+		{
 			ShowLastRequestMenu(client);
+		}
 		
 		Call_StartForward(g_hOnLRAvailable);
 		Call_PushCell(client);
@@ -225,9 +231,13 @@ void PlayLastRequestSound()
 	
 	int id;
 	if(g_iLRSoundsCount > 1)
+	{
 		id = GetRandomInt(1, g_iLRSoundsCount);
+	}
 	else
+	{
 		id = 1;
+	}
 	
 	IntToString(id, sid, sizeof(sid));
 	ReplaceString(sFile, sizeof(sFile), "X", sid, true);
@@ -253,14 +263,18 @@ public Action LRDebug(int client, int args)
 	CreateCountdown(3, client);
 	
 	if(Hosties3_IsClientInLastRequest(client))
+	{
 		PrintToChat(client, "You're in a last request!");
+	}
 }
 
 
 public Action Command_LastRequestList(int client, int args)
 {
 	if(!Hosties3_IsClientValid(client)) // TODO: Add message
+	{
 		return Plugin_Handled;
+	}
 	
 	ShowLastRequestList(client);
 	
@@ -271,15 +285,26 @@ public Action Command_LastRequestList(int client, int args)
 public Action Command_LastRequest(int client, int args)
 {
 	if(!Hosties3_IsClientValid(client))
+	{
 		return Plugin_Handled;
+	}
+	
+	if(GetClientTeam(client) != CS_TEAM_T) // TODO: Add message
+	{
+		return Plugin_Handled;
+	}
 	
 	PrintToChat(client, "Hosties3_IsLastRequestAvailable: %d, Hosties3_IsClientInLastRequest: %d", Hosties3_IsLastRequestAvailable(), Hosties3_IsClientInLastRequest(client));
 	
 	if(Hosties3_IsLastRequestAvailable()) // TODO: Add message
+	{
 		return Plugin_Handled;
+	}
 	
 	if(Hosties3_IsClientInLastRequest(client)) // TODO: Add message
+	{
 		return Plugin_Handled;
+	}
 		
 	ShowLastRequestMenu(client);
 	
