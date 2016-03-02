@@ -39,7 +39,7 @@ Handle g_hOnLRChoosen;
 Handle g_hOnLRAvailable;
 
 char g_sLRGame[MAXPLAYERS + 1][128];
-int g_iLRTarget[MAXPLAYERS + 1];
+int g_iLRTarget[MAXPLAYERS + 1] =  { 0, ... };
 
 char g_sSoundsPath[PLATFORM_MAX_PATH + 1];
 
@@ -226,6 +226,9 @@ public Action LRDebug(int client, int args)
 	}
 	
 	CreateCountdown(3, client);
+	
+	if(Hosties3_IsClientInLastRequest(client))
+		PrintToChat(client, "You're in a last request!");
 }
 
 
@@ -458,14 +461,18 @@ public Action Timer_Countdown(Handle timer, any pack)
 			if(Hosties3_IsClientValid(i))
 			{
 				if(seconds == 1)
-					PrintToChat(i, "Last request started in %d second ( Game: %d, Opponent: %N)", seconds, g_sLRGame[client], g_iLRTarget[client]); // TODO: Add translation
+				{
+					PrintToChat(i, "Last request started in %d second ( Game: %s, Opponent: %N)", seconds, g_sLRGame[client], g_iLRTarget[client]); // TODO: Add translation
+				}
 				else if(seconds == 0)
 				{
-					PrintToChat(i, "Go! ( Game: %d, Opponent: %N)", seconds, g_sLRGame[client], g_iLRTarget[client]); // TODO: Add translation
+					PrintToChat(i, "Go! ( Game: %s, Opponent: %N)", g_sLRGame[client], g_iLRTarget[client]); // TODO: Add translation
 					StartLastRequest(client);
 				}
 				else
-					PrintToChat(i, "Last request started in %d seconds ( Game: %d, Opponent: %N)", seconds, g_sLRGame[client], g_iLRTarget[client]); // TODO: Add translation
+				{
+					PrintToChat(i, "Last request started in %d seconds ( Game: %s, Opponent: %N)", seconds, g_sLRGame[client], g_iLRTarget[client]); // TODO: Add translation
+				}
 				
 				PlaySound(seconds);
 			}

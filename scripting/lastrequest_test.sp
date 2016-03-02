@@ -60,4 +60,5 @@ public bool Hosties_OnLastRequestAvailable(int client)
 		PrintToChatAll("Last request is now available!");
 		PrintToChatAll("Last T is: %N", client);
 	}
+	PrintToChatAll("(Hosties_OnLastRequestAvailable) called!");
 }
