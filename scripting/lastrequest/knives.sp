@@ -1,6 +1,7 @@
 #pragma semicolon 1
 
 #include <sourcemod>
+#include <sdktools>
 #include <sdkhooks>
 
 #pragma newdecls required
@@ -11,8 +12,8 @@
 #define FEATURE_NAME "Knife Fight"
 #define PLUGIN_NAME FEATURE_NAME
 
-#define KNORMAL			FEATURE_NAME ... " - Normal"
-#define BACKSTAB	FEATURE_NAME ... " - Backstab"
+#define KNORMAL  FEATURE_NAME ... " - Normal"
+#define BACKSTAB FEATURE_NAME ... " - Backstab"
 
 bool g_bKnife = false;
 bool g_bNormal = false;
@@ -40,8 +41,8 @@ public void Hosties3_OnConfigsLoaded()
 		return;
 	}
 
-	bool bNormal 		= Hosties3_RegisterLRGame(KNORMAL, "KnifeNormal");
-	bool bBackstab 	= Hosties3_RegisterLRGame(BACKSTAB, "KnifeAntiBackstab");
+	bool bNormal    = Hosties3_RegisterLRGame(KNORMAL, "KnifeNormal");
+	bool bBackstab  = Hosties3_RegisterLRGame(BACKSTAB, "KnifeAntiBackstab");
 	
 	Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register Knife Normal: %d", FEATURE_NAME, bNormal);
 	Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register Knife Backstab: %d", FEATURE_NAME, bBackstab);
@@ -67,6 +68,15 @@ public void Hosties3_OnLastRequestChoosen(int client, int target, const char[] n
 		SDKHook(client, SDKHook_TraceAttack, OnTraceAttack);
 		SDKHook(target, SDKHook_TraceAttack, OnTraceAttack);
 	}
+	
+	Hosties3_StripClientAll(client);
+	Hosties3_StripClientAll(target);
+	
+	int iKnife1 = GivePlayerItem(client, "weapon_knife");
+	int iKnife2 = GivePlayerItem(target, "weapon_knife");
+	
+	EquipPlayerWeapon(client, iKnife1);
+	EquipPlayerWeapon(target, iKnife2);
 }
 
 public void Hosties3_OnLastRequestEnd(int client, int target)
