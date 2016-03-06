@@ -8,10 +8,15 @@
 #include <hosties3>
 #include <lastrequest>
 
-#define FEATURE_NAME "Knives"
+#define FEATURE_NAME "Knife Fight"
 #define PLUGIN_NAME FEATURE_NAME
 
+#define KNORMAL			FEATURE_NAME ... " - Normal"
+#define BACKSTAB	FEATURE_NAME ... " - Backstab"
+
 bool g_bKnife = false;
+bool g_bNormal = false;
+bool g_bBackstab = false;
 
 public Plugin myinfo =
 {
@@ -35,18 +40,30 @@ public void Hosties3_OnConfigsLoaded()
 		return;
 	}
 
-	bool success = Hosties3_RegisterLRGame(FEATURE_NAME, "knives");
+	bool bNormal 		= Hosties3_RegisterLRGame(KNORMAL, "KnifeNormal");
+	bool bBackstab 	= Hosties3_RegisterLRGame(BACKSTAB, "KnifeAntiBackstab");
 	
-	Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register status: %d", FEATURE_NAME, success);
+	Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register Knife Normal: %d", FEATURE_NAME, bNormal);
+	Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register Knife Backstab: %d", FEATURE_NAME, bBackstab);
 }
 
 public void Hosties3_OnLastRequestChoosen(int client, int target, const char[] name)
 {
-	if(StrEqual(name, FEATURE_NAME, false))
+	if(StrEqual(name, KNORMAL, false))
 	{
-		PrintToChatAll("KNIVE!!!");
+		PrintToChatAll("%s", name);
 		g_bKnife = true;
-		
+		g_bNormal = true;
+	}
+	else if(StrEqual(name, BACKSTAB, false))
+	{
+		PrintToChatAll("%s", name);
+		g_bKnife = true;
+		g_bBackstab = true;
+	}
+	
+	if(g_bKnife)
+	{
 		SDKHook(client, SDKHook_TraceAttack, OnTraceAttack);
 		SDKHook(target, SDKHook_TraceAttack, OnTraceAttack);
 	}
@@ -94,7 +111,27 @@ public Action OnTraceAttack(int victim, int &attacker, int &inflictor, float &da
 	
 	if ((StrContains(sWeapon, "knife", false) != -1) || (StrContains(sWeapon, "bayonet", false) != -1))
 	{
-		return Plugin_Continue;
+		if(g_bNormal)
+		{
+			return Plugin_Continue;
+		}
+		else if(g_bBackstab)
+		{
+			float fAAngle[3], fVAngle[3], fBAngle[3];
+			
+			GetClientAbsAngles(victim, fVAngle);
+			GetClientAbsAngles(attacker, fAAngle);
+			MakeVectorFromPoints(fVAngle, fAAngle, fBAngle);
+			
+			if(fBAngle[1] > -90.0 && fBAngle[1] < 90.0)
+			{
+				return Plugin_Continue;
+			}
+			else
+			{
+				return Plugin_Handled;
+			}
+		}
 	}
 	
 	return Plugin_Handled;
