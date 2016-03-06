@@ -69,6 +69,16 @@ public void Hosties3_OnLastRequestChoosen(int client, int target, const char[] n
 	}
 }
 
+public void Hosties3_OnLastRequestEnd(int client, int target)
+{
+	SDKUnhook(client, SDKHook_TraceAttack, OnTraceAttack);
+	SDKUnhook(target, SDKHook_TraceAttack, OnTraceAttack);
+	
+	g_bKnife = false;
+	g_bNormal = false;
+	g_bBackstab = false;
+}
+
 public Action OnTraceAttack(int victim, int &attacker, int &inflictor, float &damage, int &damagetype, int &ammotype, int hitbox, int hitgroup)
 {
 	if(!g_bKnife)
