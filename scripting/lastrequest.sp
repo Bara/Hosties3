@@ -154,7 +154,16 @@ public void Hosties3_OnConfigsLoaded()
 
 public Action Event_PlayerDeath(Event event, const char[] name, bool dontBroadcast)
 {
+	int client = GetClientOfUserId(event.GetInt("userid"));
+	
+	if(Hosties3_IsClientValid(client) && Hosties3_IsClientInLastRequest(client))
+	{
+		Hosties3_StopLastRequest();
+		return;
+	}
+	
 	CheckTeams();
+	return;
 }
 
 public Action Timer_CheckTeams(Handle timer)
