@@ -10,9 +10,6 @@
 #define FEATURE_NAME "Lastrequet Test"
 #define PLUGIN_NAME FEATURE_NAME
 
-bool g_bEnable;
-int g_iLogLevel;
-
 public Plugin myinfo =
 {
 	name = PLUGIN_NAME,
@@ -29,20 +26,12 @@ public void OnAllPluginsLoaded()
 
 public void Hosties3_OnConfigsLoaded()
 {
-	if (!(g_bEnable = Hosties3_AddCvarBool(FEATURE_NAME, "Enable", true)))
+	if (!Hosties3_AddCvarBool(FEATURE_NAME, "Enable", true))
 	{
 		SetFailState("'%s' is deactivated!", FEATURE_NAME);
 		return;
 	}
 
-	g_iLogLevel = Hosties3_GetLogLevel();
-
-	if (g_iLogLevel <= 2)
-	{
-		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Enable: %d", FEATURE_NAME, g_bEnable);
-	}
-
-	Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, false, 0, HOSTIES3_DESCRIPTION);
 	bool success = Hosties3_RegisterLRGame(FEATURE_NAME, "example");
 	
 	Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register status: %d", FEATURE_NAME, success);
