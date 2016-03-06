@@ -144,7 +144,7 @@ public void Hosties3_OnConfigsLoaded()
 		Hosties3_LogToFile(HOSTIES3_PATH, FEATURE_NAME, DEBUG, "[%s] Register Command: %s Full: %s", FEATURE_NAME, sLRSCommandsList[i], sBuffer);
 	}
 	
-	RegConsoleCmd("sm_lrdebug", LRDebug);
+	RegAdminCmd("sm_lrdebug", LRDebug, ADMFLAG_ROOT);
 	
 	Hosties3_AddToFeatureList(FEATURE_NAME, HOSTIES3_AUTHOR, false, 0, HOSTIES3_DESCRIPTION);
 	
@@ -361,7 +361,7 @@ public int Menu_LastRequest(Menu menu, MenuAction action, int client, int param)
 		
 		Hosties3_LoopClients(i)
 		{
-			if(IsClientInGame(i) && GetClientTeam(i) == CS_TEAM_T && IsPlayerAlive(i) && !Hosties3_IsClientInLastRequest(i))
+			if(IsClientInGame(i) && GetClientTeam(i) == CS_TEAM_CT && IsPlayerAlive(i) && !Hosties3_IsClientInLastRequest(i))
 			{
 				char sIndex[12], sName[MAX_NAME_LENGTH];
 				IntToString(i, sIndex, sizeof(sIndex));
