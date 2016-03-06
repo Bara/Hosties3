@@ -37,6 +37,7 @@ int g_iLRMenuTime;
 
 Handle g_hOnLRChoosen;
 Handle g_hOnLRAvailable;
+Handle g_hOnLREnd;
 
 char g_sLRGame[MAXPLAYERS + 1][128];
 int g_iLRTarget[MAXPLAYERS + 1] =  { 0, ... };
@@ -71,7 +72,8 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	CreateNative("Hosties3_StopLastRequest", Native_StopLastRequest);
 	
 	g_hOnLRChoosen = CreateGlobalForward("Hosties3_OnLastRequestChoosen", ET_Ignore, Param_Cell, Param_Cell, Param_String);
-	g_hOnLRAvailable = CreateGlobalForward("Hosties_OnLastRequestAvailable", ET_Ignore, Param_Cell);
+	g_hOnLRAvailable = CreateGlobalForward("Hosties3_OnLastRequestAvailable", ET_Ignore, Param_Cell);
+	g_hOnLREnd = CreateGlobalForward("Hosties3_OnLastRequestEnd", ET_Ignore, Param_Cell, Param_Cell);
 	
 	RegPluginLibrary("hosties3-lr");
 	
@@ -481,6 +483,20 @@ public int Native_SetLastRequestStatus(Handle plugin, int numParams)
 
 public int Native_StopLastRequest(Handle plugin, int numParams)
 {
+	Hosties3_LoopClients(i)
+	{
+		if(Hosties3_IsClientValid(i))
+		{
+			if(GetClientTeam(i) == CS_TEAM_T && g_iLRTarget[i] > 0)
+			{
+				Call_StartForward(g_hOnLREnd);
+				Call_PushCell(i);
+				Call_PushCell(g_iLRTarget[i]);
+				Call_Finish();
+			}
+		}
+	}
+	
 	Hosties3_LoopClients(i)
 	{
 		if(Hosties3_IsClientValid(i))

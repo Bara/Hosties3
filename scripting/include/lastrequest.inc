@@ -4,7 +4,8 @@
 #define _hosties3_lr_included
 
 forward void Hosties3_OnLastRequestChoosen(int client, int target, const char[] name);
-forward bool Hosties_OnLastRequestAvailable(int lastT);
+forward bool Hosties3_OnLastRequestAvailable(int lastT);
+forward void Hosties3_OnLastRequestEnd(int client, int target);
 
 native bool Hosties3_RegisterLRGame(const char[] name, const char[] translations);
 native bool Hosties3_IsClientInLastRequest(int client);
